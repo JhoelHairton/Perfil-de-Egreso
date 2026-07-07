@@ -1,0 +1,6 @@
+# Normaliza saltos de linea: LF en el repositorio para archivos de texto
+* text=auto eol=lf
+
+# Tratar como binarios (sin conversion de saltos de linea)
+*.pdf binary
+*.png binary
