@@ -1,0 +1,1235 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{geometry}
+\geometry{margin=2.6cm}
+\usepackage{calc}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[table]{xcolor}
+\usepackage{caption}
+\captionsetup{skip=6pt}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\usepackage{parskip}
+\usepackage{needspace}
+\usepackage{etoolbox}
+\setlength{\parskip}{0.55em}
+\setlist{itemsep=0.2em}
+
+% evita titulos "huerfanos" solos al final de una pagina, empujandolos a la
+% siguiente si no queda espacio para el titulo mas unas lineas de contenido
+\pretocmd{\section}{\needspace{5\baselineskip}}{}{}
+\pretocmd{\subsection}{\needspace{4\baselineskip}}{}{}
+\pretocmd{\subsubsection}{\needspace{3\baselineskip}}{}{}
+
+% --- Macros pandoc espera que existan (normalmente las inyecta su modo -s) ---
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\pandocbounded}[1]{#1}
+\newcommand{\passthrough}[1]{#1}
+
+\hypersetup{
+  pdftitle={HemoScan Andino},
+  pdfauthor={Equipo HemoScan Andino -- UPeU Juliaca},
+  colorlinks=false,
+  bookmarksopen=true
+}
+
+% El contenido ya trae su propia numeracion manual (1., 1.1, 1.1.1...) escrita
+% en el texto de cada encabezado, asi que se desactiva la numeracion automatica
+% de LaTeX para evitar una doble numeracion en el indice y en el cuerpo.
+\setcounter{secnumdepth}{-2}
+\setcounter{tocdepth}{4}
+\titleformat{\section}{\normalfont\Large\bfseries}{}{0em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries}{}{0em}{}
+\titleformat{\subsubsection}{\normalfont\normalsize\bfseries}{}{0em}{}
+
+% Encabezado con dos etiquetas CORTAS y de ancho fijo (nunca texto largo o
+% dinamico por subseccion) para que jamas puedan solaparse entre si.
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small HemoScan Andino}
+\fancyhead[R]{\small Infraestructura E2 --- Seguridad}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\begin{document}
+
+\begin{titlepage}
+\centering
+\vspace*{1.2cm}
+{\large UNIVERSIDAD PERUANA UNI\'ON\par}
+{\normalsize Facultad de Ingenier\'ia y Arquitectura\par}
+{\normalsize Escuela Profesional de Ingenier\'ia de Sistemas --- Filial Juliaca\par}
+\vspace{0.5cm}
+\rule{0.6\linewidth}{0.4pt}
+\vspace{1.6cm}
+
+{\large PROYECTO DE TESIS / PROYECTO INTEGRADOR\par}
+\vspace{1.0cm}
+{\huge\bfseries HemoScan Andino\par}
+\vspace{0.6cm}
+{\Large Sistema no invasivo de tamizaje de anemia infantil con fusi\'on \'optica multisensor y autocalibraci\'on por altitud\par}
+\vspace{1.6cm}
+\rule{0.6\linewidth}{0.4pt}
+\vspace{1.6cm}
+
+{\Large\bfseries Entregable 2 de Infraestructura (CE0321) --- Planificaci\'on de Seguridad\par}
+\vspace{2.0cm}
+
+{\normalsize Juliaca, Puno, Per\'u \par}
+{\normalsize Julio de 2026\par}
+
+\vfill
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\textbf{Entregable N.° 8 --- Planificación de Seguridad}
+\emph{(Octavo entregable consecutivo del proyecto HemoScan Andino. Corresponde al Entregable N.° 2 de la competencia CE032 --- Área A: Infraestructura Tecnológica; utiliza una numeración de entregable propia y distinta de la de los Entregables N.° 1-4 del Área B --- Gestión de TI--- y N.° 5 del Área C --- Ingeniería de Software--- ya presentados, aunque continúa la secuencia documental global del proyecto)}
+
+\textbf{Área de competencia:} Área A --- Infraestructura Tecnológica
+\textbf{Competencia:} CE032 --- Gestión de la Seguridad de la Información
+\textbf{Evidencia que cubre este documento:} CE0321 --- Planificación de Seguridad (identificación de activos críticos, análisis de riesgos según ISO 27005/NIST, políticas de seguridad y roles y responsabilidades)
+
+\textbf{Organización diagnosticada (caso ilustrativo y representativo):} Microred de Salud Altiplano-Puno
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Integrantes del equipo:}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+N.°
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Integrante
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Rol / Área de competencia
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 & \textit{(Integrante 1, Líder de Infraestructura Tecnológica -- nombre por completar)} & CE03 --- Infraestructura Tecnológica (red, seguridad, centro de datos) --- \textbf{responsable principal de este entregable} \\
+2 & \textit{(Integrante 2, Líder de Gestión de TI -- nombre por completar)} & CE01 --- Gestión de TI (diagnóstico, business case, plan de gestión, procesos) \\
+3 & \textit{(Integrante 3, Líder de Ingeniería de Software -- nombre por completar)} & CE02 --- Ingeniería de Software (requerimientos, datos, sistema, calidad) \\
+\end{longtable}
+}
+
+\textbf{Docente asesor(a) del curso:} \textit{(nombre del docente asesor por completar)}
+\textbf{Curso / Sílabo:} \textit{(nombre del curso / s\'ilabo por completar)}
+\textbf{Ciclo académico:} 2026-I (supuesto, a confirmar con la programación académica vigente)
+
+\textbf{Lugar y fecha:} Juliaca, Puno, Perú --- 07 de julio de 2026
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{quote}
+\textbf{Nota metodológica y alcance (léase antes de continuar).} Este documento se apoya directamente en los entregables precedentes del proyecto: del \textbf{Entregable N.° 1} (Diagnóstico Organizacional) toma la caracterización de la organización ilustrativa \textbf{``Microred de Salud Altiplano-Puno''}, su bajo nivel de madurez digital en gobierno de TI y ciberseguridad (nivel 1 de 5, sección 1.3.2) y el inventario de sistemas de información existentes; del \textbf{Entregable N.° 2} (Business Case) toma el modelo de negocio B2G de 3 fases, el presupuesto de validación de Fase 0 (S/ 3,124) y el riesgo estratégico R5 ya identificado (``brecha de seguridad o incumplimiento de la Ley N.° 29733''), que este documento desarrolla y opera-cionaliza en detalle; del \textbf{Entregable N.° 3} (Plan de Gestión) toma el paquete de trabajo 2.3 ``Seguridad, identidad y control de acceso'' (asignado al Integrante 1, con el entregable ``ambiente de autenticación operativo + checklist de seguridad'' como criterio de aceptación); y del \textbf{Entregable N.° 5} (Requerimientos y Diseño del Sistema) toma íntegramente la arquitectura ya diseñada (backend FastAPI/NestJS, PostgreSQL+PostGIS, Keycloak OIDC/RBAC --- ADR-09---, servidor único de Fase 0 --- ADR-02, ADR-10---), los seis recursos FHIR del proyecto, los ocho actores del sistema y los requerimientos no funcionales de seguridad ya especificados (RNF-05 a RNF-07, RNF-18, RNF-19; RF-39, RF-40; RN-02 a RN-11). Este Entregable N.° 2 de la competencia CE032 \textbf{no rediseña} esa arquitectura: la toma como dada y construye sobre ella la capa de gobierno, gestión de riesgos y políticas de seguridad de la información que la rúbrica CE0321 exige.
+
+Se mantiene vigente la misma advertencia metodológica de los entregables anteriores: HemoScan Andino \textbf{no cuenta todavía con un convenio real} con ninguna microred o posta de salud, ni con un comité de ética constituido, ni con un servidor de producción desplegado. Por ello, este plan de seguridad tiene naturaleza de \textbf{planificación previa (pre-despliegue)}: define los controles, políticas y roles que deberán estar operativos \textbf{antes} de procesar el primer dato real de un menor de edad en la Fase 0 de validación, no la certificación de un sistema ya operando. Su alcance es además \textbf{dual}, y esto se declara explícitamente para evitar ambigüedad: cubre (a) los activos propios de HemoScan Andino como organización emprendedora (código fuente, modelo de inteligencia artificial, dataset propietario, credenciales del equipo fundador) y (b) los activos que existirán en el entorno operativo de la organización cliente ilustrativa ``Microred de Salud Altiplano-Puno'' una vez desplegado el sistema (servidor de la posta, dispositivos de campo, cuentas del personal de salud), dado que el modelo de negocio B2G implica que la futura HemoScan Andino S.A.C. actuará como \textbf{encargada de tratamiento} de datos de salud sobre una infraestructura cuya modalidad exacta de alojamiento (servidor propio del equipo, nube comercial, o servidor físico dentro de la posta) es todavía \textbf{{[}DATO PENDIENTE DE VALIDAR: modalidad de alojamiento definitiva, a acordar contractualmente con la DIRESA/microred en la Fase 1{]}}. Todo valor numérico o afirmación normativa específica que no pueda derivarse razonablemente de lo ya declarado en el proyecto o de un estándar internacional de referencia pública (ISO/IEC 27001, ISO/IEC 27005, NIST) se marca explícitamente como \textbf{{[}DATO PENDIENTE DE VALIDAR{]}}, en lugar de presentarse como un hecho verificado.
+\end{quote}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Resumen Ejecutivo}\label{resumen-ejecutivo}
+
+HemoScan Andino procesa, por definición de su propio modelo de negocio, uno de los tipos de datos más sensibles que contempla el ordenamiento jurídico peruano: datos de salud de menores de edad, agravados por la dimensión geográfica (comunidades altoandinas dispersas), la dimensión tecnológica (inteligencia artificial embebida clasificada como de alto riesgo por el Decreto Supremo N.° 115-2025-PCM) y la dimensión organizacional (una microred cuyo nivel de madurez en gobierno de TI y ciberseguridad fue diagnosticado, en el Entregable N.° 1, en el nivel más bajo de una escala de cinco). Este documento desarrolla la \textbf{Planificación de Seguridad} exigida por la competencia CE032 --- Gestión de la Seguridad de la Información, adoptando como marco metodológico central la familia de normas \textbf{ISO/IEC 27001:2022} (requisitos de un sistema de gestión de seguridad de la información), \textbf{ISO/IEC 27002:2022} (catálogo de controles) e \textbf{ISO/IEC 27005:2022} (gestión de riesgos de seguridad de la información), complementada con el proceso de evaluación de riesgos de \textbf{NIST SP 800-30 Rev.~1} y las seis funciones del \textbf{NIST Cybersecurity Framework (CSF) 2.0} (Gobernar, Identificar, Proteger, Detectar, Responder, Recuperar), en estricta observancia del DS 115-2025-PCM y de la Ley N.° 29733 de Protección de Datos Personales.
+
+La \textbf{Sección 1} identifica y clasifica veintiocho activos críticos organizados en siete categorías (datos e información, credenciales y secretos, software, hardware, servicios, personas e intangibles), evaluados según el triángulo de confidencialidad, integridad y disponibilidad (CID), con propietario y custodio explícitos para cada uno. Se confirma que los activos de mayor criticidad global son, en este orden, los datos clínicos identificables de menores de edad, el servidor único que aloja el backend y la base de datos (punto único de falla ya reconocido en el Entregable N.° 5), y las credenciales/secretos de integración del backend.
+
+La \textbf{Sección 2} aplica la metodología ISO 27005/NIST mediante una matriz semicuantitativa de diecinueve riesgos de seguridad de la información (identificados con el prefijo RS-01 a RS-19), cada uno con su amenaza, vulnerabilidad explotable, probabilidad e impacto en escala 1-5, puntaje de riesgo (probabilidad × impacto, rango 1-25) y nivel cualitativo resultante (Bajo, Moderado, Alto, Crítico). Cuatro riesgos alcanzan nivel Crítico: el acceso no autorizado por credenciales no revocadas ante la alta rotación del personal (régimen SERUMS), la pérdida o robo de un nodo/smartphone de campo con datos sin cifrar, la exposición accidental de secretos de configuración en un repositorio de código, y la ingeniería social dirigida al personal de salud. Estos resultados \textbf{desarrollan y operacionalizan}, con un método formal, el riesgo estratégico R5 ya declarado de forma cualitativa en el Business Case (Entregable N.° 2).
+
+La \textbf{Sección 3} define once políticas de seguridad detalladas y aplicables ---control de accesos, protección de datos de menores, gestión criptográfica, dispositivos de campo y movilidad, copias de seguridad y continuidad, gestión de incidentes, desarrollo seguro, uso aceptable y concientización, gobernanza de inteligencia artificial, gestión de terceros, y un cierre de ética profesional alineado al Código de Ética y Conducta Profesional de la ACM---, cada una con lineamientos numerados, parámetros técnicos concretos (por ejemplo, cifrado TLS 1.2 o superior y AES-256 en reposo, autenticación multifactor para roles clínicos y administrativos, respaldo diario con prueba trimestral de restauración) y su control equivalente del Anexo A de ISO/IEC 27001:2022.
+
+La \textbf{Sección 4} propone una estructura de gobierno de seguridad proporcional al tamaño real del equipo (tres integrantes en Fase 0), con una matriz RACI de doce procesos de seguridad que distingue las responsabilidades internas del equipo HemoScan Andino de las responsabilidades que, en un despliegue real, recaerán sobre el administrador del sistema de la microred y sobre el Comité de Ética/DIRESA como titular del banco de datos de salud, y plantea como hoja de ruta la creación de un rol formal de Oficial de Seguridad de la Información y de un Oficial de Protección de Datos una vez constituida HemoScan Andino S.A.C.
+
+El cuerpo evaluable de este documento (Secciones 1 a 4, más los Anexos A, B y D) se ajusta al rango de 10-15 páginas indicado por la plantilla del entregable, y cierra con la matriz de riesgos completa con tratamiento y riesgo residual estimado (\textbf{Anexo A}), las referencias normativas y de estándares (\textbf{Anexo B}) y el checklist de seguridad que opera el criterio de aceptación del paquete EDT 2.3 del Plan de Gestión (\textbf{Anexo D}), este último ampliado con la verificación de la validación legal pendiente de las Políticas 3.2 y 3.6 (Sección 3.12). El glosario de términos y el índice de diagramas ---material útil pero no exigido por la plantilla--- se reclasifican como \textbf{material complementario de referencia}, ubicado después del cierre formal del cuerpo evaluable. Al final del documento se incluye, también fuera del cuerpo evaluable, una \textbf{nota interna de cobertura frente a la rúbrica} (no una autocalificación, tarea que corresponde exclusivamente al docente/evaluador) que documenta honestamente, como limitaciones centrales aún abiertas, la ausencia de una evaluación de riesgos validada con datos reales de incidentes, un pentest técnico ejecutado, un comité de ética constituido, y la validación legal peruana específica de los parámetros pendientes de las Políticas 3.2 y 3.6, insumos que solo estarán disponibles una vez formalizado un convenio institucional real.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{1. Identificación de Activos Críticos}\label{identificaciuxf3n-de-activos-cruxedticos}
+
+\subsection{1.1 Metodología de identificación y clasificación}\label{metodologuxeda-de-identificaciuxf3n-y-clasificaciuxf3n}
+
+La identificación de activos sigue el enfoque de \textbf{ISO/IEC 27001:2022, control A.5.9 (Inventario de información y otros activos asociados)}: todo activo que soporte el proceso de tamizaje de anemia infantil ---ya sea información, software, hardware, un servicio contratado o una persona con acceso privilegiado--- se registra con un identificador único (AC-01 a AC-28), su categoría, un \textbf{propietario} (quien decide su uso y clasificación) y un \textbf{custodio} (quien lo opera y protege técnicamente en el día a día), siguiendo la separación de responsabilidades que exige la norma.
+
+Cada activo se valora según el triángulo clásico de seguridad de la información ---\textbf{Confidencialidad (C), Integridad (I) y Disponibilidad (D)}--- en una escala ordinal de tres niveles (Alta / Media / Baja), y se deriva una \textbf{criticidad global} igual al valor máximo alcanzado entre C, I y D, ajustada cualitativamente cuando el activo involucra datos de menores de edad o constituye un punto único de falla ya reconocido en la arquitectura (Entregable N.° 5, ADR-02 y ADR-10), en cuyo caso la criticidad global se fija en Alta con independencia del promedio matemático. Esta regla de ajuste es una decisión metodológica propia del equipo, no una prescripción literal de la norma, y se declara explícitamente por transparencia.
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Nivel
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Confidencialidad (C)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Integridad (I)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Disponibilidad (D)
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Alta} & La divulgación no autorizada vulnera datos de salud de un menor de edad, secretos criptográficos o propiedad intelectual central del producto & La alteración no autorizada puede inducir un diagnóstico o tratamiento erróneo, o falsificar un registro de auditoría & La indisponibilidad detiene el tamizaje en campo o dejar sin operar el único servidor de la posta \\
+\textbf{Media} & La divulgación afecta información operativa u organizacional sin exponer datos clínicos individuales de un menor & La alteración degrada la calidad del servicio o de un reporte, sin efecto clínico directo & La indisponibilidad es tolerable por horas gracias al diseño offline-first (RNF-03) \\
+\textbf{Baja} & La divulgación tiene impacto marginal o es información ya pública/agregada & La alteración es detectable y corregible sin efecto sobre terceros & La indisponibilidad no afecta la operación crítica del tamizaje \\
+\end{longtable}
+}
+
+\subsection{1.2 Inventario de activos críticos}\label{inventario-de-activos-cruxedticos}
+
+\textbf{Datos e información}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+ID
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Activo
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Propietario
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Custodio
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+C
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+I
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+D
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Criticidad global
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+AC-01 & Datos clínicos identificables de menores de edad (recursos FHIR \emph{Patient} y \emph{Observation}) & Titular del banco de datos de salud (microred/DIRESA, futuro contrato) & Backend de interoperabilidad (Integrante 3) & Alta & Alta & Media & \textbf{Alta} \\
+AC-02 & Consentimientos informados digitales (recurso FHIR \emph{Consent}) & Cuidador/a (titular del derecho) & Backend / App móvil & Alta & Alta & Media & \textbf{Alta} \\
+AC-03 & Trazas de auditoría y procedencia (recursos FHIR \emph{Provenance}, \emph{AuditEvent}) & HemoScan Andino (equipo) & Servicio de Auditoría (backend) & Media & \textbf{Alta} & Media & \textbf{Alta} \\
+AC-04 & Dataset propietario de entrenamiento (imágenes de conjuntiva, espectros AS7341, señales PPG MAX30102 y etiquetas de referencia HemoCue/ferritina/PCR) & HemoScan Andino (equipo) & Integrante 3 / repositorio de datos de entrenamiento & Alta & Alta & Media & \textbf{Alta} \\
+AC-05 & Modelo de inferencia de IA entrenado (pesos ONNX/TFLite y su versionado) & HemoScan Andino (equipo) & Integrante 3 & Media & Alta & Media & \textbf{Alta} \\
+AC-06 & Tabla/parámetros de corrección de hemoglobina por altitud y umbrales clínicos versionados (RN-02) & HemoScan Andino (equipo), validado por Personal médico & Backend (Configuración Clínica) & Media & \textbf{Alta} & Media & \textbf{Alta} \\
+AC-07 & Motor de reglas de consejería nutricional (alineado a NTS 213-MINSA/DGIESP-2024) & HemoScan Andino (equipo) & Integrante 3 & Baja & Alta & Media & Media \\
+AC-08 & Copias de respaldo (\emph{backups}) de la base de datos clínica y geoespacial & HemoScan Andino (equipo) & Integrante 1 & Alta & Alta & Alta & \textbf{Alta} \\
+\end{longtable}
+}
+
+\textbf{Credenciales y secretos}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+ID
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Activo
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Propietario
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Custodio
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+C
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+I
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+D
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Criticidad global
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+AC-09 & Credenciales/secretos del backend (claves de base de datos, \emph{client secrets} de Keycloak, tokens de integración HIS-MINSA/Padrón Nominal/SIGA) & HemoScan Andino (equipo) & Integrante 1 & \textbf{Alta} & Alta & Media & \textbf{Alta} \\
+AC-10 & Certificados TLS/SSL del backend FHIR y de la plataforma web & HemoScan Andino (equipo) & Integrante 1 & Media & Alta & Alta & \textbf{Alta} \\
+AC-11 & Credenciales de acceso del personal de salud y agentes comunitarios (cuentas Keycloak, roles CRED/médico/farmacia) & Microred (futuro), HemoScan Andino (Fase 0) & Administrador del sistema & \textbf{Alta} & Media & Media & \textbf{Alta} \\
+AC-12 & Credenciales administrativas (superusuario Keycloak, acceso raíz al servidor) & HemoScan Andino (equipo) & Integrante 1 & \textbf{Alta} & \textbf{Alta} & Media & \textbf{Alta} \\
+\end{longtable}
+}
+
+\textbf{Software}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+ID
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Activo
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Propietario
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Custodio
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+C
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+I
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+D
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Criticidad global
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+AC-13 & Código fuente de la app móvil (Flutter/PWA) & HemoScan Andino (equipo) & Integrante 3 & Media & Alta & Media & Alta \\
+AC-14 & Código fuente del backend de interoperabilidad (FastAPI/NestJS) & HemoScan Andino (equipo) & Integrante 3 & Media & Alta & Media & Alta \\
+AC-15 & Firmware del nodo (C/C++, ESP32-S3) & HemoScan Andino (equipo) & Integrante 1 & Baja & Alta & Media & Media \\
+AC-16 & Sistema de identidad Keycloak (configuración de \emph{realm}, políticas OIDC/RBAC --- ADR-09) & HemoScan Andino (equipo) & Integrante 1 & Media & \textbf{Alta} & Alta & \textbf{Alta} \\
+AC-17 & Plataforma web de analítica geoespacial (React/TypeScript) & HemoScan Andino (equipo) & Integrante 3 & Baja & Media & Media & Media \\
+\end{longtable}
+}
+
+\textbf{Hardware}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+ID
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Activo
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Propietario
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Custodio
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+C
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+I
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+D
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Criticidad global
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+AC-18 & Nodos de hardware HemoScan Andino en campo (ESP32-S3 + AS7341 + MAX30102 + LED) & HemoScan Andino (equipo) & Integrante 1 / Personal CRED en uso & Media & Media & Alta & Alta \\
+AC-19 & Smartphones del personal de campo (Personal CRED/médico) & Microred (futuro) / personal (Fase 0) & Personal CRED / Personal médico & \textbf{Alta} & Media & Alta & \textbf{Alta} \\
+AC-20 & Servidor/nube único de la posta (backend + BD + Keycloak --- ADR-02, ADR-10) & HemoScan Andino (equipo) & Integrante 1 & Alta & Alta & \textbf{Alta} & \textbf{Alta} \\
+AC-21 & Equipo de referencia HemoCue usado en la validación clínica de Fase 0 & Microred ilustrativa (préstamo/convenio) & Personal médico / Personal CRED & Baja & Alta & Media & Media \\
+\end{longtable}
+}
+
+\textbf{Servicios}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+ID
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Activo
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Propietario
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Custodio
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+C
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+I
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+D
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Criticidad global
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+AC-22 & Integración con sistemas externos (HIS-MINSA, Padrón Nominal, SIGA) & MINSA / MEF-RENIEC (dato externo) & Integrante 3 (conector) & Alta & Alta & Media & Alta \\
+AC-23 & Servicio de hosting/nube contratado & HemoScan Andino (equipo) & Integrante 1 & Media & Media & \textbf{Alta} & Alta \\
+AC-24 & Servicio de notificaciones push/SMS a cuidadores & HemoScan Andino (equipo) & Integrante 3 & Media & Baja & Media & Media \\
+\end{longtable}
+}
+
+\textbf{Personas}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+ID
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Activo
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Propietario
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Custodio
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+C
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+I
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+D
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Criticidad global
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+AC-25 & Personal de salud (CRED, médico, farmacia) como custodio operativo de datos y dispositivos & Microred (futuro) & Jefatura de microred & Alta & Media & Alta & Alta \\
+AC-26 & Equipo HemoScan Andino (los 3 integrantes) como custodio de código, infraestructura y llaves & HemoScan Andino (equipo) & Los 3 integrantes & \textbf{Alta} & \textbf{Alta} & \textbf{Alta} & \textbf{Alta} \\
+\end{longtable}
+}
+
+\textbf{Intangibles}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+ID
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Activo
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Propietario
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Custodio
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+C
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+I
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+D
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Criticidad global
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+AC-27 & Reputación institucional y confianza pública (``licencia social para operar'') & HemoScan Andino (equipo) & Equipo / futura S.A.C. & Media & \textbf{Alta} & Baja & Alta \\
+AC-28 & Propiedad intelectual del algoritmo de fusión multisensor y de autocalibración por altitud (potencial modelo de utilidad/patente, ya anotado como riesgo competitivo R10 en el Business Case) & HemoScan Andino (equipo) & Integrante 3 & Alta & Media & Baja & Alta \\
+\end{longtable}
+}
+
+\subsection{1.3 Síntesis de activos de máxima criticidad}\label{suxedntesis-de-activos-de-muxe1xima-criticidad}
+
+Del inventario de veintiocho activos, veintitrés (el 82 \%) alcanzan criticidad global \textbf{Alta}, cinco se clasifican como Media y ninguno como Baja, lo que confirma cuantitativamente la observación cualitativa ya hecha en el Entregable N.° 1: una organización con datos de máxima sensibilidad (salud de menores) y una arquitectura deliberadamente concentrada en un único servidor de bajo costo (ADR-02, ADR-10) no tiene margen para tratar la seguridad de la información como un asunto secundario. Cinco activos merecen mención explícita como prioridad absoluta de protección, por concentrar simultáneamente alta confidencialidad, alta integridad y relevancia legal directa: \textbf{AC-01} (datos clínicos de menores), \textbf{AC-02} (consentimientos, precondición legal obligatoria de cualquier captura por RN-04), \textbf{AC-09} y \textbf{AC-12} (credenciales/secretos, cuya exposición compromete transitivamente a todos los demás activos del backend) y \textbf{AC-20} (el servidor único, cuya pérdida de disponibilidad detiene la operación completa del backend, Keycloak y la base de datos a la vez). Esta síntesis es la que orienta la priorización de riesgos de la Sección 2 y el diseño de controles de la Sección 3. Como mejora no obligatoria para esta etapa de planificación pre-despliegue, se recomienda ---una vez desplegado el servidor de producción--- contrastar este inventario documental contra un \textbf{CMDB (\emph{Configuration Management Database}) técnico real}, verificando que cada activo aquí declarado corresponda exactamente a un elemento de configuración operativo y detectando activos no documentados que puedan haberse incorporado durante la implementación.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{2. Análisis de Riesgos (ISO 27005 / NIST)}\label{anuxe1lisis-de-riesgos-iso-27005-nist}
+
+\subsection{2.1 Metodología}\label{metodologuxeda}
+
+El análisis de riesgos adopta el proceso de \textbf{ISO/IEC 27005:2022} ---establecimiento del contexto, identificación del riesgo, análisis del riesgo (probabilidad × consecuencia), evaluación del riesgo frente a criterios de aceptación, y tratamiento del riesgo---, complementado con el modelo de \textbf{NIST SP 800-30 Rev.~1}, que descompone cada escenario en una \textbf{fuente de amenaza} (humana deliberada, humana accidental, ambiental o de falla técnica), un \textbf{evento de amenaza} que explota una \textbf{vulnerabilidad} concreta del activo, produciendo un \textbf{impacto adverso}. La siguiente tabla resume la correspondencia entre ambos marcos y las seis funciones del NIST CSF 2.0, usada como verificación cruzada de cobertura:
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Fase ISO/IEC 27005:2022
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Paso equivalente NIST SP 800-30
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Función NIST CSF 2.0 relacionada
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Establecimiento del contexto & Preparación de la evaluación & Gobernar (\emph{Govern}) \\
+Identificación del riesgo & Identificación de fuentes y eventos de amenaza, y de vulnerabilidades & Identificar (\emph{Identify}) \\
+Análisis y evaluación del riesgo & Determinación de probabilidad e impacto; cálculo del riesgo & Identificar (\emph{Identify}) / Proteger (\emph{Protect}) \\
+Tratamiento del riesgo & Comunicación de resultados y priorización de controles & Proteger (\emph{Protect}), Detectar (\emph{Detect}) \\
+Monitoreo y revisión & Mantenimiento de la evaluación & Detectar (\emph{Detect}), Responder (\emph{Respond}), Recuperar (\emph{Recover}) \\
+\end{longtable}
+}
+
+Para el cálculo, se emplea una escala semicuantitativa de \textbf{1 a 5} tanto para probabilidad como para impacto, con un puntaje de riesgo igual a \textbf{probabilidad × impacto} (rango 1-25), clasificado en cuatro bandas:
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Puntaje (P × I)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nivel de riesgo
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Criterio de tratamiento
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+16 - 25 & \textbf{Crítico} & Tratamiento inmediato; requiere control compensatorio antes de procesar el primer dato real de un menor \\
+11 - 15 & \textbf{Alto} & Tratamiento prioritario dentro del paquete EDT 2.3 (Fase 0) \\
+6 - 10 & \textbf{Moderado} & Tratamiento planificado dentro del roadmap de Fase 1 \\
+1 - 5 & \textbf{Bajo} & Aceptar y monitorear; revisar en cada ciclo de revisión del SGSI (sección 4) \\
+\end{longtable}
+}
+
+\textbf{Escala de probabilidad:} (1) Muy baja --- improbable en el horizonte de Fase 0-1; (2) Baja --- podría ocurrir de forma excepcional; (3) Media --- es razonable que ocurra en algún momento del piloto; (4) Alta --- se considera probable dado el contexto ya diagnosticado (madurez digital nivel 1, rotación SERUMS, dispersión geográfica); (5) Muy alta --- existen indicios concretos de que ya ocurre de forma análoga (por ejemplo, el uso ya diagnosticado de \emph{shadow IT}).
+
+\textbf{Escala de impacto:} (1) Insignificante; (2) Menor --- molestia operativa sin efecto clínico ni legal; (3) Moderado --- degradación del servicio sin exposición de datos de menores; (4) Mayor --- exposición parcial de datos o indisponibilidad prolongada; (5) Catastrófico --- compromiso de datos clínicos de menores de edad, decisión clínica errónea inducida, o incumplimiento grave de la Ley N.° 29733 o del DS 115-2025-PCM.
+
+\subsection{2.2 Taxonomía de fuentes de amenaza consideradas}\label{taxonomuxeda-de-fuentes-de-amenaza-consideradas}
+
+Siguiendo la taxonomía de NIST SP 800-30, se consideran cuatro fuentes de amenaza aplicables al contexto de HemoScan Andino: \textbf{(a) humana deliberada} (atacante externo, personal interno malicioso, suplantación de identidad); \textbf{(b) humana accidental} (error de configuración, extravío de un dispositivo, publicación accidental de un secreto, uso de canales informales por desconocimiento); \textbf{(c) ambiental/estructural} (condiciones de campo altoandinas ya diagnosticadas en el Entregable N.° 1: dispersión geográfica, conectividad y electricidad intermitentes, clima extremo); y \textbf{(d) falla técnica} (indisponibilidad del servidor único, expiración no gestionada de certificados, defectos de software). Cada riesgo de la matriz siguiente se etiqueta con su fuente de amenaza predominante.
+
+\subsection{2.3 Matriz de riesgos de seguridad de la información (riesgo inherente)}\label{matriz-de-riesgos-de-seguridad-de-la-informaciuxf3n-riesgo-inherente}
+
+La matriz siguiente desarrolla, con método formal, el riesgo estratégico \textbf{R5} ya identificado cualitativamente en el Business Case (Entregable N.° 2: ``brecha de seguridad o incumplimiento de la Ley N.° 29733\ldots{} Probabilidad Baja, Impacto Crítico, Nivel Alto'') y lo descompone en diecinueve escenarios técnicos específicos y auditables.
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1111}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+ID
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Activo(s) (AC-\#\#)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Fuente
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Amenaza
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Vulnerabilidad explotada
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+P
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+I
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Riesgo
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nivel
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+RS-01 & AC-01, AC-11 & Humana accidental & Acceso indebido a historiales clínicos de menores mediante cuentas de personal saliente no desactivadas a tiempo & Ausencia de proceso formal de baja inmediata de cuentas Keycloak al finalizar el periodo SERUMS (alta rotación, Entregable N.° 1) & 4 & 5 & 20 & \textbf{Crítico} \\
+RS-02 & AC-01, AC-08, AC-20 & Humana deliberada & Exfiltración o filtración masiva de la base de datos clínica por explotación de una vulnerabilidad del backend expuesto a internet & Backend sin \emph{hardening}, gestión de parches ni \emph{firewall} de aplicaciones web (WAF); cifrado en reposo aún no verificado en la práctica & 3 & 5 & 15 & Alto \\
+RS-03 & AC-20 & Falla técnica & Indisponibilidad total del sistema por sobrecarga o ataque de denegación de servicio al servidor único (backend + BD + Keycloak, ADR-02/ADR-10) & Arquitectura de un único servidor sin redundancia ni balanceo de carga & 3 & 4 & 12 & Alto \\
+RS-04 & AC-08, AC-20 & Falla técnica & Pérdida irreversible de datos clínicos e históricos por ausencia o falla de copias de seguridad periódicas & No existe todavía una política formal de respaldo ni prueba documentada de restauración & 3 & 5 & 15 & Alto \\
+RS-05 & AC-18, AC-19 & Ambiental / humana accidental & Pérdida, robo o extravío de un nodo o \emph{smartphone} de campo con datos clínicos en el búfer \emph{offline} local & Dispersión geográfica (Entregable N.° 1, 1.1.1) y ausencia de cifrado de almacenamiento local o de borrado/bloqueo remoto & 4 & 4 & 16 & \textbf{Crítico} \\
+RS-06 & AC-09, AC-14 & Humana accidental & Exposición de credenciales/secretos (claves de BD, \emph{client secret} de Keycloak, tokens HIS-MINSA) por publicación accidental en un repositorio de código & Falta de gestión de secretos (variables de entorno/\emph{vault}) y de revisión previa a cada \emph{commit}/\emph{push}, riesgo típico de repositorios académicos & 4 & 4 & 16 & \textbf{Crítico} \\
+RS-07 & AC-06 & Humana deliberada & Alteración no autorizada de la tabla de corrección de hemoglobina por altitud o de los umbrales clínicos & Ausencia de control de integridad (firma/hash) y de doble aprobación sobre cambios en la configuración clínica parametrizable (RN-02) & 2 & 5 & 10 & Moderado \\
+RS-08 & AC-01, AC-16 & Humana deliberada & Suplantación del rol ``Personal médico'' para ejecutar confirmaciones diagnósticas o prescripciones sin autorización real (\emph{bypass} de RN-06) & Ausencia de autenticación multifactor para roles clínicos críticos & 2 & 5 & 10 & Moderado \\
+RS-09 & AC-10 & Falla técnica & Interceptación o degradación de la confidencialidad en tránsito por certificado TLS expirado o mal configurado & Proceso de renovación de certificados no automatizado (costo ya presupuestado en el Entregable N.° 2, sin procedimiento operativo definido) & 3 & 4 & 12 & Alto \\
+RS-10 & AC-01 & Humana deliberada / accidental & Reidentificación indirecta de niños o familias a partir de datos ``anonimizados'' del mapa de cobertura/riesgo si la celda H3 es demasiado fina en zonas de muy baja densidad & Falta de un umbral mínimo de agregación (\emph{k}-anonimato) antes de exponer una celda H3 en la plataforma web (brecha de implementación de RN-08) & 3 & 4 & 12 & Alto \\
+RS-11 & AC-15, AC-18 & Humana deliberada & Manipulación del firmware del nodo mediante carga de firmware no autorizado & Ausencia de actualización OTA firmada criptográficamente y de verificación de integridad del firmware & 2 & 3 & 6 & Moderado \\
+RS-12 & AC-18 & Humana deliberada & Interceptación (\emph{sniffing}) del canal BLE entre el nodo y la app durante la transmisión de señales ópticas crudas & Emparejamiento BLE sin cifrado GATT reforzado ni verificación de vínculo (\emph{bonding}) & 2 & 3 & 6 & Moderado \\
+RS-13 & AC-25 & Humana deliberada & Ingeniería social/\emph{phishing} dirigido al personal de salud o al administrador del sistema para obtener credenciales & Baja madurez de ciberseguridad y concientización del personal (Entregable N.° 1, nivel 1/5 en gobierno de TI y ciberseguridad) & 4 & 4 & 16 & \textbf{Crítico} \\
+RS-14 & AC-01 & Humana accidental & Uso de canales no oficiales (mensajería instantánea informal, \emph{shadow IT}) para compartir información clínica entre personal de salud & Práctica ya diagnosticada en el Entregable N.° 1 (sección 1.3.1) como canal sin trazabilidad institucional & 4 & 3 & 12 & Alto \\
+RS-15 & AC-04, AC-05 & Humana deliberada & Manipulación del dataset o de las actualizaciones del modelo durante el reentrenamiento federado (\emph{data/model poisoning}), una vez activado en Fase 1/2 (ADR-08) & Ausencia de validación de integridad de las actualizaciones de parámetros recibidas de cada posta & 2 & 4 & 8 & Moderado \\
+RS-16 & AC-26 & Estructural / organizacional & Concentración del conocimiento técnico y de accesos privilegiados en un solo integrante (``\emph{bus factor}''), sin respaldo documentado de configuraciones críticas & Equipo de 3 personas sin documentación de continuidad ni acceso de respaldo (relacionado con el riesgo organizacional R9 del Business Case) & 3 & 3 & 9 & Moderado \\
+RS-17 & AC-05, AC-28 & Humana accidental & Registro auditable incompleto de recomendaciones generadas por el componente de IA, dificultando demostrar cumplimiento del DS 115-2025-PCM & Implementación parcial o tardía de RF-40 (registro de toda recomendación de IA con supervisión humana explícita) & 3 & 4 & 12 & Alto \\
+RS-18 & AC-21, AC-22 & Humana accidental & Ruptura de la cadena de custodia de datos durante la validación cruzada con HemoCue/ferritina-PCR de Fase 0 & Coexistencia temporal de registro digital (HemoScan) y registro manual del laboratorio de referencia durante la validación & 3 & 3 & 9 & Moderado \\
+RS-19 & AC-18 & Cadena de suministro & Sustitución o adulteración de componentes electrónicos (AS7341, MAX30102) por un proveedor no autorizado & Proceso de adquisición sin verificación de autenticidad ni proveedor único certificado (riesgo ya anotado como R6 en el Business Case) & 2 & 2 & 4 & Bajo \\
+\end{longtable}
+}
+
+\subsection{2.4 Mapa de calor de riesgo inherente (probabilidad × impacto)}\label{mapa-de-calor-de-riesgo-inherente-probabilidad-impacto}
+
+\begin{samepage}\begin{verbatim}
+                          P=1          P=2                P=3                        P=4                     P=5
+ I=5 Catastrófico          —      RS-07, RS-08       RS-02, RS-04                  RS-01                      —
+ I=4 Mayor                 —         RS-15        RS-03,RS-09,RS-10,RS-17    RS-05,RS-06,RS-13                —
+ I=3 Moderado              —      RS-11, RS-12       RS-16, RS-18                RS-14                       —
+ I=2 Menor                 —         RS-19                —                        —                         —
+ I=1 Insignificante        —           —                  —                        —                         —
+\end{verbatim}\end{samepage}
+
+\textbf{Leyenda de bandas:} celdas con puntaje 16-25 (esquina superior derecha) = Crítico; 11-15 = Alto; 6-10 = Moderado; 1-5 = Bajo (esquina inferior izquierda).
+
+\subsection{2.5 Priorización y estrategia de tratamiento}\label{priorizaciuxf3n-y-estrategia-de-tratamiento}
+
+De los diecinueve riesgos identificados, \textbf{cuatro son de nivel Crítico} (RS-01, RS-05, RS-06, RS-13), \textbf{siete de nivel Alto} (RS-02, RS-03, RS-04, RS-09, RS-10, RS-14, RS-17), \textbf{siete de nivel Moderado} (RS-07, RS-08, RS-11, RS-12, RS-15, RS-16, RS-18) y \textbf{uno de nivel Bajo} (RS-19). Es relevante notar que \textbf{ninguno de los cuatro riesgos críticos corresponde a un ataque técnicamente sofisticado}: los cuatro se originan en debilidades de gestión (falta de proceso de baja de cuentas, falta de cifrado de dispositivos de campo, falta de gestión de secretos, falta de concientización del personal), lo que confirma un hallazgo consistente con el diagnóstico digital del Entregable N.° 1 (nivel de madurez 1/5 en gobierno de TI y ciberseguridad): la prioridad de tratamiento de Fase 0 no es adquirir herramientas de seguridad sofisticadas, sino \textbf{cerrar brechas de proceso básicas} antes de tocar el primer dato real de un menor. En términos de las cuatro opciones de tratamiento de ISO/IEC 27005 (modificar/mitigar, retener/aceptar, evitar, compartir/transferir), este documento \textbf{mitiga} dieciséis de los diecinueve riesgos mediante controles técnicos y de proceso (Sección 3), \textbf{transfiere} parcialmente el riesgo de disponibilidad del hosting (RS-03) mediante la elección de un proveedor de nube con SLA propio en Fase 1 ---una vez resuelto el \textbf{{[}DATO PENDIENTE DE VALIDAR: SLA objetivo del servidor, ya señalado como pendiente en el Entregable N.° 5, RNF-20{]}}---, \textbf{evita} la activación prematura del riesgo de envenenamiento de modelo (RS-15) al mantener el aprendizaje federado inactivo hasta Fase 1/2 (decisión ya tomada en ADR-08) y \textbf{acepta con monitoreo} el único riesgo de nivel Bajo (RS-19), por su naturaleza de cadena de suministro externa al control directo del equipo. El desarrollo completo del tratamiento y del riesgo residual estimado para cada uno de los diecinueve riesgos se presenta en el \textbf{Anexo A}.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{3. Políticas de Seguridad}\label{poluxedticas-de-seguridad}
+
+Las siguientes once políticas traducen el análisis de riesgos de la Sección 2 en reglas concretas, aplicables y auditables. Cada política indica su objetivo, sus lineamientos numerados, el o los controles equivalentes del \textbf{Anexo A de ISO/IEC 27001:2022} (citados de forma general por tema, dado el carácter público y estandarizado de dicho catálogo) y su vínculo con los requerimientos ya definidos en el Entregable N.° 5. Todas las políticas rigen desde la Fase 0 de validación, no solo desde un eventual despliegue comercial.
+
+\subsection{3.1 Política de Control de Accesos}\label{poluxedtica-de-control-de-accesos}
+
+\textbf{Objetivo:} garantizar que cada usuario acceda únicamente a la información y funciones estrictamente necesarias para su rol (principio de mínimo privilegio), en cumplimiento de RNF-06 y RF-37.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Toda autenticación se realiza exclusivamente a través de Keycloak (OIDC); ninguna aplicación ni servicio de HemoScan Andino almacena contraseñas propias (ADR-09, ya decidido en el Entregable N.° 5).
+\item
+  Se definen, como mínimo, los cuatro roles funcionales exigidos por RNF-06 (Personal CRED, Personal médico, Administrador del sistema, Auditor), ampliables a los ocho actores humanos identificados en el Entregable N.° 5, cada uno con permisos explícitamente delimitados y probados antes de la ejecución de campo.
+\item
+  Se exige \textbf{autenticación multifactor (MFA)} obligatoria para los roles Administrador del sistema, Personal médico y Auditor/Comité de ética, dado que estos roles pueden confirmar diagnósticos, prescribir tratamiento o acceder a trazas de auditoría completas (mitiga RS-08). Para el rol Personal CRED, dado el uso de teléfonos de gama baja/media y la posible intermitencia de señal para MFA por SMS, se exige como mínimo una contraseña robusta (12 caracteres, complejidad) más vínculo de dispositivo (\emph{device binding}), evaluándose MFA por aplicación de autenticación (TOTP) offline como mejora incremental --- \textbf{{[}DATO PENDIENTE DE VALIDAR: factibilidad de TOTP offline en los modelos de smartphone finalmente adquiridos{]}}.
+\item
+  Toda cuenta de personal de salud debe darse de baja o suspenderse \textbf{el mismo día} en que finaliza su vínculo con la microred (incluyendo el término del periodo SERUMS), mediante un procedimiento formal de notificación de la Jefatura de microred al Administrador del sistema (mitiga directamente RS-01, el riesgo Crítico de mayor puntaje de toda la matriz).
+\item
+  Se realiza una \textbf{revisión trimestral} de cuentas activas y de sus roles asignados, documentada y firmada por el Administrador del sistema.
+\item
+  Toda cuenta se bloquea automáticamente tras 5 intentos fallidos de autenticación consecutivos, con un tiempo de bloqueo mínimo de 15 minutos.
+\item
+  Las acciones de ``confirmación diagnóstica'' y ``prescripción'' permanecen reservadas de forma exclusiva al rol Personal médico a nivel de backend (no solo de interfaz), conforme RN-06, de modo que ninguna manipulación del cliente móvil pueda otorgar privilegios no autorizados.
+\end{enumerate}
+
+\emph{Controles ISO/IEC 27001:2022 relacionados:} A.5.15 (Control de acceso), A.5.16 (Gestión de identidad), A.5.17 (Información de autenticación), A.5.18 (Derechos de acceso), A.8.2 (Derechos de acceso privilegiado), A.8.5 (Autenticación segura).
+
+\subsection{3.2 Política de Protección de Datos Personales y de Salud de Menores de Edad}\label{poluxedtica-de-protecciuxf3n-de-datos-personales-y-de-salud-de-menores-de-edad}
+
+\textbf{Objetivo:} cumplir la Ley N.° 29733 y sus principios (legalidad, consentimiento, finalidad, proporcionalidad, calidad, seguridad y disposición de recurso), reconociendo la sensibilidad máxima de tratar datos de salud de personas menores de edad.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Ninguna captura de señales ópticas se inicia sin un recurso FHIR \emph{Consent} previamente registrado, vigente y verificable (RN-04); el firmante debe acreditar su relación de parentesco o tutela con el menor.
+\item
+  Se aplica el principio de \textbf{minimización de datos}: solo se recolectan los campos estrictamente necesarios para el tamizaje, la corrección por altitud y la trazabilidad exigida; no se solicitan datos adicionales ``por si acaso''.
+\item
+  Todo dato expuesto en la plataforma web de analítica geoespacial (mapa de cobertura/riesgo) debe agregarse a un nivel mínimo de \emph{k}-anonimato por hexágono H3 antes de su publicación, nunca a nivel de individuo identificable (RN-08); se fija como parámetro de partida un mínimo de \textbf{k \textgreater= 5} casos por celda expuesta, sujeto a validación estadística posterior --- \textbf{{[}DATO PENDIENTE DE VALIDAR: umbral óptimo de \emph{k} según la densidad poblacional real de la microred{]}}.
+\item
+  Se reconoce expresamente que, en un despliegue real, el \textbf{titular del banco de datos de salud} es la entidad de salud (microred/DIRESA), mientras que HemoScan Andino S.A.C. actúa como \textbf{encargada de tratamiento} bajo un acuerdo contractual que deberá especificar finalidad, plazo de conservación y prohibición de uso secundario no autorizado --- \textbf{{[}DATO PENDIENTE DE VALIDAR: cláusulas exactas del futuro contrato de encargo de tratamiento{]}}.
+\item
+  Los datos utilizados para analítica poblacional agregada (Sección 2.5 y RN-09 del Entregable N.° 5) se anonimizan de forma irreversible antes de cualquier uso secundario (planificación regional, publicaciones académicas).
+\item
+  Se reconoce a los cuidadores el ejercicio de los derechos de acceso, rectificación, cancelación y oposición (derechos ARCO) sobre los datos de sus hijos, mediante un procedimiento a definir con la Jefatura de microred --- \textbf{{[}DATO PENDIENTE DE VALIDAR: procedimiento operativo exacto y plazo de respuesta, a definir en coordinación con la Autoridad Nacional de Protección de Datos Personales{]}}.
+\item
+  El plazo de conservación de los datos clínicos se alinea al que exija la normativa de historias clínicas del sector salud peruano --- \textbf{{[}DATO PENDIENTE DE VALIDAR: plazo legal exacto de conservación{]}} ---; mientras tanto, se adopta como valor operativo provisional un mínimo de 15 años desde la última atención, revisable.
+\item
+  Toda solicitud de acceso a datos clínicos de un menor por un rol de auditoría, incluyendo accesos de solo lectura, se registra sin excepción en un recurso \emph{AuditEvent} (RN-11).
+\end{enumerate}
+
+\emph{Controles ISO/IEC 27001:2022 relacionados:} A.5.34 (Privacidad y protección de datos personales), A.5.12 (Clasificación de la información), A.5.33 (Protección de registros), A.8.10 (Eliminación de información).
+
+\subsection{3.3 Política de Gestión Criptográfica}\label{poluxedtica-de-gestiuxf3n-criptogruxe1fica}
+
+\textbf{Objetivo:} proteger la confidencialidad e integridad de los datos en tránsito y en reposo (RNF-05, RF-39), y eliminar la exposición de secretos identificada como riesgo Crítico (RS-06).
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Todo tráfico entre la app móvil, la plataforma web y el backend se cifra con \textbf{TLS 1.2 como mínimo}, con preferencia por TLS 1.3 cuando el hardware de referencia lo soporte.
+\item
+  Los datos en reposo en la base de datos PostgreSQL/PostGIS se cifran a nivel de disco/columna sensible con \textbf{AES-256} o algoritmo de fortaleza equivalente.
+\item
+  Ningún secreto (claves de base de datos, \emph{client secrets} de Keycloak, tokens de integración con HIS-MINSA/Padrón Nominal/SIGA) se almacena en texto plano dentro del código fuente ni se sube a un repositorio de control de versiones; se gestionan mediante variables de entorno o un gestor de secretos dedicado, con revisión automatizada previa a cada \emph{commit} (mitiga directamente RS-06).
+\item
+  Los certificados TLS se renuevan mediante un procedimiento automatizado (por ejemplo, renovación programada con al menos 30 días de anticipación al vencimiento), eliminando la dependencia de un recordatorio manual (mitiga RS-09); el costo de esta renovación ya fue presupuestado como partida de mantenimiento en el Entregable N.° 2.
+\item
+  Las llaves criptográficas y los certificados raíz se resguardan bajo custodia exclusiva del Integrante 1 (Infraestructura Tecnológica), con una copia de respaldo cifrada y accesible por un segundo integrante designado, para mitigar el riesgo de ``\emph{bus factor}'' (RS-16).
+\item
+  El firmware del nodo únicamente admite actualizaciones \emph{over-the-air} firmadas criptográficamente, rechazando cualquier imagen de firmware no verificada (mitiga RS-11).
+\end{enumerate}
+
+\emph{Controles ISO/IEC 27001:2022 relacionados:} A.8.24 (Uso de criptografía), A.8.9 (Gestión de la configuración), A.8.12 (Prevención de fuga de datos).
+
+\subsection{3.4 Política de Seguridad de Dispositivos de Campo y Movilidad}\label{poluxedtica-de-seguridad-de-dispositivos-de-campo-y-movilidad}
+
+\textbf{Objetivo:} proteger los nodos de hardware y los \emph{smartphones} de campo frente a pérdida, robo o manipulación, dado el contexto de dispersión geográfica ya diagnosticado (Entregable N.° 1) y el riesgo Crítico RS-05.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Todo \emph{smartphone} de campo activa cifrado de almacenamiento a nivel de sistema operativo y bloqueo de pantalla obligatorio (PIN/biometría) antes de instalar la app HemoScan Andino.
+\item
+  El búfer de sincronización \emph{offline} (cola de \emph{outbox}, ADR-01) se cifra en el almacenamiento local del dispositivo, de modo que la pérdida física del equipo no exponga datos clínicos en texto plano.
+\item
+  Se mantiene un inventario físico actualizado de los nodos y \emph{smartphones} asignados por establecimiento, con responsable nombrado (vínculo directo con el inventario de activos AC-18/AC-19 de la Sección 1).
+\item
+  Ante la pérdida o robo reportado de un dispositivo, el Administrador del sistema revoca de inmediato las credenciales asociadas y, si la plataforma móvil lo permite, ejecuta borrado remoto del contenido de la app.
+\item
+  Los nodos de hardware no se dejan sin supervisión en zonas de acceso público durante las jornadas de campo; su transporte sigue el protocolo ya definido por el paquete EDT 2.5 (Soporte de infraestructura en campo) del Plan de Gestión.
+\item
+  Se prohíbe expresamente el uso de dispositivos personales no inventariados (BYOD no controlado) para capturar, almacenar o transmitir datos clínicos de pacientes.
+\end{enumerate}
+
+\emph{Controles ISO/IEC 27001:2022 relacionados:} A.7.9 (Seguridad de los activos fuera de las instalaciones), A.8.1 (Dispositivos \emph{endpoint} de usuario).
+
+\subsection{3.5 Política de Copias de Seguridad y Continuidad Operativa}\label{poluxedtica-de-copias-de-seguridad-y-continuidad-operativa}
+
+\textbf{Objetivo:} garantizar la disponibilidad y recuperabilidad de los datos clínicos ante la falla del servidor único (AC-20), mitigando el riesgo Alto RS-04.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Se ejecuta una copia de seguridad \textbf{incremental diaria} y una copia \textbf{completa semanal} de la base de datos PostgreSQL/PostGIS y de la configuración de Keycloak.
+\item
+  Las copias se retienen en una ventana móvil de 90 días, más un respaldo mensual conservado durante 12 meses, almacenado en una ubicación lógicamente separada del servidor de producción.
+\item
+  Se ejecuta una \textbf{prueba de restauración trimestral} documentada, verificando que la copia es efectivamente utilizable y no solo generada.
+\item
+  Se define un objetivo de tiempo de recuperación (\textbf{RTO \textless= 24 horas}) y un objetivo de punto de recuperación (\textbf{RPO \textless= 24 horas}) como metas propuestas por este documento para la Fase 0, en ausencia de un SLA contractual definido (RNF-20 del Entregable N.° 5 ya señala esta cifra como pendiente de validar con el proveedor final).
+\item
+  Se documenta un plan mínimo de continuidad operativa que reconoce explícitamente la limitación arquitectónica de un único servidor (ADR-02/ADR-10): ante una falla mayor, el modo \emph{offline-first} del cliente móvil (RNF-03, hasta 72 horas de autonomía) actúa como mitigación temporal mientras se restaura el servicio, evitando la pérdida de capturas ya realizadas en campo.
+\end{enumerate}
+
+\emph{Controles ISO/IEC 27001:2022 relacionados:} A.8.13 (Copias de seguridad de la información), A.5.30 (Preparación de las TIC para la continuidad del negocio), A.5.29 (Seguridad de la información durante la disrupción).
+
+\subsection{3.6 Política de Gestión de Incidentes de Seguridad}\label{poluxedtica-de-gestiuxf3n-de-incidentes-de-seguridad}
+
+\textbf{Objetivo:} detectar, contener, comunicar y aprender de cualquier incidente de seguridad, con especial atención a brechas que involucren datos de menores de edad.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Todo incidente se clasifica en cuatro niveles de severidad ---Crítico, Alto, Moderado, Bajo--- usando la misma escala de la Sección 2, y se registra en una bitácora de incidentes desde su detección.
+\item
+  Un incidente que exponga o pueda haber expuesto datos clínicos de un menor de edad se escala internamente al Integrante 2 (responsable de cumplimiento) en un plazo objetivo de \textbf{24 horas} desde su detección.
+\item
+  Se evalúa, dentro de un plazo objetivo interno de \textbf{72 horas} desde la detección, si el incidente amerita notificación a la Autoridad Nacional de Protección de Datos Personales y a los cuidadores afectados; se aclara expresamente que este plazo de 72 horas es un \textbf{objetivo interno de buena práctica propuesto por este documento}, inspirado en estándares internacionales comparables, y no una cifra confirmada como plazo legal peruano exigido --- \textbf{{[}DATO PENDIENTE DE VALIDAR: plazo legal exacto de notificación de brechas bajo la Ley N.° 29733 y su Reglamento{]}}.
+\item
+  Todo incidente cerrado genera una revisión de causa raíz y una actualización correspondiente de la matriz de riesgos de la Sección 2, cerrando el ciclo de mejora continua exigido por un sistema de gestión de seguridad de la información.
+\item
+  El uso de canales informales (mensajería instantánea personal) para reportar un incidente que involucre datos de pacientes queda expresamente prohibido, en coherencia con la Política 3.8.
+\end{enumerate}
+
+\emph{Controles ISO/IEC 27001:2022 relacionados:} A.5.24 (Planificación y preparación de la gestión de incidentes), A.5.25 (Evaluación y decisión sobre eventos de seguridad), A.5.26 (Respuesta a incidentes), A.5.27 (Aprendizaje de los incidentes), A.6.8 (Reporte de eventos de seguridad de la información).
+
+\subsection{3.7 Política de Desarrollo Seguro (Secure SDLC)}\label{poluxedtica-de-desarrollo-seguro-secure-sdlc}
+
+\textbf{Objetivo:} incorporar la seguridad desde el diseño (``\emph{security by design}'') en el ciclo de vida de desarrollo de la app móvil, el backend y el firmware.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Todo cambio de código pasa por revisión de al menos un segundo integrante antes de integrarse a la rama principal (\emph{code review} obligatorio); el repositorio se configura además con protección de rama principal y con un mecanismo automatizado de detección de secretos expuestos (mitiga en parte el ``\emph{bus factor}'' RS-16 y refuerza estructuralmente la mitigación de RS-06).
+\item
+  Las dependencias de terceros (bibliotecas de Flutter, paquetes Python/Node del backend) se revisan periódicamente contra vulnerabilidades conocidas (CVE) antes de cada incremento de \emph{sprint}, y se mantienen ambientes separados de desarrollo, pruebas y producción, usando en desarrollo y pruebas exclusivamente datos sintéticos o anonimizados ---nunca datos clínicos reales---.
+\item
+  Ninguna funcionalidad que module reglas de negocio críticas (RN-01 a RN-12) se despliega a producción sin evidencia de prueba funcional y de seguridad, coherente con el paquete EDT 4.7 (Aseguramiento de la calidad) del Plan de Gestión.
+\end{enumerate}
+
+\emph{Controles ISO/IEC 27001:2022 relacionados:} A.8.25 (Ciclo de vida de desarrollo seguro), A.8.28 (Codificación segura), A.8.29 (Pruebas de seguridad en desarrollo y aceptación).
+
+\subsection{3.8 Política de Uso Aceptable y Concientización en Seguridad}\label{poluxedtica-de-uso-aceptable-y-concientizaciuxf3n-en-seguridad}
+
+\textbf{Objetivo:} elevar la madurez de ciberseguridad del personal de salud, hoy diagnosticada en el nivel más bajo de la escala (Entregable N.° 1, sección 1.3.2), y mitigar el riesgo Crítico RS-13 (ingeniería social).
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Todo integrante del equipo y todo miembro del personal de salud que use el sistema recibe una capacitación mínima de concientización en seguridad (reconocimiento de \emph{phishing}, gestión de contraseñas, manejo adecuado de dispositivos) antes de operar el sistema con datos reales, aprovechando la misma jornada de preparación logística y de campo ya prevista en el paquete EDT 3.6 del Plan de Gestión (Entregable N.° 3) y la partida presupuestal de ``materiales de gestión, consejería nutricional impresa y capacitación'' ya definida en el Business Case (Entregable N.° 2).
+\item
+  Se prohíbe expresamente el uso de mensajería instantánea personal no oficial (\emph{shadow IT}) para compartir cualquier dato identificable de un paciente, atacando directamente la práctica ya diagnosticada en el Entregable N.° 1 y el riesgo RS-14 de esta matriz.
+\item
+  Se prohíbe compartir credenciales de acceso entre distintos usuarios, incluso entre compañeros del mismo establecimiento en situaciones de aparente urgencia operativa.
+\item
+  Todo usuario debe reportar de inmediato cualquier sospecha de correo, mensaje o llamada de \emph{phishing} dirigidos a sus credenciales del sistema, sin sanción por el solo hecho de reportar (cultura de reporte no punitiva).
+\item
+  El lenguaje de toda comunicación de seguridad dirigida al personal de campo debe ser simple y no alarmista, en coherencia con RNF-14 ya definido en el Entregable N.° 5, y contemplar la pertinencia intercultural (quechua/aymara) cuando sea aplicable.
+\end{enumerate}
+
+\emph{Controles ISO/IEC 27001:2022 relacionados:} A.6.3 (Concientización, educación y capacitación en seguridad de la información), A.6.8 (Reporte de eventos de seguridad).
+
+\subsection{3.9 Política de Gobernanza de Inteligencia Artificial y Trazabilidad}\label{poluxedtica-de-gobernanza-de-inteligencia-artificial-y-trazabilidad}
+
+\textbf{Objetivo:} dar cumplimiento operativo al DS 115-2025-PCM, que clasifica a la salud como sector de alto riesgo para sistemas de IA y exige supervisión humana significativa y trazabilidad auditable.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Ninguna recomendación, alerta o clasificación de severidad generada por el modelo de inferencia se ejecuta como decisión autónoma; toda confirmación diagnóstica y prescripción requiere una acción explícita de un profesional de salud humano autenticado (RN-01, RN-10, ya definidos en el Entregable N.° 5).
+\item
+  Toda inferencia del modelo, junto con su versión de modelo y de firmware, se registra de forma auditable (RF-40, RNF-18), cerrando la brecha identificada en el riesgo RS-17 de esta matriz.
+\item
+  Todo cambio en la tabla de corrección por altitud o en los umbrales clínicos se versiona y queda trazable a las determinaciones históricas a las que se aplicó cada versión (RN-02, CA-10 del Entregable N.° 5), con doble validación técnica (Integrante 3) y clínica (Personal médico referente).
+\item
+  El reentrenamiento federado (Flower), cuando se active en Fase 1/2 (ADR-08), transfiere exclusivamente actualizaciones de parámetros del modelo, nunca datos crudos de pacientes fuera del nodo/posta de origen (RN-09), y valida la integridad de cada actualización recibida antes de incorporarla (mitigación de RS-15).
+\item
+  Se mantiene una bitácora de gobernanza de IA disponible para consulta del rol Auditor/Comité de ética (CU-10 del Entregable N.° 5), documentando qué decisiones fueron asistidas por IA y cuál fue la acción humana de supervisión correspondiente.
+\end{enumerate}
+
+\emph{Controles ISO/IEC 27001:2022 relacionados:} A.5.31 (Requisitos legales, estatutarios, regulatorios y contractuales), A.8.16 (Actividades de monitoreo); referencia normativa directa: DS 115-2025-PCM.
+
+\subsection{3.10 Política de Gestión de Terceros y Cadena de Suministro}\label{poluxedtica-de-gestiuxf3n-de-terceros-y-cadena-de-suministro}
+
+\textbf{Objetivo:} extender el control de seguridad a los sistemas externos (HIS-MINSA, Padrón Nominal, SIGA) y a los proveedores de componentes de hardware.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Toda integración con un sistema externo, así como cualquier tercero con acceso a datos clínicos o a infraestructura de HemoScan Andino (por ejemplo, un proveedor de hosting en Fase 1), se formaliza mediante un acuerdo o protocolo técnico que especifique el alcance exacto de los datos intercambiados ---minimizado a lo estrictamente necesario para la interoperabilidad FHIR--- y un compromiso de confidencialidad y cumplimiento mínimo equivalente a las políticas de este documento.
+\item
+  Los proveedores de componentes electrónicos (AS7341, MAX30102, ESP32-S3) se seleccionan preferentemente de canales oficiales o distribuidores autorizados, con verificación básica de autenticidad al recibir cada lote, para mitigar el riesgo Bajo RS-19 y el riesgo de cadena de suministro R6 ya anotado en el Business Case.
+\end{enumerate}
+
+\emph{Controles ISO/IEC 27001:2022 relacionados:} A.5.19, A.5.20, A.5.21, A.5.22 (Seguridad de la información en las relaciones con proveedores y en la cadena de suministro de TIC).
+
+\subsection{3.11 Ética profesional (Código de Ética y Conducta Profesional de la ACM) y responsabilidad social}\label{uxe9tica-profesional-cuxf3digo-de-uxe9tica-y-conducta-profesional-de-la-acm-y-responsabilidad-social}
+
+Esta planificación de seguridad no se concibe únicamente como un ejercicio de cumplimiento normativo, sino como una responsabilidad ética directa del equipo, en línea con el \textbf{Código de Ética y Conducta Profesional de la ACM (2018)}. En particular, el principio \textbf{1.2 (Evitar el daño)} exige anticipar que un fallo de seguridad en este sistema no es un incidente abstracto de TI, sino uno que puede afectar directamente a un niño o niña y a la confianza de su familia en el sistema de salud; el principio \textbf{1.6 (Respetar la privacidad)} y \textbf{1.7 (Honrar la confidencialidad)} sustentan directamente la Política 3.2; el principio \textbf{2.5 (Ofrecer evaluaciones exhaustivas de los sistemas informáticos y sus impactos, incluido el análisis de riesgos posibles)} es, en esencia, el mandato ético detrás de la Sección 2 de este mismo documento; el principio \textbf{2.9 (Diseñar e implementar sistemas robusta y usablemente seguros)} exige que los controles de las políticas anteriores no sean tan onerosos que el personal de salud ---ya sobrecargado, según el Entregable N.° 1--- termine evadiéndolos por impracticabilidad, razón por la cual varias políticas (3.1, 3.8) equilibran deliberadamente rigor y usabilidad; y el principio \textbf{3.7 (Reconocer y cuidar especialmente los sistemas que se integran a la infraestructura de la sociedad)} es directamente aplicable a un sistema que aspira a integrarse en la infraestructura pública de salud regional. Esta sección cierra el conjunto de políticas reconociendo que la seguridad de la información en HemoScan Andino no es solo un requisito de la competencia CE032, sino una condición ética de legitimidad para operar sobre datos de menores de edad en un contexto de alta vulnerabilidad social.
+
+\subsection{3.12 Precondición legal previa a la operación con datos reales (síntesis de validaciones pendientes de las Políticas 3.2 y 3.6)}\label{precondiciuxf3n-legal-previa-a-la-operaciuxf3n-con-datos-reales-suxedntesis-de-validaciones-pendientes-de-las-poluxedticas-3.2-y-3.6}
+
+Las Políticas 3.2 (Protección de Datos Personales y de Salud de Menores de Edad) y 3.6 (Gestión de Incidentes de Seguridad) están técnicamente completas y fundamentadas, pero dependen de \textbf{tres parámetros legales peruanos aún no confirmados con cita normativa exacta}, cada uno ya marcado en su lugar de origen como \textbf{{[}DATO PENDIENTE DE VALIDAR{]}}. Esta subsección los consolida en un único punto de control, a modo de precondición explícita: \textbf{ninguno de los tres debe permanecer como valor provisional una vez que HemoScan Andino procese el primer dato real de un menor de edad} (inicio efectivo de Fase 0 con convenio institucional vigente).
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+N.°
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Parámetro pendiente
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Valor provisional usado en este documento
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Política que lo referencia
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Fuente de validación requerida
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 & Plazo legal de notificación de brechas de seguridad & 72 horas (objetivo interno de buena práctica, no confirmado como plazo legal peruano) & 3.6, regla 3 & Ley N.° 29733 y su Reglamento; asesoría legal específica en protección de datos \\
+2 & Plazo legal de conservación de historias clínicas del sector salud peruano & 15 años desde la última atención (valor operativo provisional, revisable) & 3.2, regla 7 & Normativa sectorial de historias clínicas del MINSA/sector salud peruano \\
+3 & Cláusulas exactas del contrato de encargo de tratamiento (finalidad, plazo, prohibición de uso secundario) & No definidas; dependen de la contraparte real & 3.2, regla 4 & Convenio institucional a suscribir con la microred/DIRESA en Fase 1, con revisión legal \\
+\end{longtable}
+}
+
+\textbf{Corrección aplicada:} ninguno de estos tres valores se reemplaza en este documento por una cifra definitiva, precisamente porque no existe todavía evidencia normativa ni contractual que la respalde; inventar un número para ``cerrar'' la brecha sería contrario a la disciplina de honestidad metodológica que rige todo el proyecto. La acción correctiva concreta y exigible antes de escalar a Fase 0 con datos reales es: \textbf{obtener validación legal peruana específica (Ley N.° 29733 y su Reglamento, más la normativa sectorial de historias clínicas que corresponda) que reemplace estos tres parámetros provisionales por cifras confirmadas con cita exacta de artículo/inciso}, incorporando dicha cita en una futura revisión de este documento. Esta verificación se añade como ítem explícito y auditable del checklist de seguridad (Anexo D, ítem 11).
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{4. Roles y Responsabilidades}\label{roles-y-responsabilidades}
+
+\subsection{4.1 Estructura de gobierno de seguridad}\label{estructura-de-gobierno-de-seguridad}
+
+Dado que HemoScan Andino es, a la fecha de este documento, un equipo de tesis de tres integrantes sin personal dedicado exclusivamente a seguridad, este documento propone una estructura de gobierno \textbf{proporcional al tamaño real del equipo en Fase 0}, con una hoja de ruta explícita hacia una estructura más formal una vez constituida HemoScan Andino S.A.C. y alcanzada la Fase 1 (piloto pagado). Se declara honestamente que esta estructura \textbf{no sustituye} un Oficial de Seguridad de la Información (\emph{CISO}) ni un Oficial de Protección de Datos (\emph{DPO}) dedicados de tiempo completo, que la Ley N.° 29733 y las buenas prácticas de ISO/IEC 27001 recomendarían para una organización que trate datos de salud de menores a escala regional; se recomienda explícitamente la creación de ambos roles, aunque sea a tiempo parcial o mediante asesoría externa contratada, como condición para escalar de la Fase 0 a la Fase 1.
+
+\begin{samepage}\begin{verbatim}
+                         DOCENTE ASESOR (supervisión académica de CE032)
+                                            |
+                                            v
+        +---------------------------------------------------------------+
+        |  EQUIPO HEMOSCAN ANDINO — GOBIERNO DE SEGURIDAD (Fase 0)        |
+        |                                                                 |
+        |  Integrante 2 — Responsable de Cumplimiento y Gestión de        |
+        |  Riesgos (rol de Oficial de Seguridad de la Información, a. i.,|
+        |  y enlace con la futura figura de Oficial de Protección de     |
+        |  Datos)                                                        |
+        +-------------------------+---------------------------------------+
+                                   |
+              +--------------------+---------------------+
+              v                                           v
+     Integrante 1                                 Integrante 3
+     Responsable Técnico de Seguridad              Responsable de Seguridad
+     de Infraestructura (servidor,                  en el Ciclo de Desarrollo
+     Keycloak, cifrado, respaldo,                    (app, backend, firmware,
+     dispositivos de campo)                          control de versiones, secretos)
+              |                                           |
+              v                                           v
+     Administrador del sistema                    Personal de salud (CRED,
+     (rol operativo futuro en la                   médico, farmacia) — usuarios
+     microred real, hoy ejercido                    finales sujetos a la Política
+     por el propio equipo)                          de Uso Aceptable (3.8)
+                                   |
+                                   v
+        Comité de Ética / DIRESA-GERESA — supervisión externa,
+        titular del banco de datos de salud, rol de Auditor (CU-10)
+\end{verbatim}\end{samepage}
+
+\subsection{4.2 Matriz RACI de procesos de seguridad}\label{matriz-raci-de-procesos-de-seguridad}
+
+\textbf{Leyenda:} R = Responsable de ejecutar · A = Aprobador/rinde cuentas del resultado · C = Consultado · I = Informado · ``---'' = sin participación directa en este proceso.
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Proceso de seguridad
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Integrante 1
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Integrante 2
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Integrante 3
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Docente asesor
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Administrador del sistema / Jefatura de microred
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Comité de Ética / DIRESA
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Aprobación y actualización de la Política de Seguridad (Sección 3) & R & A & C & C & I & I \\
+Gestión de altas, bajas y revisión periódica de accesos (RBAC, Política 3.1) & A & I & R & I & R & --- \\
+Copias de seguridad y prueba de restauración (Política 3.5) & R/A & I & C & I & I & --- \\
+Gestión de incidentes de seguridad y brechas de datos (Política 3.6) & R & A & C & I & C & I (si involucra menores) \\
+Cumplimiento de la Ley N.° 29733 (Política 3.2) & C & R & C & C & C & A (como titular del banco de datos de salud) \\
+Auditoría de IA y cumplimiento del DS 115-2025-PCM (Política 3.9) & C & A & R & C & I & R (verifica, rol de Auditor, CU-10) \\
+Gestión de vulnerabilidades y parches del backend/servidor & R/A & I & C & I & I & --- \\
+Gestión criptográfica: certificados TLS, cifrado, secretos (Política 3.3) & R/A & I & C & I & I & --- \\
+Seguridad física y custodia de dispositivos de campo (Política 3.4) & R & C & I & I & R/A & --- \\
+Capacitación y concientización en seguridad del personal (Política 3.8) & C & R/A & C & I & C & I \\
+Gestión de terceros e interoperabilidad externa (Política 3.10) & C & A & R & I & C & I \\
+Revisión y mejora continua del sistema de gestión de seguridad & R & A & C & C & I & I \\
+\end{longtable}
+}
+
+\subsection{4.3 Justificación de la asignación de roles}\label{justificaciuxf3n-de-la-asignaciuxf3n-de-roles}
+
+La asignación anterior no es arbitraria: sigue tres criterios explícitos. \textbf{Primero}, todo proceso de naturaleza técnica-operativa (respaldo, criptografía, gestión de vulnerabilidades, dispositivos de campo) asigna la responsabilidad de ejecución (R) al \textbf{Integrante 1}, coherente con su área de competencia CE03 (Infraestructura Tecnológica, red, seguridad, centro de datos) ya declarada en la portada de este documento y con el paquete EDT 2.3 del Plan de Gestión, que le asigna literalmente la ``configuración de Keycloak\ldots{} y checklist de seguridad''. \textbf{Segundo}, todo proceso de naturaleza normativa o de cumplimiento (Ley N.° 29733, capacitación, gestión de terceros) asigna la responsabilidad de ejecución al \textbf{Integrante 2}, coherente con su área CE01 (Gestión de TI, diagnóstico, business case, procesos), quedando como el enlace natural con la futura figura de Oficial de Protección de Datos. \textbf{Tercero}, todo proceso embebido en el ciclo de desarrollo de software (gestión de accesos a nivel de código, auditoría de IA, gestión de terceros a nivel de integración técnica) asigna la ejecución al \textbf{Integrante 3}, coherente con su área CE02 (Ingeniería de Software).
+
+Es importante señalar dos matices de responsabilidad que exceden la capacidad de decisión del equipo HemoScan Andino y que se reflejan deliberadamente en la matriz: \textbf{(a)} en el cumplimiento de la Ley N.° 29733, la responsabilidad final (A) recae sobre el \textbf{Comité de Ética/DIRESA}, en su calidad de titular legal del banco de datos de salud una vez exista un convenio real, mientras que HemoScan Andino ejecuta (R, vía Integrante 2) las obligaciones que le correspondan como encargada de tratamiento; y \textbf{(b)} en la auditoría de cumplimiento del DS 115-2025-PCM, el mismo Comité/DIRESA ejerce el rol de verificación externa (R en su columna, como Auditor de CU-10), sin que esto sustituya la responsabilidad clínica independiente del Personal médico sobre cada decisión individual, la cual queda fuera del alcance de esta matriz de gobernanza organizacional y se rige por su propio marco de responsabilidad profesional médica. Esta distinción evita que el documento sobre-simplifique la gobernanza de un sistema que, por diseño, involucra a actores fuera del control directo del equipo de tesis.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Anexos}\label{anexos}
+
+\subsection{Anexo A --- Matriz de riesgos completa: tratamiento y riesgo residual estimado}\label{anexo-a-matriz-de-riesgos-completa-tratamiento-y-riesgo-residual-estimado}
+
+La siguiente tabla extiende la matriz de riesgo inherente de la Sección 2.3 con la opción de tratamiento aplicada, el control principal de la Sección 3 que la implementa, y una estimación del \textbf{riesgo residual} (probabilidad e impacto recalculados asumiendo el control ya operativo), evidenciando el efecto cuantitativo esperado de las políticas de este documento.
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+ID
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nivel inherente (P×I)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Tratamiento (ISO 27005)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Control principal aplicado (Sección 3)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+P res.
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+I res.
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Riesgo residual
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nivel residual
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+RS-01 & 20 Crítico & Mitigar & Política 3.1, regla 4 (baja el mismo día) & 1 & 4 & 4 & Bajo \\
+RS-02 & 15 Alto & Mitigar & Políticas 3.1 y 3.3 (RBAC + cifrado en reposo) & 2 & 5 & 10 & Moderado \\
+RS-03 & 12 Alto & Mitigar / Transferir & Política 3.5 + SLA de hosting en Fase 1 & 2 & 4 & 8 & Moderado \\
+RS-04 & 15 Alto & Mitigar & Política 3.5 (respaldo diario + prueba trimestral) & 1 & 5 & 5 & Bajo \\
+RS-05 & 16 Crítico & Mitigar & Política 3.4 (cifrado local + borrado remoto) & 2 & 4 & 8 & Moderado \\
+RS-06 & 16 Crítico & Mitigar & Política 3.3, regla 3 (gestión de secretos) & 1 & 4 & 4 & Bajo \\
+RS-07 & 10 Moderado & Mitigar & Política 3.9, regla 3 (doble validación + versionado) & 1 & 5 & 5 & Bajo \\
+RS-08 & 10 Moderado & Mitigar & Política 3.1, regla 3 (MFA en roles clínicos) & 1 & 5 & 5 & Bajo \\
+RS-09 & 12 Alto & Mitigar & Política 3.3, regla 4 (renovación automatizada) & 1 & 4 & 4 & Bajo \\
+RS-10 & 12 Alto & Mitigar & Política 3.2, regla 3 (\emph{k}-anonimato mínimo) & 2 & 3 & 6 & Moderado \\
+RS-11 & 6 Moderado & Mitigar & Política 3.3, regla 6 (OTA firmado) & 1 & 3 & 3 & Bajo \\
+RS-12 & 6 Moderado & Mitigar & Cifrado GATT reforzado (control técnico BLE) & 1 & 3 & 3 & Bajo \\
+RS-13 & 16 Crítico & Mitigar & Política 3.8 (capacitación y concientización) & 2 & 4 & 8 & Moderado \\
+RS-14 & 12 Alto & Mitigar & Política 3.8, regla 2 (prohibición de \emph{shadow IT}) & 2 & 3 & 6 & Moderado \\
+RS-15 & 8 Moderado & Evitar (hasta Fase 1/2) & ADR-08 (federado inactivo) + Política 3.9, regla 4 & 1 & 4 & 4 & Bajo \\
+RS-16 & 9 Moderado & Mitigar & Política 3.3, regla 5 + 3.7, regla 1 (revisión cruzada) & 2 & 3 & 6 & Moderado \\
+RS-17 & 12 Alto & Mitigar & Política 3.9, regla 2 (registro auditable de IA) & 1 & 4 & 4 & Bajo \\
+RS-18 & 9 Moderado & Mitigar & Procedimiento de conciliación de registros (Fase 0) & 2 & 3 & 6 & Moderado \\
+RS-19 & 4 Bajo & Aceptar y monitorear & Política 3.10, regla 2 (verificación de proveedor) & 2 & 2 & 4 & Bajo \\
+\end{longtable}
+}
+
+\textbf{Lectura cuantitativa de conjunto:} el puntaje de riesgo inherente agregado de los diecinueve escenarios suma 220 puntos; el puntaje residual estimado, tras aplicar íntegramente las políticas de la Sección 3, suma 103 puntos --- una reducción aproximada del \textbf{53 \%} del riesgo agregado. Se declara explícitamente que esta estimación de riesgo residual es una \textbf{proyección de diseño}, no una medición empírica: su validación real requiere que los controles descritos en la Sección 3 estén efectivamente implementados y operando, y que un ciclo de auditoría posterior (Sección 4.2, proceso de ``revisión y mejora continua'') confirme o corrija estos valores con evidencia real de operación.
+
+\subsection{Anexo B --- Referencias normativas y de estándares}\label{anexo-b-referencias-normativas-y-de-estuxe1ndares}
+
+\begin{itemize}
+\tightlist
+\item
+  International Organization for Standardization / International Electrotechnical Commission. \textbf{ISO/IEC 27001:2022} --- Information security, cybersecurity and privacy protection --- Information security management systems --- Requirements.
+\item
+  International Organization for Standardization / International Electrotechnical Commission. \textbf{ISO/IEC 27002:2022} --- Information security, cybersecurity and privacy protection --- Information security controls.
+\item
+  International Organization for Standardization / International Electrotechnical Commission. \textbf{ISO/IEC 27005:2022} --- Information security, cybersecurity and privacy protection --- Guidance on managing information security risks.
+\item
+  National Institute of Standards and Technology. \textbf{NIST SP 800-30 Rev.~1 (2012)} --- Guide for Conducting Risk Assessments.
+\item
+  National Institute of Standards and Technology. \textbf{NIST Cybersecurity Framework (CSF) 2.0 (2024)}.
+\item
+  Presidencia del Consejo de Ministros del Perú. \textbf{Decreto Supremo N.° 115-2025-PCM}, reglamento de la Ley N.° 31814 (Ley que promueve el uso de la Inteligencia Artificial en favor del desarrollo del país); sección salud como sector de alto riesgo, exigencia de supervisión humana y trazabilidad.
+\item
+  Congreso de la República del Perú. \textbf{Ley N.° 29733}, Ley de Protección de Datos Personales.
+\item
+  Ministerio de Salud del Perú. \textbf{Norma Técnica de Salud NTS 213-MINSA/DGIESP-2024} para el manejo terapéutico y preventivo de la anemia.
+\item
+  Association for Computing Machinery. \textbf{Código de Ética y Conducta Profesional de la ACM (2018)}, principios 1.2, 1.6, 1.7, 2.5, 2.9 y 3.7.
+\item
+  HemoScan Andino, Equipo de tesis (2026). Entregable N.° 1 --- Diagnóstico Organizacional y Alineamiento Estratégico. Documento interno del proyecto, Universidad Peruana Unión, sede Juliaca.
+\item
+  HemoScan Andino, Equipo de tesis (2026). Entregable N.° 2 --- Business Case del Proyecto. Documento interno del proyecto, Universidad Peruana Unión, sede Juliaca.
+\item
+  HemoScan Andino, Equipo de tesis (2026). Entregable N.° 3 --- Plan de Gestión del Proyecto. Documento interno del proyecto, Universidad Peruana Unión, sede Juliaca.
+\item
+  HemoScan Andino, Equipo de tesis (2026). Entregable N.° 5 --- Requerimientos y Diseño del Sistema. Documento interno del proyecto, Universidad Peruana Unión, sede Juliaca.
+\end{itemize}
+
+\textbf{Nota:} las referencias a los estándares ISO/IEC 27001, 27002 y 27005, y a los marcos NIST SP 800-30 y NIST CSF 2.0, corresponden a marcos internacionales estándar y ampliamente documentados de la disciplina de gestión de seguridad de la información, por lo que se citan con confianza en su estructura general (procesos, categorías de control, funciones); los valores numéricos específicos de este documento (umbrales de \emph{k}-anonimato, plazos de retención, RTO/RPO) son \textbf{propuestas de diseño del equipo}, no cifras tomadas literalmente de dichas normas, y se marcan como tales donde corresponde.
+
+\subsection{Anexo D --- Checklist de seguridad de Fase 0 (operacionaliza el paquete EDT 2.3 del Plan de Gestión)}\label{anexo-d-checklist-de-seguridad-de-fase-0-operacionaliza-el-paquete-edt-2.3-del-plan-de-gestiuxf3n}
+
+El Plan de Gestión del Proyecto (Entregable N.° 3) define el paquete EDT 2.3 (``Seguridad, identidad y control de acceso'', responsable Integrante 1) con el criterio de aceptación ``al menos 3 roles funcionales probados; checklist de seguridad firmado''. Este anexo entrega dicho checklist, \textbf{actualizando el criterio de 3 a 4 roles funcionales mínimos}, en coherencia con la especificación más detallada y posterior del RNF-06 del Entregable N.° 5 (``RBAC vía Keycloak/OIDC, con al menos 4 roles funcionales distintos probados''). El checklist debe firmarse antes de autorizar el inicio de la ejecución de campo (paquete EDT 5.1 del Plan de Gestión), en la misma lógica preventiva ya anotada en el riesgo de proyecto RP8 del Entregable N.° 3.
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+N.°
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Verificación
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Responsable
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Estado (a la fecha de este documento)
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 & Keycloak desplegado y operativo, con al menos 4 roles funcionales distintos configurados y probados (RNF-06) & Integrante 1 & Pendiente --- requiere servidor desplegado (paquete EDT 2.2) \\
+2 & TLS 1.2 o superior habilitado y verificado en el backend y la plataforma web (RNF-05) & Integrante 1 & Pendiente \\
+3 & Cifrado en reposo (AES-256 o equivalente) habilitado en la base de datos & Integrante 1 & Pendiente \\
+4 & Ningún secreto de configuración presente en el repositorio de código (verificación automatizada) & Integrante 1 / Integrante 3 & Pendiente \\
+5 & Procedimiento de baja inmediata de cuentas ante fin de vínculo documentado y comunicado a la Jefatura de microred & Integrante 2 & Pendiente --- requiere convenio institucional \\
+6 & Copia de seguridad automatizada configurada, con al menos una prueba de restauración exitosa documentada & Integrante 1 & Pendiente \\
+7 & Consentimiento informado digital (FHIR \emph{Consent}) verificado como precondición obligatoria antes de cualquier captura (RN-04) & Integrante 3 & Pendiente --- depende de la implementación del backend \\
+8 & Registro \emph{AuditEvent} verificado para toda recomendación generada por el componente de IA (RF-40) & Integrante 3 & Pendiente \\
+9 & Capacitación de concientización en seguridad realizada al personal de salud participante de la validación & Integrante 2 & Pendiente --- depende del convenio y de la Fase 0 \\
+10 & Este documento de Planificación de Seguridad revisado y firmado por los 3 integrantes y el docente asesor & Los 3 integrantes & \textbf{Completado con la emisión de este documento}, pendiente de firma física/digital \\
+11 & Validación legal peruana de los tres parámetros pendientes de las Políticas 3.2 y 3.6 (plazo de notificación de brechas, plazo de conservación de historias clínicas, cláusulas del encargo de tratamiento --- síntesis en la Sección 3.12) obtenida y citada con artículo/inciso exacto & Integrante 2 & Pendiente --- requiere asesoría legal especializada y convenio institucional \\
+\end{longtable}
+}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{FIN DEL CUERPO EVALUABLE} (Secciones 1 a 4 y Anexos A, B y D --- rango objetivo de 10-15 páginas conforme a la plantilla del entregable). Lo que sigue a continuación es material complementario de referencia y una nota interna de cobertura, ninguno de los dos exigido por la plantilla ni sujeto a la calificación de la rúbrica CE0321.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Material complementario de referencia (fuera del cuerpo evaluable)}\label{material-complementario-de-referencia-fuera-del-cuerpo-evaluable}
+
+\begin{quote}
+Este material no es exigido por la plantilla del entregable; se conserva por utilidad de consulta, pero se excluye deliberadamente del rango de 10-15 páginas del cuerpo evaluable de la Sección 1 a la Sección 4 y sus Anexos A, B y D.
+\end{quote}
+
+\subsection{Anexo C --- Glosario de términos y siglas de seguridad}\label{anexo-c-glosario-de-tuxe9rminos-y-siglas-de-seguridad}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Sigla / término
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Definición
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+ACM & Association for Computing Machinery, asociación profesional internacional de informática, emisora de su Código de Ética y Conducta Profesional \\
+AES-256 & Advanced Encryption Standard con clave de 256 bits, algoritmo de cifrado simétrico usado para datos en reposo \\
+CID / CIA & Confidencialidad, Integridad y Disponibilidad; triángulo clásico de propiedades de seguridad de la información \\
+CSF & Cybersecurity Framework, marco de ciberseguridad del NIST (versión 2.0: funciones Gobernar, Identificar, Proteger, Detectar, Responder, Recuperar) \\
+ISMS / SGSI & \emph{Information Security Management System} / Sistema de Gestión de Seguridad de la Información, conforme ISO/IEC 27001 \\
+ISO/IEC 27001 & Norma internacional de requisitos de un sistema de gestión de seguridad de la información \\
+ISO/IEC 27005 & Norma internacional de gestión de riesgos de seguridad de la información \\
+\emph{k}-anonimato & Propiedad de un conjunto de datos agregados en la que cada combinación de atributos identificables corresponde a al menos \emph{k} individuos, dificultando la reidentificación \\
+MFA & \emph{Multi-Factor Authentication}, autenticación multifactor \\
+NIST & National Institute of Standards and Technology, instituto de estándares tecnológicos de EE. UU., emisor de guías de gestión de riesgo (SP 800-30) y del CSF \\
+OIDC / RBAC & OpenID Connect / Role-Based Access Control, ya definidos en el Entregable N.° 5 \\
+OTA & \emph{Over-the-Air}, actualización remota de firmware sin conexión física al dispositivo \\
+RACI & Responsable, Aprobador, Consultado, Informado; matriz de asignación de responsabilidades \\
+RPO & \emph{Recovery Point Objective}, punto objetivo de recuperación: máxima pérdida de datos tolerable medida en tiempo \\
+RTO & \emph{Recovery Time Objective}, tiempo objetivo de recuperación: tiempo máximo tolerable de indisponibilidad \\
+SGSI & Ver ISMS \\
+TLS & \emph{Transport Layer Security}, protocolo criptográfico de cifrado de datos en tránsito \\
+WAF & \emph{Web Application Firewall}, cortafuegos de aplicaciones web \\
+\end{longtable}
+}
+
+\subsection{Anexo E --- Índice de diagramas y figuras presentados en el cuerpo del documento}\label{anexo-e-uxedndice-de-diagramas-y-figuras-presentados-en-el-cuerpo-del-documento}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Figura
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Descripción
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Ubicación
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Diagrama 1 & Mapa de calor de riesgo inherente (probabilidad × impacto) de los 19 riesgos de seguridad identificados & Sección 2.4 \\
+Diagrama 2 & Estructura de gobierno de seguridad de la información (Fase 0) & Sección 4.1 \\
+\end{longtable}
+}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Nota interna de cobertura frente a la rúbrica (fuera del cuerpo evaluable)}\label{nota-interna-de-cobertura-frente-a-la-ruxfabrica-fuera-del-cuerpo-evaluable}
+
+\begin{quote}
+\textbf{Aclaración de alcance.} Asignar un nivel de logro (``Excelente'', ``Bueno'', etc.) por criterio es tarea exclusiva del docente/evaluador de la competencia CE032, no del equipo autor del entregable. Por ello, esta sección se reformuló: ya no se autoasigna una calificación por criterio; en su lugar, documenta de forma factual qué cubre el documento y qué insumos permanecen pendientes, para que la evaluación real se apoye en evidencia verificable y no en una autocalificación.
+\end{quote}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Criterio de la rúbrica
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Qué cubre el documento (evidencia verificable)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Qué permanece pendiente (no se resuelve inventando datos)
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Identificación de Activos Críticos & 28 activos (AC-01 a AC-28) en 7 categorías, cada uno con propietario, custodio y valoración CID justificada; síntesis de los 5 activos de máxima prioridad (Sección 1.3). Cubre los 6 tipos de activo exigidos por el enunciado (datos de salud de menores, modelo de IA y dataset propietario, claves/certificados del backend FHIR, nodos ESP32, credenciales de agentes comunitarios y personal de salud). & Contraste del inventario contra un CMDB técnico real, posible solo una vez desplegado el servidor de producción (nota añadida en Sección 1.3). \\
+Análisis de Riesgos (ISO 27005/NIST) & Matriz de 19 riesgos (RS-01 a RS-19) con probabilidad, impacto, puntaje y nivel; mapa de calor (Sección 2.4) consistente con la tabla 2.3; tratamiento y riesgo residual estimado para los 19 riesgos (Anexo A), con suma inherente de 220, suma residual de 103 y reducción agregada de \textasciitilde53 \%. Metodología cruzada ISO/IEC 27005:2022, NIST SP 800-30 y NIST CSF 2.0. & Los valores de probabilidad e impacto son juicio experto del equipo, no datos empíricos de incidentes reales; su reemplazo por datos reales solo es posible una vez el sistema esté en operación (ya declarado en Anexo A). \\
+Definición de Políticas de Seguridad & 11 políticas con lineamientos numerados, parámetros técnicos concretos y control equivalente del Anexo A de ISO/IEC 27001:2022 en cada una (\textasciitilde25 controles citados, verificados como reales: A.5.9, A.5.15-18, A.8.24, A.5.34, A.8.13, A.5.19-22, entre otros). & Tres parámetros legales de las Políticas 3.2 y 3.6 (plazo de notificación de brechas, plazo de conservación de historias clínicas, cláusulas del encargo de tratamiento) siguen marcados \textbf{{[}DATO PENDIENTE DE VALIDAR{]}}; su síntesis y la acción correctiva exigida están en la Sección 3.12 y en el ítem 11 del Anexo D. Ninguno se reemplaza por una cifra inventada. \\
+Establecimiento de Roles y Responsabilidades & Organigrama y matriz RACI (12 procesos x 6 actores, incluidos actores externos futuros: Administrador del sistema y Comité de Ética/DIRESA), con justificación explícita de la asignación por área de competencia (Sección 4.3). & Reconocimiento explícito de que la titularidad del banco de datos de salud y la responsabilidad clínica independiente exceden el control del equipo de tesis (Sección 4.3); no se resuelve por decreto documental, sino que se declara como límite real. \\
+Calidad Documental y Ética & Integración explícita del Código de Ética y Conducta Profesional de la ACM (Sección 3.11, principios 1.2, 1.6, 1.7, 2.5, 2.9, 3.7), referencias normativas verificadas (ISO 27001/27002/27005, NIST, DS 115-2025-PCM, Ley 29733), coherencia de identificadores (AC-\#\#, RS-\#\#) trazable a los entregables previos. Cuerpo evaluable acotado a Secciones 1-4 y Anexos A, B y D (glosario e índice de figuras reclasificados como material complementario no exigido por la plantilla; ver más arriba). & Validación legal peruana específica de los tres parámetros de las Políticas 3.2/3.6 (Sección 3.12); un pentest técnico ejecutado sobre un ambiente desplegado; un comité de ética y un convenio institucional real. Ninguno de estos insumos existe a la fecha de este documento. \\
+\end{longtable}
+}
+
+\textbf{Limitación transversal declarada:} cerrar por completo las brechas pendientes de la columna derecha requiere, como condición necesaria, (a) un comité de ética y un convenio institucional real que permitan validar el tratamiento de datos con una microred verdadera; (b) una prueba de penetración (\emph{pentest}) técnica ejecutada sobre un ambiente desplegado, hoy inexistente; y (c) asesoría legal especializada en protección de datos peruana que confirme o corrija los valores marcados como \textbf{{[}DATO PENDIENTE DE VALIDAR{]}} en este documento. Ninguno de estos insumos existe a la fecha de este documento, por lo que se han declarado explícitamente en lugar de presentarse como hallazgos verificados o de rellenarse con cifras supuestas, siguiendo la misma disciplina de honestidad metodológica de los Entregables N.° 1, N.° 2, N.° 3 y N.° 5 ya presentados. La calificación final de cada criterio corresponde al docente/evaluador de la competencia CE032.
+
+
+\end{document}

@@ -1,0 +1,963 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{geometry}
+\geometry{margin=2.6cm}
+\usepackage{calc}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[table]{xcolor}
+\usepackage{caption}
+\captionsetup{skip=6pt}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\usepackage{parskip}
+\usepackage{needspace}
+\usepackage{etoolbox}
+\setlength{\parskip}{0.55em}
+\setlist{itemsep=0.2em}
+
+% evita titulos "huerfanos" solos al final de una pagina, empujandolos a la
+% siguiente si no queda espacio para el titulo mas unas lineas de contenido
+\pretocmd{\section}{\needspace{5\baselineskip}}{}{}
+\pretocmd{\subsection}{\needspace{4\baselineskip}}{}{}
+\pretocmd{\subsubsection}{\needspace{3\baselineskip}}{}{}
+
+% --- Macros pandoc espera que existan (normalmente las inyecta su modo -s) ---
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\pandocbounded}[1]{#1}
+\newcommand{\passthrough}[1]{#1}
+
+\hypersetup{
+  pdftitle={HemoScan Andino},
+  pdfauthor={Equipo HemoScan Andino -- UPeU Juliaca},
+  colorlinks=false,
+  bookmarksopen=true
+}
+
+% El contenido ya trae su propia numeracion manual (1., 1.1, 1.1.1...) escrita
+% en el texto de cada encabezado, asi que se desactiva la numeracion automatica
+% de LaTeX para evitar una doble numeracion en el indice y en el cuerpo.
+\setcounter{secnumdepth}{-2}
+\setcounter{tocdepth}{4}
+\titleformat{\section}{\normalfont\Large\bfseries}{}{0em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries}{}{0em}{}
+\titleformat{\subsubsection}{\normalfont\normalsize\bfseries}{}{0em}{}
+
+% Encabezado con dos etiquetas CORTAS y de ancho fijo (nunca texto largo o
+% dinamico por subseccion) para que jamas puedan solaparse entre si.
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small HemoScan Andino}
+\fancyhead[R]{\small Entregable 2 --- Business Case}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\begin{document}
+
+\begin{titlepage}
+\centering
+\vspace*{1.2cm}
+{\large UNIVERSIDAD PERUANA UNI\'ON\par}
+{\normalsize Facultad de Ingenier\'ia y Arquitectura\par}
+{\normalsize Escuela Profesional de Ingenier\'ia de Sistemas --- Filial Juliaca\par}
+\vspace{0.5cm}
+\rule{0.6\linewidth}{0.4pt}
+\vspace{1.6cm}
+
+{\large PROYECTO DE TESIS / PROYECTO INTEGRADOR\par}
+\vspace{1.0cm}
+{\huge\bfseries HemoScan Andino\par}
+\vspace{0.6cm}
+{\Large Sistema no invasivo de tamizaje de anemia infantil con fusi\'on \'optica multisensor y autocalibraci\'on por altitud\par}
+\vspace{1.6cm}
+\rule{0.6\linewidth}{0.4pt}
+\vspace{1.6cm}
+
+{\Large\bfseries Entregable 2 (CE0113) --- Business Case del Proyecto\par}
+\vspace{2.0cm}
+
+{\normalsize Juliaca, Puno, Per\'u \par}
+{\normalsize Julio de 2026\par}
+
+\vfill
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\textbf{Entregable N.° 2 --- Business Case del Proyecto}
+
+\textbf{Área de competencia:} Área B --- Gestión de Tecnologías de Información (GTI)
+\textbf{Competencia:} CE011 --- Gestión e Innovación de TI
+\textbf{Evidencia que cubre este documento:} CE0113 (Business Case del Proyecto)
+
+\textbf{Organización diagnosticada (caso ilustrativo y representativo):} Microred de Salud Altiplano-Puno
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Integrantes del equipo:}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+N.°
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Integrante
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Rol / Área de competencia
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 & \textit{(Integrante 1, Líder de Infraestructura Tecnológica -- nombre por completar)} & CE03 --- Infraestructura Tecnológica (red, seguridad, centro de datos) \\
+2 & \textit{(Integrante 2, Líder de Gestión de TI -- nombre por completar)} & CE01 --- Gestión de TI (diagnóstico, business case, plan de gestión, procesos) --- \textbf{responsable principal de este entregable} \\
+3 & \textit{(Integrante 3, Líder de Ingeniería de Software -- nombre por completar)} & CE02 --- Ingeniería de Software (requerimientos, datos, sistema, calidad) \\
+\end{longtable}
+}
+
+\textbf{Docente asesor(a) del curso:} \textit{(nombre del docente asesor por completar)}
+\textbf{Curso / Sílabo:} \textit{(nombre del curso / s\'ilabo por completar)}
+\textbf{Ciclo académico:} 2026-I (supuesto, a confirmar con la programación académica vigente)
+
+\textbf{Lugar y fecha:} Juliaca, Puno, Perú --- 06 de julio de 2026
+
+\textbf{Documento antecedente:} Entregable N.° 1 --- Diagnóstico Organizacional y Alineamiento Estratégico (CE0111/CE0112), del cual este Business Case toma como insumo directo el problema central, los objetivos estratégicos institucionales (OE1-OE5) y la ficha técnica de la organización ilustrativa.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{quote}
+\textbf{Nota metodológica y alcance (léase antes de continuar).} Este documento hereda íntegramente las condiciones de alcance declaradas en el Entregable 1: HemoScan Andino \textbf{no cuenta a la fecha con un convenio real} con ninguna microred o posta de salud, ni con un comité de ética constituido, por lo que el análisis se desarrolla sobre la organización \textbf{ilustrativa y representativa ``Microred de Salud Altiplano-Puno''}. Adicionalmente, y de forma específica para un Business Case, se precisa lo siguiente: \textbf{todas las cifras de precios, costos unitarios de producción a escala, tamaño de contratos, número de establecimientos en fases futuras y parámetros del modelo financiero (tasa de descuento, indicadores VAN/TIR/Payback) son supuestos de planificación ilustrativos construidos por el equipo con fines exclusivamente académicos}, no cotizaciones reales de proveedores, ni cartas de intención firmadas, ni contratos vigentes con ninguna entidad pública. Estas cifras se presentan de forma transparente, con su lógica de derivación explícita, para demostrar la \textbf{capacidad analítica} del equipo de construir un caso de negocio estructurado, y \textbf{no deben leerse como una proyección financiera validada}. Todo dato que no puede derivarse razonablemente de los supuestos explícitos del proyecto se marca como \textbf{{[}DATO PENDIENTE DE VALIDAR{]}}. El presupuesto de la Fase 0 (S/ 3,124) es la única cifra financiera de este documento que constituye un compromiso real y definido del equipo, no una proyección.
+\end{quote}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Resumen Ejecutivo}\label{resumen-ejecutivo}
+
+El presente Business Case sustenta la viabilidad y conveniencia de HemoScan Andino como iniciativa de tecnología en salud pública, tomando como base el problema y el alineamiento estratégico ya documentados en el Diagnóstico Organizacional (Entregable 1): Puno registra la prevalencia de anemia infantil más alta del Perú (56.1 \% en menores de 3 años, ENDES 2025), agravada por el riesgo de sobre o subdiagnóstico derivado de una corrección de hemoglobina por altitud mal aplicada o no auditable (Gonzales et al., 2025; Baquerizo-Sedano et al., 2025), en un contexto donde el método de referencia (HemoCue, punción capilar) es invasivo, dependiente de insumos importados y carece de trazabilidad digital.
+
+La justificación del proyecto (sección 2.1) formula un objetivo general y cinco objetivos específicos SMART, estructurados alrededor de las tres fases del modelo de negocio: validación (Fase 0), piloto pagado (Fase 1) y escalamiento regional (Fase 2). El análisis de alternativas (sección 2.2) compara tres opciones tecnológicas reales mediante una matriz ponderada de siete criterios: (A) continuar exclusivamente con HemoCue sin tamizaje digital, (B) una aplicación de imagen de conjuntiva palpebral sola ---sin espectrómetro ni fotopletismografía, sin autocalibración de altitud--- y (C) HemoScan Andino, la solución multimodal propuesta con autocalibración por altitud. El resultado de la evaluación ponderada favorece de forma clara a la alternativa C (4.45 sobre 5.00, equivalente a 89 \%), frente a 3.10/5.00 (62 \%) de la alternativa B y 2.55/5.00 (51 \%) de la alternativa A, con transparencia sobre las dimensiones en las que la solución propuesta no es la mejor opción (menor madurez tecnológica/TRL, mayor inversión inicial de hardware).
+
+La evaluación de beneficios (sección 2.3) distingue beneficios cuantificables ---reducción del costo unitario de tamizaje conforme el modelo escala (de un rango ilustrativo de S/ 10.4-20.8 por niño en Fase 0, frente a su escenario conservador de 150 niños, a aproximadamente S/ 15.6-18.4 por niño en Fase 1; ver la aclaración sobre el escenario optimista de Fase 0 en la sección 2.3.1), cobertura de una submuestra representativa de 150-300 niños en Fase 0 con proyección ilustrativa a 800 niños/año en Fase 1--- de beneficios cualitativos (reducción del trauma de la punción capilar, fortalecimiento de la trazabilidad institucional, generación de evidencia para política pública) y de un conjunto de ocho indicadores de valor con línea base y meta. La estimación de costos (sección 2.4) desglosa la inversión inicial ya comprometida de Fase 0 (S/ 3,124, detallada en ocho partidas) y presenta, bajo supuestos explícitos, costos operativos y de mantenimiento ilustrativos para la Fase 1. A partir de estos flujos, se construye un modelo financiero simplificado a tres años que arroja un Valor Actual Neto ilustrativo de aproximadamente S/ 952 (tasa de descuento 12 \%), una Tasa Interna de Retorno aproximada de 23.4 \%, un período de recuperación de la inversión de aproximadamente 2 años y 4-5 meses, y una relación beneficio-costo de 1.02 --- resultados que muestran viabilidad económica ajustada, no holgada, coherente con la naturaleza de una iniciativa social-tecnológica en etapa temprana dependiente de contratación pública.
+
+Finalmente, los riesgos iniciales (sección 2.5) se organizan en un registro de doce riesgos estratégicos clasificados por categoría, probabilidad e impacto, de los cuales dos ---la insuficiencia de validación clínica frente a HemoCue corregido por altitud, y la falta de adopción o convenio con una entidad pública B2G--- se califican como de nivel crítico y requieren atención prioritaria desde la Fase 0. El documento concluye que HemoScan Andino presenta un caso de negocio sólido en términos de justificación estratégica, rigor comparativo frente a alternativas y estructuración financiera, con la limitación honesta de que los indicadores económicos descansan en supuestos no verificados por ausencia de convenio real, cotizaciones de proveedores a escala y contratos formales --- brecha que el equipo identifica explícitamente como el principal insumo pendiente para robustecer este caso de negocio antes de iniciar la Fase 1.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{2. Business Case del Proyecto}\label{business-case-del-proyecto}
+
+\subsection{2.1 Justificación del Proyecto}\label{justificaciuxf3n-del-proyecto}
+
+\subsubsection{2.1.1 Problema que se resuelve}\label{problema-que-se-resuelve}
+
+El Diagnóstico Organizacional (Entregable 1) estableció que la Microred de Salud Altiplano-Puno ---organización ilustrativa y representativa de una microred rural altoandina dependiente de GERESA/DIRESA Puno--- enfrenta un problema central: \textbf{el tamizaje de anemia infantil disponible es impreciso, invasivo, no trazable digitalmente y expuesto a un riesgo específico de sobre o subdiagnóstico por efecto de la altitud}. Este Business Case retoma dicho problema para traducirlo a términos de valor institucional y económico, que es el lenguaje en el que una decisión de inversión pública (B2G) debe sustentarse.
+
+Desde la perspectiva de negocio, el problema tiene cuatro componentes que generan costo o pérdida de valor para el sistema de salud, aun cuando ese costo no siempre se contabiliza explícitamente en los presupuestos actuales:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Costo de invasividad y rechazo.} La punción capilar (HemoCue) es dolorosa para el paciente pediátrico y genera resistencia de cuidadores, particularmente ante tamizajes repetidos de control, lo que se traduce en menor cobertura efectiva de tamizaje y, por tanto, en casos de anemia no detectados oportunamente.
+\item
+  \textbf{Costo de insumos fungibles importados.} Las microcuvetas HemoCue son un insumo importado sujeto a quiebres de stock, cuyo costo recurrente y disponibilidad no están bajo control directo de la microred, introduciendo un riesgo operativo silencioso sobre la continuidad del tamizaje.
+\item
+  \textbf{Costo del riesgo clínico de altitud.} La ausencia de una capa de corrección de hemoglobina por altitud que sea automática, transparente y auditable ---a diferencia de la aplicación manual de tablas de corrección--- introduce un riesgo real y documentado de sobre o subdiagnóstico (Gonzales et al., 2025; Baquerizo-Sedano et al., 2025). El sobrediagnóstico erosiona la confianza del sistema y puede inducir suplementación innecesaria; el subdiagnóstico posterga una intervención nutricional crítica en la ventana de los primeros 1,000 días de vida.
+\item
+  \textbf{Costo de opacidad y no interoperabilidad.} El registro actual no genera evidencia digital estructurada (no hay trazabilidad tipo FHIR), lo que impide a GERESA/DIRESA Puno construir mapas de cobertura y riesgo geoespacial confiables para la toma de decisiones de política pública basada en evidencia, y dificulta el cumplimiento de las exigencias de trazabilidad y supervisión humana que impone DS 115-2025-PCM (reglamento de la Ley N.° 31814) para cualquier sistema de inteligencia artificial aplicado en el sector salud, clasificado como de alto riesgo.
+\end{enumerate}
+
+Estos cuatro componentes no son hipotéticos: se derivan directamente del diagnóstico de brechas tecnológicas y organizacionales documentado en la sección 1.3 y 1.4 del Entregable 1. Lo que este Business Case añade es la cuantificación preliminar de dicho problema en términos de costo por niño tamizado, alternativas disponibles y retorno esperado de la inversión, para que la decisión de adoptar HemoScan Andino pueda evaluarse con el mismo rigor que cualquier otra inversión pública en tecnología sanitaria.
+
+Es importante precisar, además, que HemoScan Andino se posiciona explícitamente como una solución de \textbf{tamizaje que deriva a confirmación clínica}, nunca como un diagnóstico autónomo: esta distinción no es solo clínica sino regulatoria, dado que DS 115-2025-PCM exige supervisión humana significativa y trazabilidad para sistemas de IA en el sector salud, y la Ley N.° 29733 impone el estándar más alto de protección sobre datos de salud de menores de edad. El caso de negocio que sigue está diseñado para ser consistente con ambas restricciones normativas en cada una de sus fases.
+
+\subsubsection{2.1.2 Objetivos del proyecto (SMART)}\label{objetivos-del-proyecto-smart}
+
+\textbf{Objetivo general.} Sustentar la viabilidad técnica, operativa y económica de HemoScan Andino como solución de tamizaje no invasivo de anemia infantil con autocalibración por altitud, demostrando ---mediante análisis comparativo de alternativas y un modelo financiero estructurado--- que su adopción genera un valor superior al de las alternativas actualmente disponibles para una microred de salud altoandina como la Microred de Salud Altiplano-Puno (caso ilustrativo), sentando las bases para su validación en Fase 0 y su comercialización progresiva en las Fases 1 y 2.
+
+Los objetivos específicos se formulan bajo el criterio SMART (Específico, Medible, Alcanzable, Relevante, Temporal). Cabe precisar que las metas numéricas señaladas en la columna ``Medible'' son \textbf{metas propuestas por el equipo} como parámetros de planificación y decisión (por ejemplo, umbrales mínimos de sensibilidad/especificidad para autorizar el paso de Fase 0 a Fase 1), no cifras validadas por un estudio clínico previo ni por un ente regulador; su formulación exacta deberá ratificarse con el asesor metodológico y, eventualmente, con el comité de ética antes de iniciar el trabajo de campo.
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+N.°
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Objetivo específico
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+S --- Específico
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+M --- Medible (meta propuesta)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+A --- Alcanzable
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+R --- Relevante
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+T --- Temporal
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+OE1 & Validar en Fase 0 la concordancia diagnóstica del prototipo HemoScan frente a HemoCue corregido por altitud, en una submuestra de 150-300 niños menores de 3 años de la Microred de Salud Altiplano-Puno (caso ilustrativo) & Concordancia diagnóstica del algoritmo de tamizaje multisensor frente al método de referencia & Meta propuesta: sensibilidad \textgreater= 85 \% y especificidad \textgreater= 80 \% frente a HemoCue corregido, con submuestra de confirmación por ferritina y PCR & Alcanzable con el presupuesto ya definido (S/ 3,124) y el equipo de 3 integrantes & Determina si el algoritmo es clínicamente defendible antes de escalar; condición de entrada a Fase 1 & 8 meses (duración de la Fase 0) \\
+OE2 & Formalizar al menos un contrato de piloto pagado (Fase 1) con una DIRESA/municipio o entidad de cooperación internacional & Suscripción de al menos 1-2 contratos B2G o convenios de cooperación remunerados & Meta propuesta: 1 contrato firmado que cubra un mínimo ilustrativo de 8 establecimientos de salud & Alcanzable si se cumple OE1 y se gestiona activamente el relacionamiento institucional identificado en el mapa de stakeholders (Entregable 1) & Genera el primer ingreso comercial y valida el modelo B2G en condiciones reales & Dentro de los 12 meses posteriores al cierre exitoso de la Fase 0 (inicio de Año 1) \\
+OE3 & Alcanzar en Fase 1 un costo unitario operativo \textbf{estable} de tamizaje que no exceda el extremo superior (más conservador) del rango de Fase 0 (S/ 20.8/niño, con 150 niños), evitando que el costo del escalamiento comercial supere el costo de la validación de tesis. \textbf{Precisión:} esta meta no se formula como una reducción frente a \emph{todo} el rango de Fase 0, dado que el extremo inferior de dicho rango (S/ 10.4/niño, con 300 niños) ya es menor que el rango completo de Fase 1 (ver aclaración en la sección 2.3.1) & Costo total (CAPEX+OPEX) del tamizaje dividido entre el número de niños tamizados & Meta propuesta: costo operativo estable de S/ 15.6-18.4/niño o menor en Fase 1 --- cifra que representa una reducción frente al escenario conservador de Fase 0 (150 niños, S/ 20.8/niño), pero que puede ser numéricamente superior al escenario optimista de Fase 0 (300 niños, S/ 10.4/niño); ambos escenarios son igualmente válidos según el enunciado del proyecto & Alcanzable si se mantiene el volumen de al menos 8 establecimientos contratados & Sostiene el argumento de valor económico frente a GERESA/DIRESA para negociar renovaciones y ampliaciones, con la salvedad honesta de que la comparación exacta depende del escenario de Fase 0 efectivamente alcanzado & Dentro de los primeros 2 años de operación comercial (Año 1-Año 2, Fase 1) \\
+OE4 & Lograr trazabilidad FHIR completa de los registros de tamizaje generados en Fase 1 & Proporción de registros con recursos FHIR completos (Observation, Provenance, Consent, AuditEvent) exportables al HIS-MINSA & Meta propuesta: 100 \% de los registros de Fase 1 con trazabilidad FHIR completa & Alcanzable dado que la arquitectura FHIR se diseña desde el inicio del sistema (no como capa añadida posteriormente) & Condición de cumplimiento de DS 115-2025-PCM (supervisión humana y trazabilidad auditable) y habilitador de interoperabilidad real con HIS-MINSA/Padrón Nominal & Dentro del primer año de piloto pagado (Año 1, Fase 1) \\
+OE5 & Constituir legalmente HemoScan Andino S.A.C. y formalizar al menos una alianza institucional (convenio con microred real y/o comité de ética) & Inscripción registral de la sociedad y firma de al menos un convenio o carta de intención institucional & Meta propuesta: 1 sociedad constituida + 1 convenio o carta de intención firmada & Alcanzable dentro de los procedimientos administrativos y de gestión ya identificados como pendientes en el Diagnóstico (Entregable 1) & Condición legal y ética previa indispensable para operar comercialmente y para cualquier trabajo de campo con datos reales de menores de edad & Antes del inicio de la Fase 1 (fin de Fase 0 / inicio de Año 1) \\
+\end{longtable}
+}
+
+\subsubsection{2.1.3 Beneficios esperados}\label{beneficios-esperados}
+
+De manera preliminar ---antes del desarrollo cuantificado de la sección 2.3--- se espera que la adopción de HemoScan Andino genere los siguientes beneficios para la Microred de Salud Altiplano-Puno (caso ilustrativo) y, por extensión, para cualquier microred real que eventualmente participe:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Mayor cobertura efectiva de tamizaje}, al eliminar la barrera de invasividad que hoy desincentiva los controles repetidos, especialmente en la población rural quechua/aymara-hablante identificada en el análisis PESTEL del Entregable 1.
+\item
+  \textbf{Reducción del riesgo de sobre/subdiagnóstico por altitud}, mediante una capa de autocalibración transparente y auditable que reemplaza la aplicación manual e inconsistente de tablas de corrección.
+\item
+  \textbf{Generación de evidencia digital estructurada} (trazabilidad FHIR) que habilita analítica espacial de cobertura y riesgo (PySAL/esda, SaTScan) para la toma de decisiones de política pública en GERESA/DIRESA Puno.
+\item
+  \textbf{Menor dependencia de insumos fungibles importados}, sustituyendos por un nodo de hardware reutilizable de bajo costo (ESP32-S3, AS7341, MAX30102).
+\item
+  \textbf{Cumplimiento normativo por diseño} frente a DS 115-2025-PCM y la Ley N.° 29733, evitando el costo reputacional y legal de una adopción tecnológica no conforme.
+\item
+  \textbf{Fortalecimiento del posicionamiento institucional} de GERESA/DIRESA Puno como referente de innovación en salud pública andina, y generación de un activo académico-científico para la Universidad Peruana Unión.
+\end{itemize}
+
+A título estrictamente referencial de contexto de mercado ---y no como base de cálculo de ingresos, que se desarrolla con supuestos propios en la sección 2.3--- la magnitud potencial de la necesidad no atendida puede dimensionarse con la población de la región Puno, estimada en un orden de 1.2-1.4 millones de habitantes, con un número de niños menores de 3 años del orden de 60,000-80,000 (proyección INEI); ambas cifras son \textbf{estimaciones referenciales de orden de magnitud, a validar con el Padrón Nominal (MINSA-MEF-RENIEC), INEI o ENDES}, y se citan únicamente para ilustrar que el alcance del piloto de tesis (150-300 niños en 1 microred) representa una fracción mínima y deliberadamente acotada de dicha necesidad potencial regional.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{2.2 Análisis de Alternativas}\label{anuxe1lisis-de-alternativas}
+
+\subsubsection{2.2.1 Alternativas tecnológicas consideradas}\label{alternativas-tecnoluxf3gicas-consideradas}
+
+Antes de construir la matriz comparativa, el equipo realizó un barrido preliminar (screening) de opciones tecnológicas disponibles para el tamizaje no invasivo o semi-invasivo de anemia. De este barrido se descartaron en etapa temprana, sin incluirlas en la matriz de puntuación detallada, dos opciones adicionales: (i) dispositivos comerciales importados de pulsioximetría de hemoglobina (tecnología SpHb, disponible en el mercado internacional de equipamiento biomédico), descartados por su alto costo de importación, ausencia de una capa de autocalibración por altitud pensada para el contexto altoandino peruano y dependencia de soporte técnico extranjero ---su costo exacto de adquisición e importación no ha sido cotizado y se marca como \textbf{{[}DATO PENDIENTE DE VALIDAR{]}}---; y (ii) la digitalización exclusiva del registro actual en papel (mantener HemoCue y solo digitalizar la ficha de resultados), descartada por no resolver ninguno de los cuatro componentes del problema identificados en 2.1.1 más allá de la trazabilidad parcial. Las tres alternativas que sí se desarrollan en la matriz comparativa son las siguientes:
+
+\textbf{Alternativa A --- HemoCue exclusivo (statu quo reforzado).} Continuar con el método de referencia actual (punción capilar y hemoglobinómetro portátil HemoCue), sin incorporar tamizaje digital ni sensores adicionales, complementado únicamente con un registro más disciplinado en el HIS-MINSA existente. Representa la opción de no innovar tecnológicamente, manteniendo el estándar clínico ya validado pero sin resolver las brechas de invasividad, trazabilidad ni corrección auditable de altitud.
+
+\textbf{Alternativa B --- Aplicación de imagen de conjuntiva sola.} Una aplicación móvil que estima el nivel de hemoglobina exclusivamente a partir de una fotografía de la conjuntiva palpebral, procesada con visión por computadora, \textbf{sin} el espectrómetro AS7341 de 11 canales ni el sensor de fotopletismografía MAX30102, y \textbf{sin} una capa formal de autocalibración por altitud (a lo sumo, un ajuste fijo o tabular). Representa una vía de bajo costo de hardware (solo requiere el teléfono del usuario) pero con mayor dependencia de condiciones de iluminación y cámara, y sin corrección auditable del efecto fisiológico de la altitud.
+
+\textbf{Alternativa C --- HemoScan Andino multimodal (solución propuesta).} Fusión de tres señales ópticas (imagen de conjuntiva palpebral, espectrometría AS7341 de 11 canales, fotopletismografía MAX30102) con inferencia embebida offline-first (ONNX/TFLite) en un nodo ESP32-S3 conectado por BLE al teléfono, más una capa de autocalibración por altitud basada en GPS y Modelo Digital de Elevación ---nunca altitud cruda de GPS---, con trazabilidad FHIR nativa desde el diseño (Observation, Provenance, AuditEvent, Consent, Device, Patient).
+
+\subsubsection{2.2.2 Criterios de evaluación}\label{criterios-de-evaluaciuxf3n}
+
+Se definieron siete criterios de evaluación, ponderados de acuerdo con su relevancia estratégica para un proyecto de tamizaje clínico en zona rural altoandina, sujeto a un marco regulatorio de alto riesgo (DS 115-2025-PCM) y a un modelo comercial B2G dependiente de presupuesto público:
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Criterio
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Peso
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Justificación del peso
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+C1. Precisión diagnóstica corregida por altitud & 25 \% & Es el criterio de mayor peso porque de él depende la legitimidad clínica de cualquier alternativa (factor crítico de éxito N.° 1, Entregable 1) \\
+C2. Invasividad / experiencia del usuario & 10 \% & Determina la aceptación social y la cobertura efectiva de tamizaje, especialmente ante tamizajes repetidos \\
+C3. Costo total de propiedad (CAPEX + OPEX por niño tamizado) & 15 \% & Condiciona la sostenibilidad financiera del modelo B2G frente a un presupuesto público limitado \\
+C4. Escalabilidad y operación offline-first & 15 \% & Refleja la brecha de conectividad e infraestructura rural diagnosticada en la sección 1.3 del Entregable 1 \\
+C5. Trazabilidad e interoperabilidad (FHIR / HIS-MINSA / Padrón Nominal) & 15 \% & Determina si la alternativa contribuye a cerrar o a perpetuar la fragmentación de información diagnosticada en el Entregable 1 \\
+C6. Cumplimiento normativo (DS 115-2025-PCM, Ley N.° 29733, NTS 213) & 15 \% & Un incumplimiento normativo puede invalidar por completo la viabilidad legal de cualquier alternativa, independientemente de su desempeño técnico \\
+C7. Madurez tecnológica / tiempo de implementación (TRL) & 5 \% & Relevante pero de menor peso relativo, dado que el proyecto se encuentra explícitamente en etapa de validación temprana (Fase 0) \\
+\textbf{Total} & \textbf{100 \%} & \\
+\end{longtable}
+}
+
+La puntuación de cada alternativa frente a cada criterio se realizó en una escala de 1 (deficiente) a 5 (excelente), mediante juicio experto interno del equipo de tesis (método de puntuación ponderada / weighted scoring model, de tipo Delphi simplificado a un solo panel), a falta de pruebas de usuario o paneles de expertos externos independientes. Esta limitación se declara explícitamente en la autoevaluación final de este documento.
+
+\textbf{Mitigación de sesgo pendiente --- acción requerida antes de uso formal de esta matriz como sustento de decisión de inversión.} Los siete puntajes que determinan la selección de la alternativa ganadora provienen exclusivamente del juicio del propio equipo proponente de la Alternativa C, lo que constituye un conflicto de interés directo en al menos dos criterios: C5 (trazabilidad FHIR, puntuado 5/5) y C6 (cumplimiento normativo, puntuado 5/5), ambos calificados con la nota máxima para una funcionalidad de diseño propio que \textbf{aún no ha sido implementada ni auditada por un tercero}. Esta limitación, declarada en el párrafo anterior, no ha sido mitigada hasta la fecha con ningún contraste externo. Por lo tanto, \textbf{antes de que esta matriz se emplee como sustento formal de una decisión de inversión} (por ejemplo, para negociar el contrato piloto de Fase 1 u OE2), el equipo se compromete a contrastar, como mínimo, las puntuaciones de C5 y C6 ---las más sensibles a sesgo de autoevaluación, por depender de una arquitectura de diseño propia no verificada externamente--- con una fuente externa al equipo (el docente asesor de la competencia CE011 y/o un experto en cumplimiento regulatorio de DS 115-2025-PCM). Mientras dicho contraste no se realice, los puntajes de C5 y C6 deben leerse como una \textbf{hipótesis de diseño del equipo}, no como una evaluación validada externamente; esta salvedad se refleja también en la autoevaluación final de este documento.
+
+\subsubsection{2.2.3 Matriz comparativa}\label{matriz-comparativa}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Criterio
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Peso
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+A --- HemoCue exclusivo
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+B --- Imagen de conjuntiva sola
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+C --- HemoScan multimodal
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+C1. Precisión diagnóstica corregida por altitud & 25 \% & 3/5 --- medición puntual de referencia alta, pero corrección de altitud manual y propensa a error humano & 2/5 --- correlación moderada reportada en literatura académica para imagen sola, sin corrección auditable de altitud & 4/5 --- mayor potencial teórico por fusión de 3 señales + autocalibración auditable; aún pendiente de validación clínica propia (no se puntúa 5) \\
+C2. Invasividad / experiencia del usuario & 10 \% & 2/5 --- punción capilar dolorosa, riesgo de rechazo en tamizajes repetidos & 5/5 --- no invasivo & 5/5 --- no invasivo \\
+C3. Costo total de propiedad & 15 \% & 3/5 --- bajo costo de equipo, pero alto costo recurrente de insumos importados y personal capacitado en punción & 5/5 --- costo marginal mínimo (usa el teléfono existente del usuario) & 4/5 --- mayor inversión inicial de hardware por nodo, pero costo marginal bajo al no depender de insumos fungibles \\
+C4. Escalabilidad / offline-first & 15 \% & 2/5 --- requiere presencia física de personal capacitado en cada punto de atención & 4/5 --- escalable, aunque la calidad depende de condiciones de cámara/iluminación no controladas & 5/5 --- arquitectura offline-first nativa con inferencia embebida (ONNX/TFLite) \\
+C5. Trazabilidad e interoperabilidad FHIR & 15 \% & 1/5 --- registro manual o en HIS básico, sin exportación FHIR & 2/5 --- posible en teoría, pero no diseñada ni implementada & 5/5 --- diseño FHIR nativo desde el inicio (Observation, Provenance, AuditEvent, Consent, Device, Patient) \\
+C6. Cumplimiento normativo & 15 \% & 3/5 --- cumple por ser el estándar vigente en NTS 213, pero no aporta gobernanza digital de datos ni trazabilidad auditable de IA & 2/5 --- mayor riesgo residual regulatorio por menor precisión y ausencia de corrección de altitud auditable frente a DS 115-2025-PCM & 5/5 --- diseñado desde el inicio para supervisión humana significativa y trazabilidad auditable (DS 115-2025-PCM, Ley N.° 29733) \\
+C7. Madurez tecnológica (TRL) & 5 \% & 5/5 --- método ya implementado y en uso (TRL 9) & 3/5 --- prototipos existentes en literatura académica (TRL 4-5) & 2/5 --- prototipo de tesis en desarrollo (TRL 3-4) \\
+\textbf{Puntaje ponderado total} & \textbf{100 \%} & \textbf{2.55 / 5.00} & \textbf{3.10 / 5.00} & \textbf{4.45 / 5.00} \\
+\end{longtable}
+}
+
+\textbf{Cálculo del puntaje ponderado (verificación aritmética):}
+
+\begin{itemize}
+\tightlist
+\item
+  Alternativa A: (3×0.25) + (2×0.10) + (3×0.15) + (2×0.15) + (1×0.15) + (3×0.15) + (5×0.05) = 0.75+0.20+0.45+0.30+0.15+0.45+0.25 = \textbf{2.55}
+\item
+  Alternativa B: (2×0.25) + (5×0.10) + (5×0.15) + (4×0.15) + (2×0.15) + (2×0.15) + (3×0.05) = 0.50+0.50+0.75+0.60+0.30+0.30+0.15 = \textbf{3.10}
+\item
+  Alternativa C: (4×0.25) + (5×0.10) + (4×0.15) + (5×0.15) + (5×0.15) + (5×0.15) + (2×0.05) = 1.00+0.50+0.60+0.75+0.75+0.75+0.10 = \textbf{4.45}
+\end{itemize}
+
+Representación visual del resultado (escala 0.00-5.00, 20 bloques = puntaje máximo):
+
+\begin{samepage}\begin{verbatim}
+Puntaje ponderado final por alternativa (máximo posible = 5.00)
+
+A — HemoCue exclusivo        ##########..........  2.55 / 5.00  (51 %)
+B — Imagen de conjuntiva     ############........  3.10 / 5.00  (62 %)
+C — HemoScan multimodal      ##################..  4.45 / 5.00  (89 %)
+\end{verbatim}\end{samepage}
+
+\textbf{Justificación de la selección.} La Alternativa C (HemoScan Andino multimodal) obtiene el mayor puntaje ponderado (4.45/5.00, 89 \%), impulsado principalmente por su desempeño superior en trazabilidad/interoperabilidad, cumplimiento normativo, escalabilidad offline y no invasividad ---los criterios de mayor peso combinado (70 \% del total)---. Es honesto reconocer que la Alternativa C \textbf{no gana en todos los criterios}: presenta la menor madurez tecnológica (TRL 3-4, al ser un prototipo de tesis aún no validado clínicamente) y un costo total de propiedad ligeramente inferior al de la Alternativa B en el corto plazo, debido a la mayor inversión inicial de hardware por nodo. La Alternativa B (imagen de conjuntiva sola) se posiciona como una alternativa intermedia razonable ---de hecho, la de menor riesgo de implementación inmediata--- pero insuficiente en el criterio de mayor peso (precisión diagnóstica corregida por altitud) y en trazabilidad, lo que la descarta como solución principal aunque podría explorarse como una función complementaria de bajo costo dentro de HemoScan Andino en escenarios de conectividad o presupuesto extremadamente restringidos. La Alternativa A (HemoCue exclusivo) obtiene el menor puntaje (2.55/5.00, 51 \%): no porque sea clínicamente inválida ---de hecho conserva la mayor madurez tecnológica y sigue siendo el estándar de referencia usado para validar a las otras dos---, sino porque no resuelve ninguna de las brechas estructurales de invasividad, trazabilidad y corrección auditable de altitud que motivan este proyecto. En consecuencia, este Business Case recomienda la Alternativa C como solución a desarrollar, utilizando explícitamente a la Alternativa A (HemoCue corregido por altitud) como método de referencia obligatorio de validación clínica durante la Fase 0, conforme al objetivo específico OE1. Esta recomendación se sostiene sobre puntajes de juicio experto interno del propio equipo proponente; conforme a lo señalado en la sección 2.2.2, los puntajes de C5 (trazabilidad) y C6 (cumplimiento normativo) ---los de mayor riesgo de sesgo por conflicto de interés--- deben contrastarse con una fuente externa antes de invocar esta matriz como sustento formal de una decisión de inversión.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{2.3 Evaluación de Beneficios}\label{evaluaciuxf3n-de-beneficios}
+
+\subsubsection{2.3.1 Beneficios cuantificables}\label{beneficios-cuantificables}
+
+Los beneficios cuantificables de HemoScan Andino se estructuran en dos grupos: los directamente comprometidos en la Fase 0 (con presupuesto ya definido) y los proyectados de forma ilustrativa para la Fase 1, bajo los supuestos explícitos que se listan en el Anexo D de este documento.
+
+\textbf{Fase 0 (validación, cifra comprometida).} Con la inversión ya definida de S/ 3,124 (detallada en la sección 2.4.1) y un alcance de 150-300 niños tamizados en 8 meses, el costo unitario ilustrativo de validación se ubica en un rango de \textbf{S/ 10.4 a S/ 20.8 por niño tamizado} (S/ 3,124 ÷ 300 y S/ 3,124 ÷ 150, respectivamente). Este rango no es comparable directamente con un costo operativo de régimen permanente, ya que incluye actividades de validación científica no recurrentes (submuestra de ferritina y PCR, impresión 3D de prototipos), pero sirve como línea base de referencia interna.
+
+\textbf{Fase 1 (piloto pagado, escenario ilustrativo).} Bajo los supuestos financieros descritos en la sección 2.4 y el Anexo C ---un contrato piloto hipotético de 8 establecimientos de salud, con 100 niños tamizados por establecimiento al año (cifra derivada de la ficha técnica ilustrativa del Entregable 1, que estima la población menor de 3 años de la microred ilustrativa en un orden de magnitud de cientos, repartida en 7-8 establecimientos)--- el volumen anual ilustrativo de tamizaje asciende a \textbf{800 niños/año}, con un costo unitario que desciende a aproximadamente \textbf{S/ 18.35/niño en el primer año de contrato} (incluyendo la producción de hardware nuevo) y a \textbf{S/ 15.59/niño en el segundo año} (una vez amortizada la producción de hardware). Es relevante notar que este segundo valor es consistente, en orden de magnitud, con el rango obtenido en la Fase 0 (S/ 10.4-20.8/niño), lo que constituye una verificación de razonabilidad interna del modelo, sin constituir validación externa.
+
+\textbf{Aclaración necesaria sobre la narrativa de ``reducción de costos'' (OE3).} Debe precisarse una tensión lógica puntual entre ambos rangos: el extremo inferior del rango de Fase 0 (S/ 10.4/niño, alcanzable únicamente si se llega a tamizar a los 300 niños del escenario optimista) es, por sí mismo, \textbf{menor} que la totalidad del rango proyectado para Fase 1 (S/ 15.6-18.4/niño). Esto significa que la afirmación de ``reducción del costo unitario por economías de escala'' (OE3, sección 2.1.2) es válida de forma inequívoca únicamente \textbf{frente al escenario conservador de Fase 0} (150 niños, S/ 20.8/niño) ---el escenario que este documento asume como línea base de planificación por ser el extremo menos favorable y, por tanto, el más prudente para comprometerse---, y \textbf{no se sostiene} frente al escenario optimista de Fase 0 (300 niños, S/ 10.4/niño). La razón de fondo no es una economía de escala continua y monotónica entre ambas fases, sino que ambas cifras miden cosas distintas: el costo de Fase 0 es un presupuesto fijo y ya comprometido (S/ 3,124) diluido entre una muestra pequeña y variable de validación científica no recurrente (incluye partidas que no se repetirán en régimen, como la submuestra de ferritina/PCR y la impresión 3D de prototipos), mientras que el costo de Fase 1 es un costo operativo recurrente en régimen estable, amortizado sobre un volumen mayor y sostenido de niños tamizados. En consecuencia, OE3 y la meta correspondiente de la sección 2.3.3 deben leerse como ``lograr un costo operativo estable y sostenible en Fase 1, inferior al escenario conservador de Fase 0'', y no como una afirmación universal de reducción frente a cualquier punto del rango de Fase 0. Esta precisión no estaba resuelta en una versión previa de este documento, que reconocía el solapamiento de rangos sin resolver la tensión frente al objetivo declarado.
+
+\textbf{Ahorro relativo frente a la Alternativa A.} Si bien no se dispone de datos primarios sobre el costo unitario real actual del tamizaje con HemoCue en la Microred de Salud Altiplano-Puno (costo que dependería de variables no confirmadas como el precio de microcuvetas, la frecuencia de quiebres de stock y el costo de oportunidad del personal capacitado en punción), el modelo de HemoScan Andino desplaza el componente de costo recurrente desde un insumo fungible importado hacia una suscripción de plataforma y un hardware reutilizable con vida útil estimada de 3 años, lo que estructuralmente reduce la exposición del costo unitario a quiebres de cadena de suministro internacional de consumibles médicos. Esta comparación se declara \textbf{cualitativa y estructural}, no cuantitativa, ante la ausencia de un costo unitario real verificado de la Alternativa A: \textbf{{[}DATO PENDIENTE DE VALIDAR: costo unitario real actual de tamizaje con HemoCue en una microred de la Red de Salud San Román o Red de Salud Puno, incluyendo insumos, logística y tiempo de personal{]}}.
+
+\textbf{Ingresos proyectados (escenario ilustrativo, ver también sección 2.4 y Anexo C).} Bajo el supuesto de un precio combinado anual de S/ 1,800 por establecimiento (hardware amortizado + suscripción de plataforma + soporte técnico), el ingreso ilustrativo asciende a S/ 14,400/año en Fase 1 (8 establecimientos) y a S/ 43,200/año al iniciar la Fase 2 bajo un supuesto de expansión a 24 establecimientos (3 microrredes de tamaño similar a la ilustrativa). El modelo financiero completo, con sus indicadores de retorno, se desarrolla en la sección 2.3.3.
+
+Cabe señalar que este modelo \textbf{no monetiza} dos fuentes de valor adicionales contempladas en el modelo de negocio de HemoScan Andino: los servicios analíticos agregados y anonimizados para planificación de salud pública, y el cofinanciamiento potencial de municipalidades o cooperación internacional identificado en el mapa de stakeholders del Entregable 1. Ambas se excluyen deliberadamente del modelo base por prudencia (evitar sobreestimar beneficios), y se reconocen como una vía de mejora del caso de negocio en fases posteriores.
+
+\subsubsection{2.3.2 Beneficios cualitativos}\label{beneficios-cualitativos}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Dimensión
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Beneficio cualitativo esperado
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Experiencia del paciente y cuidador & Eliminación del trauma y dolor asociados a la punción capilar repetida, con potencial efecto positivo sobre la adherencia a controles CRED \\
+Legitimidad institucional & Posicionamiento de GERESA/DIRESA Puno como referente regional de innovación en salud pública basada en tecnología auditable \\
+Evidencia para política pública & Generación de datos geoespaciales estructurados (mapas de cobertura/riesgo con H3, PMTiles, MapLibre GL JS) que hoy no existen, habilitando decisiones de focalización de recursos basadas en evidencia \\
+Equidad territorial & Ampliación de la capacidad de tamizaje hacia comunidades dispersas y de difícil acceso vial, sin requerir laboratorio clínico in situ \\
+Sostenibilidad de cadena de suministro & Reducción de la dependencia de insumos fungibles importados (microcuvetas), sustituidos por hardware reutilizable de bajo costo \\
+Formación de capacidades locales & Capacitación del personal de salud de la microred en el uso del nuevo método, fortaleciendo competencias digitales del primer nivel de atención \\
+Propiedad intelectual y posicionamiento académico & Generación de un activo de conocimiento (algoritmo de fusión multisensor y autocalibración por altitud) potencialmente protegible, y fortalecimiento de la línea de investigación en salud digital de la Universidad Peruana Unión, sede Juliaca \\
+Cumplimiento normativo proactivo & Anticipación ---en vez de remediación reactiva--- de las exigencias de DS 115-2025-PCM y la Ley N.° 29733, reduciendo el riesgo legal y reputacional de una adopción tecnológica no conforme \\
+\end{longtable}
+}
+
+\subsubsection{2.3.3 Indicadores de valor}\label{indicadores-de-valor}
+
+\textbf{Indicadores de desempeño y cobertura.} La siguiente tabla resume los indicadores clave (KPI) propuestos para monitorear el valor generado por HemoScan Andino a lo largo de las fases del proyecto. Las líneas base marcadas como ``ilustrativa'' son supuestos de planificación, no mediciones reales.
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Indicador
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Línea base (ilustrativa)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Meta Fase 1 (propuesta)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Método de medición
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Cobertura de tamizaje (\% de niños \textless{} 3 años tamizados en los establecimientos participantes) & No medida digitalmente en la actualidad & \textgreater= 80 \% de la población objetivo de los establecimientos contratados & Cruce de registros de tamizaje contra el Padrón Nominal de la jurisdicción \\
+Sensibilidad y especificidad frente a HemoCue corregido por altitud & No aplica (Fase 0 aún no ejecutada) & Sensibilidad \textgreater= 85 \%, especificidad \textgreater= 80 \% (meta propuesta, ver OE1) & Estudio de concordancia diagnóstica con submuestra de ferritina/PCR \\
+Tiempo promedio de tamizaje por niño & Variable, dependiente de logística de punción y transporte de muestra (HemoCue) & Reducción del tiempo total de proceso (captura + resultado) frente a HemoCue & Cronometraje de campo durante la Fase 0 \\
+\% de registros con trazabilidad FHIR completa & 0 \% (no existe hoy) & 100 \% (ver OE4) & Auditoría técnica de recursos FHIR generados (Observation, Provenance, Consent, AuditEvent) \\
+Costo por niño tamizado & S/ 10.4-20.8 (Fase 0, ilustrativo) & S/ 15.6-18.4 o menor (Fase 1, ilustrativo) & Costo total (CAPEX+OPEX) ÷ niños tamizados en el período \\
+Tasa de aceptación del método por cuidadores (proxy de no invasividad) & No medida & Meta propuesta \textgreater= 90 \% de aceptación en encuesta de satisfacción & Encuesta post-tamizaje a cuidadores \\
+N.° de derivaciones oportunas a confirmación clínica & No aplica & 100 \% de los casos de tamizaje positivo derivados y trazados hasta confirmación o descarte & Seguimiento de casos mediante recurso FHIR Provenance vinculado a Observation \\
+Reducción interanual de prevalencia de anemia en la zona de intervención & 56.1 \% (ENDES 2025, referencia regional Puno, no exclusiva de la microred ilustrativa) & Indicador de impacto de largo plazo; no atribuible únicamente a HemoScan Andino, sino al conjunto de intervenciones nutricionales y de salud pública & Comparación de indicadores ENDES/SIEN en períodos sucesivos, con atribución compartida \\
+\end{longtable}
+}
+
+\textbf{Indicadores financieros del modelo ilustrativo a 3 años (ver Anexo C para el detalle completo del flujo de caja):}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Indicador financiero
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Valor ilustrativo
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Interpretación
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Valor Actual Neto (VAN), horizonte 3 años, tasa de descuento 12 \% & \textasciitilde= S/ 952 & Positivo pero modesto: el modelo genera valor económico dentro del horizonte evaluado, sin holgura amplia \\
+Tasa Interna de Retorno (TIR), horizonte 3 años & \textasciitilde= 23.4 \% & Superior a la tasa de descuento asumida (12 \%), consistente con un VAN positivo \\
+Período de recuperación (Payback) & \textasciitilde= 2 años y 4-5 meses desde el inicio de la Fase 0 & Razonable para un proyecto social-tecnológico de baja escala inicial dependiente de contratación pública \\
+Relación Beneficio-Costo (B/C) & \textasciitilde= 1.02 & Apenas superior a 1: viabilidad económica ajustada, no holgada, bajo los supuestos declarados \\
+Punto de equilibrio operativo (Fase 1, Año 1; separando costo fijo y costo variable por establecimiento, fórmula estándar --- ver Anexo C) & \textasciitilde= 6 establecimientos contratados & Con 8 establecimientos supuestos en el contrato piloto, el modelo opera con un margen de 2 establecimientos por encima del punto de equilibrio operativo desde el primer año \\
+\end{longtable}
+}
+
+Estos indicadores se desarrollan con su lógica de cálculo completa en la sección 2.4.4 (transversal a costos y beneficios) y en el Anexo C. Su lectura correcta es la de un \textbf{caso de negocio ajustado pero viable bajo los supuestos declarados}, no la de una oportunidad de alto retorno: esto es coherente con la naturaleza de un proyecto B2G en salud pública rural, donde el valor social (reducción de anemia, equidad territorial) es tan relevante como el retorno financiero estricto, y donde dicho valor social ---deliberadamente--- no se ha monetizado en los indicadores financieros anteriores para evitar sobreestimar el caso.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{2.4 Estimación de Costos}\label{estimaciuxf3n-de-costos}
+
+\subsubsection{2.4.1 Inversión inicial}\label{inversiuxf3n-inicial}
+
+\textbf{Fase 0 --- Validación (cifra comprometida, no ilustrativa).} El equipo ya cuenta con el siguiente presupuesto definido para la validación de tesis, que se reproduce aquí en su desglose completo por ser la base cuantitativa de partida de todo el caso de negocio:
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Partida
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Monto (S/)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Descripción
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Hardware (3 nodos) & 900 & Componentes ESP32-S3, AS7341, MAX30102 y LED blanco alto CRI para 3 nodos de prototipo \\
+Insumos de validación HemoCue & 400 & Microcuvetas y consumibles para la medición de referencia clínica durante la validación \\
+Submuestra ferritina + PCR & 600 & Análisis complementarios de laboratorio en una submuestra, para robustecer la validación frente a marcadores adicionales de estado de hierro e inflamación \\
+Servidor/nube (8 meses) & 320 & Infraestructura de procesamiento y almacenamiento de datos de validación \\
+Impresión 3D & 120 & Fabricación de carcasas de los nodos de prototipo \\
+Movilidad/campo & 400 & Desplazamiento del equipo hacia la microred ilustrativa durante la validación \\
+Materiales de gestión & 100 & Insumos administrativos y de documentación del proyecto \\
+Contingencia (10 \%) & 284 & Reserva sobre el subtotal de S/ 2,840, conforme a buena práctica de gestión de proyectos \\
+\textbf{TOTAL} & \textbf{3,124} & \\
+\end{longtable}
+}
+
+\textbf{Fase 1 --- Inversión inicial adicional (escenario ilustrativo).} Para el escenario ilustrativo de un contrato piloto de 8 establecimientos (ver Anexo D para el listado completo de supuestos), la inversión inicial adicional contempla:
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Partida
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Monto ilustrativo (S/)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Derivación
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Producción de 8 nodos de hardware a escala piloto & 2,800 & Costo unitario ilustrativo de S/ 350/nodo (derivado del costo de S/ 300/nodo observado en Fase 0 --- S/ 900 ÷ 3 ---, incrementado en 15-20 \% por mejoras de robustez: carcasa de mayor protección, batería de mayor capacidad) × 8 nodos \\
+Constitución legal de HemoScan Andino S.A.C. & {[}DATO PENDIENTE DE VALIDAR: costo notarial y registral exacto ante SUNARP, variable según notaría, capital social declarado y modalidad de constitución{]} & No estimado por el equipo para evitar presentar una cifra sin sustento \\
+Registro sanitario / trámites regulatorios del dispositivo (si aplica según clasificación de riesgo) & {[}DATO PENDIENTE DE VALIDAR: aplicabilidad y costo, sujeto a la clasificación regulatoria final del dispositivo ante la autoridad sanitaria competente{]} & Pendiente de asesoría legal especializada \\
+\end{longtable}
+}
+
+Estas dos últimas partidas se dejan explícitamente sin cifra, en lugar de estimarlas sin sustento, en línea con el principio de honestidad metodológica de este documento.
+
+\subsubsection{2.4.2 Costos operativos}\label{costos-operativos}
+
+Los costos operativos representan los gastos recurrentes necesarios para mantener el servicio en funcionamiento diario durante la Fase 1, bajo el escenario ilustrativo de 8 establecimientos contratados:
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Partida operativa anual
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Monto ilustrativo (S/)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Descripción
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Hosting/nube (servidor, almacenamiento, respaldos) & 1,200 & Escalamiento del costo de servidor/nube observado en Fase 0 (S/ 320/8 meses \textasciitilde= S/ 480/año) para un volumen mayor de datos y usuarios concurrentes \\
+Soporte técnico y mantenimiento remoto & 4,800 & Atención de incidencias, actualizaciones menores y mesa de ayuda, contratado a tiempo parcial \\
+Movilidad y visitas de campo (capacitación y mantenimiento in situ) & 3,600 & Desplazamiento periódico del equipo técnico a los 8 establecimientos contratados \\
+Materiales de gestión, consejería nutricional impresa y capacitación & 1,200 & Material físico de consejería nutricional basada en reglas (NTS 213-MINSA/DGIESP-2024) y materiales de capacitación al personal de salud \\
+Subtotal & 10,800 & \\
+Contingencia (10 \%) & 1,080 & \\
+\textbf{Total costos operativos Año 1} & \textbf{11,880} & \\
+Total costos operativos Año 2 (crecimiento ilustrativo del 5 \%) & 12,474 & Ajuste por inflación de insumos y ampliación leve de soporte \\
+\end{longtable}
+}
+
+\subsubsection{2.4.3 Costos de mantenimiento}\label{costos-de-mantenimiento}
+
+Se distinguen de los costos operativos por corresponder a actividades periódicas de conservación técnica y actualización, más que a la operación diaria del servicio. A diferencia de una versión previa de este documento, que remitía de forma genérica a los rubros de la sección 2.4.2 sin desagregar cifra propia alguna, a continuación se presenta un monto anual estimado por partida ---ilustrativo y marcado explícitamente como supuesto de planificación, no como cotización real de proveedor--- para al menos las dos partidas de mayor materialidad (recalibración de sensores y reemplazo de baterías), en cumplimiento del contenido mínimo exigido por la plantilla para esta subsección:
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Partida de mantenimiento
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Periodicidad
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Monto anual estimado (ilustrativo, S/)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Descripción
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Reemplazo de baterías y componentes de desgaste del nodo & Cada 12-18 meses por nodo & \textbf{S/ 160 - 240/año} --- supuesto: 8 nodos × \textasciitilde S/ 30/batería de repuesto (no cotizada con proveedor real), prorrateados sobre un ciclo de reemplazo de 12 a 18 meses (8×30/1 = 240; 8×30/1.5 = 160) & Vida útil estimada del hardware: 3 años; se anticipa reemplazo parcial de componentes antes de ese plazo. Monto ya contenido dentro del rubro ``soporte técnico y mantenimiento remoto'' de la sección 2.4.2; no debe sumarse una segunda vez al OPEX total \\
+Recalibración periódica de sensores (AS7341, MAX30102) & Semestral o según protocolo de fábrica & \textbf{S/ 240/año} --- supuesto: 8 nodos × 2 recalibraciones/año × \textasciitilde S/ 15/nodo en consumibles y patrones de calibración (no cotizado); no incluye el tiempo de personal técnico, ya cubierto en el rubro de soporte & Necesaria para mantener la precisión de la medición óptica en el tiempo. Monto ya contenido dentro del rubro ``soporte técnico y mantenimiento remoto'' de la sección 2.4.2; no debe sumarse una segunda vez al OPEX total \\
+Actualización de modelos de inferencia (reentrenamiento federado con Flower) & Continua / por ciclo de agregación & Sin monto propio adicional (costo marginal de cómputo, ya contenido en hosting/nube) & Costo principalmente de cómputo en la nube y coordinación técnica entre postas, incluido dentro del rubro de hosting/soporte de la sección 2.4.2 \\
+Mantenimiento de infraestructura de base de datos (PostgreSQL/PostGIS) & Continuo & Sin monto propio adicional (incremento marginal ya contenido en hosting) & Parcialmente cubierto por el rubro de hosting; se anticipa un incremento marginal conforme crece el volumen de datos geoespaciales \\
+Renovación de certificados de seguridad y autenticación (Keycloak/OIDC) & Anual & \textbf{S/ 60/año} --- supuesto: costo de gestión administrativa/registro, sin licenciamiento por tratarse de software libre & Costo administrativo menor, sin licenciamiento (software libre), pero con costo de gestión técnica \\
+Actualización ante cambios normativos (DS 115-2025-PCM, Ley N.° 29733, NTS 213) & Según ocurrencia & \textbf{{[}DATO PENDIENTE DE VALIDAR{]}}: costo de asesoría legal/técnica puntual, no recurrente; depende de la magnitud del cambio normativo y no puede estimarse razonablemente sin un caso concreto & Costo de asesoría legal/técnica no recurrente pero previsible dado el carácter dinámico del marco regulatorio de IA en salud en Perú \\
+\textbf{Subtotal cuantificado (partidas recurrentes con monto propio)} & & \textbf{S/ 460 - 540/año (ilustrativo)} & Equivalente a \textasciitilde3.9-4.5 \% del total de costos operativos del Año 1 (S/ 11,880, sección 2.4.2): esta magnitud confirma, ahora de forma cuantificada y no solo declarativa, que estas partidas son consistentes con estar contenidas dentro de los rubros más amplios de soporte técnico y hosting, sin requerir un rubro adicional en el modelo financiero de la sección 2.4.4 \\
+\end{longtable}
+}
+
+El detalle de los supuestos de costo unitario usados en esta desagregación (S/ 30/batería, S/ 15/nodo por evento de recalibración) se registra como S17 en el Anexo D, para trazabilidad. En una versión posterior de este caso de negocio ---una vez exista convenio real y cotizaciones de proveedores---, se recomienda reemplazar estos supuestos ilustrativos por costos reales y, de ser materialmente distintos del rango aquí estimado, desagregar estas partidas de forma independiente dentro del Plan de Gestión del proyecto.
+
+\subsubsection{2.4.4 Síntesis financiera a tres años (transversal a costos y beneficios)}\label{suxedntesis-financiera-a-tres-auxf1os-transversal-a-costos-y-beneficios}
+
+La siguiente tabla integra los flujos de ingresos (sección 2.3.1), inversión inicial (2.4.1), costos operativos (2.4.2) y de mantenimiento (2.4.3) en un modelo de caja simplificado a tres años, bajo los supuestos consolidados en el Anexo D. El detalle numérico completo, incluyendo los factores de descuento, se presenta en el Anexo C.
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Concepto
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Año 0 (Fase 0)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Año 1 (Fase 1)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Año 2 (Fase 1)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Año 3 (inicio Fase 2)
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Establecimientos activos (ilustrativo) & 1 (microred ilustrativa) & 8 & 8 & 24 \\
+Ingresos (S/) & 0 & 14,400 & 14,400 & 43,200 \\
+CAPEX (S/) & incluido en el total de 3,124 & 2,800 & 0 & 5,600 \\
+OPEX (S/) & incluido en el total de 3,124 & 11,880 & 12,474 & 33,680 \\
+\textbf{Flujo neto del año (S/)} & \textbf{-3,124} & \textbf{-280} & \textbf{1,926} & \textbf{3,920} \\
+Flujo acumulado (S/) & -3,124 & -3,404 & -1,478 & 2,442 \\
+\end{longtable}
+}
+
+El flujo se vuelve positivo de forma acumulada dentro del tercer año de evaluación (inicio de la Fase 2), lo que sustenta el período de recuperación aproximado de 2 años y 4-5 meses reportado en la sección 2.3.3. Se reitera que este modelo es un ejercicio de planificación ilustrativo, sensible a los supuestos de precio, volumen de establecimientos contratados y costo unitario de producción declarados explícitamente en el Anexo D; una variación razonable de cualquiera de estos supuestos (por ejemplo, un contrato de 5 establecimientos en lugar de 8) alteraría materialmente el punto de equilibrio y el período de recuperación.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{2.5 Riesgos Iniciales}\label{riesgos-iniciales}
+
+\subsubsection{2.5.1 Identificación de riesgos estratégicos}\label{identificaciuxf3n-de-riesgos-estratuxe9gicos}
+
+Se identifican doce riesgos estratégicos iniciales, clasificados por categoría, probabilidad e impacto cualitativos (juicio experto del equipo, sin historial de incidentes previos por tratarse de una iniciativa pre-operativa). El nivel de riesgo resulta de la combinación cualitativa de probabilidad e impacto.
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+N.°
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Riesgo
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Categoría
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Probabilidad
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Impacto
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nivel de riesgo
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Estrategia de mitigación
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+R1 & Exigencia regulatoria de certificación adicional del dispositivo como producto de IA en salud de alto riesgo & Regulatorio & Media & Alto & Alto & Diseñar el sistema desde el inicio bajo el principio de supervisión humana significativa (nunca diagnóstico autónomo); presupuestar asesoría legal especializada antes de Fase 1; vigilancia normativa activa de DS 115-2025-PCM \\
+R2 & La validación clínica de Fase 0 no alcanza los umbrales mínimos de sensibilidad/especificidad frente a HemoCue corregido por altitud & Clínico / técnico & Media & Crítico & \textbf{Crítico} & Diseño estadísticamente robusto de la Fase 0 (submuestra con ferritina/PCR), criterios de éxito/fracaso definidos ex ante, plan de contingencia de reajuste algorítmico si no se alcanzan los umbrales \\
+R3 & Ausencia de convenio real o negativa de GERESA/DIRESA Puno u otra entidad a firmar el piloto pagado de Fase 1 & Comercial / adopción B2G & Alta & Alto & \textbf{Crítico} & Gestión institucional temprana desde la Fase 0 (antes de necesitar el contrato); diversificación hacia cooperación internacional; uso de la evidencia de Fase 0 como argumento de venta \\
+R4 & Recorte o redirección de presupuesto público regional tras cambios de autoridad (ciclo electoral regional/municipal) & Financiero / político & Media & Alto & Alto & Diversificar el pipeline de clientes potenciales (varias microrredes/municipios); modelo comercial con opción de alquiler de menor barrera presupuestal que la compra directa \\
+R5 & Brecha de seguridad o incumplimiento de la Ley N.° 29733 en el tratamiento de datos de salud de menores de edad & Legal / reputacional & Baja & Crítico & Alto & Cifrado extremo a extremo, minimización de datos, anonimización para analítica agregada, auditoría nativa (AuditEvent FHIR), capacitación en protección de datos desde el diseño (``privacy by design''), pruebas de penetración antes de cualquier despliegue con datos reales \\
+R6 & Dependencia de componentes electrónicos importados (AS7341, MAX30102, ESP32-S3) sujeta a tipo de cambio, aranceles o desabastecimiento global & Cadena de suministro & Media & Medio & Medio & Identificar proveedores alternativos, mantener stock de contingencia, evaluar diseño modular tolerante a sustitución de componentes \\
+R7 & El HIS-MINSA o el Padrón Nominal no aceptan o retrasan la integración FHIR real & Interoperabilidad / técnico & Media & Alto & Alto & Involucrar tempranamente a la Unidad de Estadística e Informática de la microred y a referentes técnicos de HIS-MINSA/Padrón Nominal para validar el mapeo FHIR antes de implementación masiva \\
+R8 & Desconfianza o resistencia cultural de la población quechua/aymara-hablante hacia un dispositivo electrónico no familiar & Social / adopción & Media & Medio & Medio & Consejería y consentimiento informado en quechua/aymara, participación de agentes comunitarios de salud como mediadores culturales \\
+R9 & Dispersión del equipo emprendedor tras el egreso universitario (empleo, migración), amenazando la continuidad de HemoScan Andino S.A.C. & Organizacional / continuidad & Media & Alto & Alto & Formalización de acuerdos de socios dentro de la futura S.A.C., documentación y transferencia de conocimiento técnico no dependiente de una sola persona, evaluación de incorporar un perfil o asesor permanente adicional \\
+R10 & Entrada de soluciones competidoras de bajo costo, dado que la barrera tecnológica de hardware no es muy alta & Competitivo & Baja & Medio & Bajo & Evaluar registro de modelo de utilidad o patente sobre el diseño de fusión multisensor/autocalibración; priorizar la velocidad de validación clínica y la relación institucional como ventaja competitiva defendible \\
+R11 & El esquema de aprendizaje federado (Flower) entre postas presenta problemas de heterogeneidad de datos o conectividad que impiden mejoras del modelo & Técnico & Baja & Bajo & Bajo & Diseño de agregación asíncrona tolerante a desconexión; operación del modelo local no bloqueada por falta de sincronización \\
+R12 & Condiciones climáticas extremas (frío, humedad, radiación solar) dañan el hardware en campo, reduciendo su vida útil o confiabilidad & Ambiental / operativo & Media & Medio & Medio & Especificación de hardware con grado de protección adecuado, baterías de mayor tolerancia térmica, mantenimiento preventivo programado \\
+\end{longtable}
+}
+
+\textbf{Mapa de calor cualitativo (probabilidad × impacto):}
+
+\begin{samepage}\begin{verbatim}
+                     Probabilidad: Baja          Probabilidad: Media          Probabilidad: Alta
+Impacto Crítico  |   R5                       |  R2                        |  —
+Impacto Alto     |   —                        |  R1, R4, R7, R9            |  R3
+Impacto Medio    |   R10                      |  R6, R8, R12               |  —
+Impacto Bajo     |   R11                      |  —                         |  —
+\end{verbatim}\end{samepage}
+
+\subsubsection{2.5.2 Evaluación preliminar de impacto}\label{evaluaciuxf3n-preliminar-de-impacto}
+
+De los doce riesgos identificados, \textbf{dos se clasifican en nivel crítico y requieren atención prioritaria desde la Fase 0}: R2 (insuficiencia de validación clínica) y R3 (ausencia de convenio o adopción B2G). No es casual que ambos coincidan exactamente con los dos primeros factores críticos de éxito identificados en el Diagnóstico Organizacional (Entregable 1, sección 1.2.4): validación clínica robusta de la corrección por altitud, e interoperabilidad/adopción institucional real. Esta coincidencia refuerza la coherencia interna del proyecto entre el diagnóstico estratégico y el análisis de riesgos del presente Business Case: los riesgos más críticos son, precisamente, la contracara de las condiciones que el propio equipo ya había identificado como indispensables para el éxito.
+
+Un caso particular es \textbf{R5} (brecha de datos personales de menores): aunque su probabilidad se califica como baja ---dado que aún no existe despliegue con datos reales---, su impacto potencial es crítico tanto en términos legales (Ley N.° 29733) como reputacionales, por lo que se recomienda tratarlo con controles preventivos estrictos desde el diseño del sistema, independientemente de su probabilidad actual, siguiendo el principio de precaución aplicable a datos de salud de menores de edad.
+
+Los riesgos de nivel alto (R1, R4, R7, R9) comparten un patrón común: todos dependen, en mayor o menor medida, de actores externos al equipo de HemoScan Andino (reguladores, autoridades regionales, sistemas de información de terceros, decisiones de vida personal de los propios integrantes), lo que limita la capacidad del equipo de controlarlos directamente y refuerza la importancia de las estrategias de mitigación basadas en relacionamiento institucional temprano y diversificación, más que en control técnico unilateral.
+
+Este registro de riesgos tiene un alcance deliberadamente \textbf{preliminar}, consistente con lo exigido para un Business Case (identificación y evaluación inicial, no un plan de gestión de riesgos exhaustivo con cuantificación probabilística ni matrices de contingencia detalladas por riesgo). Se recomienda que estos doce riesgos constituyan el punto de partida del registro de riesgos formal a desarrollar en un futuro Plan de Gestión del Proyecto, donde correspondería asignar responsables, presupuesto de contingencia específico por riesgo y planes de respuesta detallados (evitar, mitigar, transferir o aceptar).
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Anexos}\label{anexos}
+
+\subsection{Anexo A --- Glosario de términos financieros y de gestión de proyectos}\label{anexo-a-glosario-de-tuxe9rminos-financieros-y-de-gestiuxf3n-de-proyectos}
+
+\emph{(Complementa, sin repetir, el glosario técnico-clínico del Anexo A del Entregable 1.)}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Sigla / término
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Definición
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+B2G & Business to Government: modelo de negocio en el que el cliente es una entidad de gobierno (en este caso, GERESA/DIRESA o municipios) \\
+B/C & Relación Beneficio-Costo: cociente entre la suma de beneficios descontados y la suma de costos descontados de un proyecto; un valor mayor a 1 indica viabilidad económica \\
+CAPEX & Capital Expenditure: inversión de capital en activos de largo plazo (por ejemplo, la fabricación de nodos de hardware) \\
+COK & Costo de Oportunidad del Capital: tasa de rendimiento mínima exigida a una inversión, usada como tasa de descuento en la evaluación financiera \\
+KPI & Key Performance Indicator: indicador clave de desempeño usado para monitorear el logro de un objetivo \\
+Modelo de puntuación ponderada (weighted scoring model) & Técnica de análisis de decisiones que asigna pesos relativos a criterios de evaluación y puntúa cada alternativa frente a ellos, para obtener un puntaje comparable \\
+OPEX & Operational Expenditure: gasto operativo recurrente necesario para mantener el funcionamiento de un servicio (hosting, soporte, movilidad, etc.) \\
+Payback (período de recuperación) & Tiempo estimado que toma a un proyecto recuperar su inversión inicial mediante flujos de caja netos positivos \\
+Punto de equilibrio (break-even) & Nivel de actividad (en este caso, número de establecimientos contratados) en el cual los ingresos igualan a los costos operativos, sin considerar aún la inversión inicial \\
+SaaS & Software as a Service: modelo de distribución de software mediante suscripción, en lugar de licencia perpetua \\
+SMART & Acrónimo para objetivos Específicos (Specific), Medibles (Measurable), Alcanzables (Achievable), Relevantes (Relevant) y Temporales (Time-bound) \\
+TCO & Total Cost of Ownership (Costo Total de Propiedad): suma de todos los costos asociados a un bien o servicio a lo largo de su ciclo de vida, no solo el precio de adquisición \\
+TIR & Tasa Interna de Retorno: tasa de descuento que hace que el Valor Actual Neto de un proyecto sea igual a cero; se compara contra el COK para evaluar viabilidad \\
+TRL & Technology Readiness Level (Nivel de Madurez Tecnológica): escala de 1 (principio básico observado) a 9 (tecnología probada en operación real) usada para caracterizar el grado de madurez de una solución \\
+VAN & Valor Actual Neto: suma de los flujos de caja futuros de un proyecto, descontados a una tasa dada, menos la inversión inicial; un valor positivo indica que el proyecto genera valor económico \\
+\end{longtable}
+}
+
+\subsection{Anexo B --- Fuentes y referencias}\label{anexo-b-fuentes-y-referencias}
+
+\begin{itemize}
+\tightlist
+\item
+  Encuesta Demográfica y de Salud Familiar (ENDES) 2025. Instituto Nacional de Estadística e Informática (INEI). Indicador de prevalencia de anemia infantil en menores de 3 años, región Puno (56.1 \%).
+\item
+  Gonzales, G. F., Vásquez-Velásquez, C., Yucra, S., Tapia, V., Gasco, M., Suchdev, P. S., Rees, C. A., \& Aguilar, J. (2025). The new WHO cut-off point for defining high-altitude anemia may be inadequate. \emph{INQUIRY: The Journal of Health Care Organization, Provision, and Financing}, 62, Article 00469580251372827. https://doi.org/10.1177/00469580251372827 (PMID: 40977614; PMCID: PMC12454947). Ficha completada y verificada mediante búsqueda en PubMed/PMC el 07 de julio de 2026; ver salvedad de correspondencia exacta en la nota al pie de este anexo.
+\item
+  Baquerizo-Sedano, L., Chaquila, J. A., Aparco, J. P., Torres Salinas, C., Woolcott, O. O., \& González-Muniesa, P. (2025). Extreme variability of anemia prevalence in Peruvian children based on different altitude correction factors: A cross-sectional study. \emph{High Altitude Medicine \& Biology}, 26(4), 374--381. https://doi.org/10.1177/15578682251364224 (PMID: 40762081). Ficha completada y verificada mediante búsqueda en PubMed el 07 de julio de 2026; ver salvedad de correspondencia exacta en la nota al pie de este anexo.
+\item
+  Ministerio de Salud del Perú. Norma Técnica de Salud NTS 213-MINSA/DGIESP-2024 para el manejo terapéutico y preventivo de la anemia.
+\item
+  Presidencia del Consejo de Ministros del Perú. Decreto Supremo N.° 115-2025-PCM, reglamento de la Ley N.° 31814 (Ley que promueve el uso de la Inteligencia Artificial en favor del desarrollo del país).
+\item
+  Congreso de la República del Perú. Ley N.° 29733, Ley de Protección de Datos Personales.
+\item
+  MINSA -- MEF -- RENIEC. Padrón Nominal de niñas y niños menores de 6 años (marco interinstitucional de referencia).
+\item
+  HemoScan Andino, Equipo de tesis (2026). Entregable N.° 1 --- Diagnóstico Organizacional y Alineamiento Estratégico. Documento interno del proyecto, Universidad Peruana Unión, sede Juliaca.
+\item
+  Metodología genérica de evaluación financiera de proyectos (VAN, TIR, Payback, relación Beneficio-Costo) aplicada de forma ilustrativa según prácticas estándar de formulación de proyectos de inversión; no se cita un texto único de referencia por tratarse de conceptos de dominio público en la disciplina de gestión de proyectos y finanzas corporativas.
+\end{itemize}
+
+\textbf{Nota (actualizada tras verificación bibliográfica externa).} Estas dos referencias sustentan tanto la premisa clínica central del problema (sección 2.1.1) como el criterio de mayor peso de la matriz de alternativas (C1, 25 \%, sección 2.2.2), por lo que su verificación se trató con prioridad. Las fichas bibliográficas completas de Gonzales et al.~(2025) y Baquerizo-Sedano et al.~(2025) ---citadas en el enunciado original del proyecto únicamente con autor y año--- fueron completadas y verificadas mediante búsqueda en bases de datos externas (PubMed/PMC) el 07 de julio de 2026. Ambos artículos coinciden de forma inequívoca en autor, año y materia (variabilidad y adecuación de los factores de corrección de hemoglobina por altitud en niños peruanos, incluyendo el riesgo de sobre/subdiagnóstico) con lo descrito en el problema central de este Business Case. No obstante, dado que el enunciado original del proyecto solo proporcionó autor y año ---sin título, DOI ni ficha completa---, el equipo no puede descartar por completo que exista otra publicación del mismo autor y año que fuese la efectivamente prevista por quien redactó el enunciado. Por ello, se mantiene explícitamente \textbf{{[}DATO PENDIENTE DE VALIDAR{]}} únicamente sobre este punto puntual de correspondencia exacta con la intención original del enunciado ---no sobre la existencia, autoría o contenido de las referencias en sí, que ya están verificadas con fuente externa---, y se recomienda que el docente asesor o el autor del enunciado confirme esta correspondencia antes de la sustentación final o publicación de resultados.
+
+\subsection{Anexo C --- Detalle numérico completo del modelo financiero ilustrativo (horizonte 3 años)}\label{anexo-c-detalle-numuxe9rico-completo-del-modelo-financiero-ilustrativo-horizonte-3-auxf1os}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Concepto
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Año 0 (Fase 0)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Año 1 (Fase 1)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Año 2 (Fase 1)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Año 3 (inicio Fase 2)
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Ingresos (S/) & 0 & 14,400.0 & 14,400.0 & 43,200.0 \\
+CAPEX (S/) & --- & 2,800.0 & 0.0 & 5,600.0 \\
+OPEX (S/) & --- & 11,880.0 & 12,474.0 & 33,680.0 \\
+Egreso total de Fase 0 (S/) & 3,124.0 & --- & --- & --- \\
+Flujo neto del año (S/) & -3,124.0 & -280.0 & 1,926.0 & 3,920.0 \\
+Flujo acumulado sin descuento (S/) & -3,124.0 & -3,404.0 & -1,478.0 & 2,442.0 \\
+Factor de descuento (12 \% anual) & 1.000 & 0.893 & 0.797 & 0.712 \\
+Flujo neto descontado (S/) & -3,124.0 & -250.0 & 1,535.6 & 2,790.5 \\
+Flujo acumulado descontado --- VAN parcial (S/) & -3,124.0 & -3,374.0 & -1,838.4 & \textbf{952.1} \\
+\end{longtable}
+}
+
+\textbf{Cálculo de la Tasa Interna de Retorno (aproximación por interpolación):}
+
+{\small
+\begin{longtable}[]{@{}ll@{}}
+\toprule\noalign{}
+Tasa de prueba & VAN resultante (S/) \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+12 \% & +952.1 \\
+20 \% & +248.7 \\
+23 \% & +28.3 \\
+24 \% & -41.5 \\
+25 \% & -108.0 \\
+\end{longtable}
+}
+
+Por interpolación lineal entre 23 \% (VAN = +28.3) y 24 \% (VAN = -41.5), la TIR aproximada es \textbf{23.4 \%}.
+
+\textbf{Cálculo de la Relación Beneficio-Costo (B/C):}
+
+\begin{itemize}
+\tightlist
+\item
+  Suma de ingresos descontados (Años 1-3): S/ 12,857.1 + S/ 11,479.6 + S/ 30,749.8 = \textbf{S/ 55,086.5}
+\item
+  Suma de costos descontados (Año 0 + CAPEX/OPEX descontados de Años 1-3): S/ 3,124.0 + S/ 13,107.1 + S/ 9,943.9 + S/ 27,959.4 = \textbf{S/ 54,134.4}
+\item
+  B/C = 55,086.5 ÷ 54,134.4 = \textbf{1.02}
+\end{itemize}
+
+\textbf{Cálculo del punto de equilibrio operativo (Año 1, Fase 1) --- fórmula estándar con separación de costo fijo y variable:}
+
+Una versión previa de este documento dividía la totalidad del OPEX del Año 1 (S/ 11,880) entre el precio unitario, tratando implícitamente todo el OPEX como costo fijo. Esto es incorrecto porque una parte del OPEX ---movilidad/visitas de campo y materiales de gestión/capacitación--- escala directamente con el número de establecimientos atendidos y por tanto es costo \textbf{variable}, no fijo. La fórmula estándar de punto de equilibrio es: Costos fijos ÷ (precio unitario - costo variable unitario). A continuación se separan ambos componentes a partir del desglose ya presentado en la sección 2.4.2 (supuesto de clasificación S16, Anexo D):
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Componente
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Partidas incluidas
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Monto (S/)
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Costo fijo anual & Hosting/nube (1,200) + Soporte técnico y mantenimiento remoto (4,800) & 6,000 \\
+Costo variable anual (total, 8 establecimientos) & Movilidad y visitas de campo (3,600) + Materiales de gestión/capacitación (1,200) & 4,800 \\
+Contingencia (10 \%), prorrateada proporcionalmente & 10 \% de 6,000 = 600 (fijo); 10 \% de 4,800 = 480 (variable) & 1,080 \\
+\textbf{Costo fijo total (con contingencia)} & & \textbf{6,600} \\
+\textbf{Costo variable total (con contingencia), 8 establecimientos} & & \textbf{5,280} \\
+\textbf{Costo variable unitario por establecimiento} & 5,280 ÷ 8 & \textbf{660} \\
+\end{longtable}
+}
+
+Verificación: costo fijo (6,600) + costo variable total (5,280) = S/ 11,880 = OPEX Año 1 reportado en la sección 2.4.2. (ok)
+
+\begin{itemize}
+\tightlist
+\item
+  Margen de contribución unitario = precio unitario (S/ 1,800) - costo variable unitario (S/ 660) = \textbf{S/ 1,140}
+\item
+  Punto de equilibrio = costos fijos (S/ 6,600) ÷ margen de contribución unitario (S/ 1,140) = 5.79 -\textgreater{} \textbf{6 establecimientos} (redondeado hacia arriba)
+\end{itemize}
+
+Con este cálculo corregido, el margen operativo del contrato piloto ilustrativo (8 establecimientos) sobre el punto de equilibrio pasa de 1 a \textbf{2 establecimientos}, un resultado más favorable ---y metodológicamente correcto--- que el obtenido con el cálculo anterior (7 establecimientos), que subestimaba dicho margen al sobrestimar el costo fijo. Se advierte que la clasificación de ``hosting/nube'' y ``soporte técnico'' como costo íntegramente fijo es en sí misma un supuesto simplificador (S16, Anexo D): en la práctica, el soporte técnico podría escalar parcialmente con el número de establecimientos atendidos, lo que se señala como una vía de refinamiento futuro de este cálculo.
+
+\subsection{Anexo D --- Registro consolidado de supuestos del Business Case}\label{anexo-d-registro-consolidado-de-supuestos-del-business-case}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+N.°
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Supuesto
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Valor usado en este documento
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Estado
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+S1 & Organización diagnosticada & Microred de Salud Altiplano-Puno (ilustrativa) & Ilustrativo, ver nota metodológica del Entregable 1 \\
+S2 & Alcance de la Fase 0 & 150-300 niños, 1 microred, 8 meses & Dato del enunciado del proyecto, comprometido \\
+S3 & Presupuesto de Fase 0 & S/ 3,124 (desglose de 8 partidas) & Dato del enunciado del proyecto, comprometido \\
+S4 & Población de Puno / niños menores de 3 años en la región & 1.2-1.4 millones de habitantes / 60,000-80,000 niños & Estimación referencial de orden de magnitud, a validar con Padrón Nominal, INEI o ENDES \\
+S5 & Niños tamizados por establecimiento al año (Fase 1) & 100 & Derivado de la ficha técnica ilustrativa del Entregable 1 (``orden de cientos'' de niños \textless{} 3 años repartidos en 7-8 establecimientos) \\
+S6 & Costo unitario de producción de un nodo en Fase 1 & S/ 350 & Derivado del costo de S/ 300/nodo en Fase 0 (S/ 900 ÷ 3), incrementado 15-20 \% por robustez de campo \\
+S7 & Precio combinado anual por establecimiento (hardware + SaaS + soporte) & S/ 1,800/año & Cifra ilustrativa redondeada, construida a partir de amortización de hardware (\textasciitilde S/ 117/año) + suscripción de plataforma (\textasciitilde S/ 1,200/año) + soporte prorrateado (\textasciitilde S/ 483/año) \\
+S8 & N.° de establecimientos en el contrato piloto de Fase 1 & 8 & Hipotético, ligeramente mayor a los 7 establecimientos de la organización ilustrativa del Entregable 1 \\
+S9 & N.° de establecimientos al inicio de Fase 2 & 24 (3 microrredes similares) & Hipotético, para fines de proyección a 3 años \\
+S10 & Vida útil estimada del hardware & 3 años & Supuesto de ingeniería, no verificado con pruebas de campo aceleradas \\
+S11 & Tasa de descuento (COK) & 12 \% anual & Valor ilustrativo conservador-medio para un proyecto social-tecnológico de alto riesgo en etapa temprana en el contexto peruano \\
+S12 & Crecimiento anual del OPEX & 5 \% (Año 2), economía de escala del 10 \% al escalar a Fase 2 (Año 3) & Supuesto de planificación, no basado en datos históricos reales \\
+S13 & Puntajes de la matriz comparativa de alternativas (sección 2.2.3) & Escala 1-5 por criterio & Juicio experto interno del equipo (weighted scoring model), sin panel externo independiente ni pruebas de usuario \\
+S14 & Probabilidad/impacto de los riesgos estratégicos (sección 2.5) & Escalas cualitativas Baja/Media/Alta y Bajo/Medio/Alto/Crítico & Juicio experto interno del equipo, sin historial de incidentes por tratarse de una iniciativa pre-operativa \\
+S15 & Costo de constitución de HemoScan Andino S.A.C. y de eventual registro sanitario del dispositivo & No estimado & {[}DATO PENDIENTE DE VALIDAR{]}: se decidió no asignar cifra por falta de sustento razonable \\
+S16 & Clasificación de los costos operativos de Fase 1 (sección 2.4.2) en fijos y variables por establecimiento, para el cálculo del punto de equilibrio & Fijos: hosting/nube + soporte técnico (S/ 6,000 + contingencia proporcional = S/ 6,600); Variables: movilidad/campo + materiales de gestión y capacitación (S/ 4,800 + contingencia proporcional = S/ 5,280 \textasciitilde= S/ 660/establecimiento) & Supuesto de planificación del equipo (sección 2.3.3 y Anexo C); simplificación ilustrativa que asume que hosting y soporte técnico no escalan con el número de establecimientos dentro del rango de 1-24 analizado, no verificada con datos reales de operación \\
+S17 & Costos unitarios ilustrativos de mantenimiento de hardware en Fase 1 (sección 2.4.3) & Batería de repuesto: \textasciitilde S/ 30/unidad; consumibles de recalibración de sensores: \textasciitilde S/ 15/nodo/evento (2 eventos/año) & Supuesto ilustrativo de ingeniería, no cotizado con proveedor real; usado únicamente para dimensionar la materialidad de los costos de mantenimiento (\textasciitilde4 \% del OPEX Año 1) \\
+\end{longtable}
+}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Autoevaluación frente a la rúbrica}\label{autoevaluaciuxf3n-frente-a-la-ruxfabrica}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Criterio
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nivel alcanzado
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Justificación
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Análisis de alternativas & Excelente & Se comparan tres alternativas tecnológicas reales y explícitamente solicitadas mediante una matriz de puntuación ponderada de siete criterios con pesos justificados individualmente, verificación aritmética del cálculo, representación visual del resultado y una conclusión que reconoce honestamente en qué criterios la alternativa seleccionada no es superior (madurez tecnológica, costo total de propiedad de corto plazo). Tras una verificación adversarial se identificó que los siete puntajes provienen exclusivamente del juicio interno del equipo proponente de la propia alternativa ganadora, con conflicto de interés directo en C5 (trazabilidad) y C6 (cumplimiento normativo); esta limitación ya estaba declarada, pero no mitigada. Se corrigió agregando en la sección 2.2.2 un compromiso explícito de contrastar C5 y C6 con una fuente externa (docente asesor o experto regulatorio) antes de usar esta matriz como sustento formal de una decisión de inversión, lo que fortalece ---en vez de debilitar--- el rigor metodológico al convertir una limitación pasiva en un control activo de sesgo. \\
+Evaluación económica & Excelente & El documento presenta un modelo financiero estructurado y trazable, con indicadores cuantificados (VAN, TIR, Payback, relación Beneficio-Costo, punto de equilibrio, costo unitario por niño), cálculos verificables paso a paso y consistencia interna cruzada entre secciones. Una verificación adversarial encontró y corrigió tres deficiencias puntuales: (1) la sección 2.4.3 (costos de mantenimiento) no presentaba cifra monetaria propia y solo remitía a otros rubros --- se desagregó un monto anual ilustrativo específico para las partidas de mayor materialidad (recalibración de sensores, reemplazo de baterías), marcado explícitamente como supuesto; (2) el punto de equilibrio operativo (Anexo C) trataba la totalidad del OPEX como costo fijo, incluyendo movilidad de campo (un costo variable por establecimiento) --- se recalculó con la fórmula estándar de punto de equilibrio separando costo fijo y variable, corrigiendo el resultado de 7 a 6 establecimientos; (3) OE3 y la sección 2.3.1 afirmaban una ``reducción'' de costo unitario entre Fase 0 y Fase 1 que se contradecía puntualmente en el escenario optimista de Fase 0 (300 niños, S/ 10.4/niño, inferior a todo el rango de Fase 1) --- se aclaró explícitamente que la narrativa de reducción aplica solo frente al escenario conservador de Fase 0 (150 niños, S/ 20.8/niño). El documento mantiene, honestamente, la limitación de fondo de que el modelo depende de supuestos de precio, volumen de contrato y costo de producción a escala \textbf{no respaldados por cotizaciones reales de proveedores ni por un contrato o carta de intención de una entidad pública}; esto se interpreta como una condición de alcance propia de esta etapa académica (declarada de forma transparente en la nota metodológica inicial), no como un defecto metodológico del modelo en sí, razón por la cual el criterio alcanza el nivel Excelente una vez subsanadas las tres inconsistencias internas identificadas. \\
+Identificación de riesgos & Excelente & Se identifican doce riesgos estratégicos clasificados por categoría, probabilidad, impacto y nivel de riesgo consolidado, cada uno con una estrategia de mitigación específica, complementados con un mapa de calor cualitativo y un análisis de coherencia que vincula los dos riesgos críticos identificados con los factores críticos de éxito ya declarados en el Entregable 1. El alcance preliminar exigido por la rúbrica para un Business Case (identificación y evaluación inicial, no un plan de gestión de riesgos exhaustivo) se cumple plenamente, dejando explícito que el desarrollo de responsables, presupuestos de contingencia específicos y planes de respuesta detallados corresponde a un futuro Plan de Gestión del Proyecto. \\
+Justificación del Proyecto / rigor referencial (transversal) & Excelente & La premisa clínica central del problema (sección 2.1.1) y el criterio de mayor peso de la matriz de alternativas (C1, 25 \%, sección 2.2.2) se sustentaban en dos referencias (Gonzales et al., 2025; Baquerizo-Sedano et al., 2025) citadas solo con autor y año, marcadas como {[}DATO PENDIENTE DE VALIDAR{]}, sin título, revista ni DOI verificables. Una verificación adversarial completó y verificó ambas fichas bibliográficas en formato APA mediante búsqueda en fuentes externas (PubMed/PMC, con PMID y DOI confirmados), dado que sustentaban una premisa clave con peso directo sobre pesos de criterios y riesgos regulatorios (Anexo B). Con honestidad metodológica, se mantiene {[}DATO PENDIENTE DE VALIDAR{]} únicamente sobre la correspondencia exacta entre estas referencias verificadas y la intención original de quien redactó el enunciado del proyecto (que solo proporcionó autor y año), sin inventar dicha confirmación. \\
+\end{longtable}
+}
+
+
+\end{document}

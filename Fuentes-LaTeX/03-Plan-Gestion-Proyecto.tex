@@ -1,0 +1,1714 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{geometry}
+\geometry{margin=2.6cm}
+\usepackage{calc}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[table]{xcolor}
+\usepackage{caption}
+\captionsetup{skip=6pt}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\usepackage{parskip}
+\usepackage{needspace}
+\usepackage{etoolbox}
+\setlength{\parskip}{0.55em}
+\setlist{itemsep=0.2em}
+
+% evita titulos "huerfanos" solos al final de una pagina, empujandolos a la
+% siguiente si no queda espacio para el titulo mas unas lineas de contenido
+\pretocmd{\section}{\needspace{5\baselineskip}}{}{}
+\pretocmd{\subsection}{\needspace{4\baselineskip}}{}{}
+\pretocmd{\subsubsection}{\needspace{3\baselineskip}}{}{}
+
+% --- Macros pandoc espera que existan (normalmente las inyecta su modo -s) ---
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\pandocbounded}[1]{#1}
+\newcommand{\passthrough}[1]{#1}
+
+\hypersetup{
+  pdftitle={HemoScan Andino},
+  pdfauthor={Equipo HemoScan Andino -- UPeU Juliaca},
+  colorlinks=false,
+  bookmarksopen=true
+}
+
+% El contenido ya trae su propia numeracion manual (1., 1.1, 1.1.1...) escrita
+% en el texto de cada encabezado, asi que se desactiva la numeracion automatica
+% de LaTeX para evitar una doble numeracion en el indice y en el cuerpo.
+\setcounter{secnumdepth}{-2}
+\setcounter{tocdepth}{4}
+\titleformat{\section}{\normalfont\Large\bfseries}{}{0em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries}{}{0em}{}
+\titleformat{\subsubsection}{\normalfont\normalsize\bfseries}{}{0em}{}
+
+% Encabezado con dos etiquetas CORTAS y de ancho fijo (nunca texto largo o
+% dinamico por subseccion) para que jamas puedan solaparse entre si.
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small HemoScan Andino}
+\fancyhead[R]{\small Entregable 3 --- Plan de Gesti\'on}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\begin{document}
+
+\begin{titlepage}
+\centering
+\vspace*{1.2cm}
+{\large UNIVERSIDAD PERUANA UNI\'ON\par}
+{\normalsize Facultad de Ingenier\'ia y Arquitectura\par}
+{\normalsize Escuela Profesional de Ingenier\'ia de Sistemas --- Filial Juliaca\par}
+\vspace{0.5cm}
+\rule{0.6\linewidth}{0.4pt}
+\vspace{1.6cm}
+
+{\large PROYECTO DE TESIS / PROYECTO INTEGRADOR\par}
+\vspace{1.0cm}
+{\huge\bfseries HemoScan Andino\par}
+\vspace{0.6cm}
+{\Large Sistema no invasivo de tamizaje de anemia infantil con fusi\'on \'optica multisensor y autocalibraci\'on por altitud\par}
+\vspace{1.6cm}
+\rule{0.6\linewidth}{0.4pt}
+\vspace{1.6cm}
+
+{\Large\bfseries Entregable 3 (CE0121-CE0125) --- Plan de Gesti\'on del Proyecto\par}
+\vspace{2.0cm}
+
+{\normalsize Juliaca, Puno, Per\'u \par}
+{\normalsize Julio de 2026\par}
+
+\vfill
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\textbf{Entregable N.° 3 --- Plan de Gestión del Proyecto}
+
+\textbf{Área de competencia:} Área B --- Gestión de Tecnologías de Información (GTI)
+\textbf{Competencia:} CE012 --- Gestión de Proyectos
+\textbf{Evidencia que cubre este documento:} CE012 (Plan de Gestión del Proyecto, enfoque híbrido PMBOK/Ágil)
+
+\textbf{Organización diagnosticada (caso ilustrativo y representativo):} Microred de Salud Altiplano-Puno
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Integrantes del equipo:}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+N.°
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Integrante
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Rol / Área de competencia
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 & \textit{(Integrante 1, Líder de Infraestructura Tecnológica -- nombre por completar)} & CE03 --- Infraestructura Tecnológica (red, seguridad, centro de datos) \\
+2 & \textit{(Integrante 2, Líder de Gestión de TI -- nombre por completar)} & CE01 --- Gestión de TI (diagnóstico, business case, plan de gestión, procesos) --- \textbf{responsable principal de este entregable, y Director/a de Proyecto (Project Manager) del presente Plan de Gestión} \\
+3 & \textit{(Integrante 3, Líder de Ingeniería de Software -- nombre por completar)} & CE02 --- Ingeniería de Software (requerimientos, datos, sistema, calidad) \\
+\end{longtable}
+}
+
+\textbf{Docente asesor(a) del curso:} \textit{(nombre del docente asesor por completar)}
+\textbf{Curso / Sílabo:} \textit{(nombre del curso / s\'ilabo por completar)}
+\textbf{Ciclo académico:} 2026-I (supuesto, a confirmar con la programación académica vigente)
+
+\textbf{Lugar y fecha:} Juliaca, Puno, Perú --- 07 de julio de 2026
+
+\textbf{Documentos antecedentes:} Entregable N.° 1 --- Diagnóstico Organizacional y Alineamiento Estratégico (CE0111/CE0112), del cual este Plan toma el problema central, los objetivos estratégicos institucionales (OE1-OE5) y el mapa de catorce stakeholders; Entregable N.° 2 --- Business Case del Proyecto (CE0113), del cual este Plan toma el presupuesto comprometido de Fase 0 (S/ 3,124), los objetivos SMART (OE1-OE5 del caso de negocio) y el registro de doce riesgos estratégicos; y Entregable N.° 4 --- Modelado de Procesos AS-IS/TO-BE (CE013), cuyas catorce automatizaciones del proceso TO-BE (A1-A14) constituyen el principal insumo técnico para delimitar el alcance y la Estructura de Desglose del Trabajo (EDT) de este Plan.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{quote}
+\textbf{Nota metodológica y alcance (léase antes de continuar).} Este documento hereda íntegramente las condiciones de alcance declaradas en los Entregables 1, 2 y 4: HemoScan Andino \textbf{no cuenta a la fecha con un convenio real} con ninguna microred o posta de salud, ni con un comité de ética constituido, por lo que la planificación se desarrolla sobre la organización \textbf{ilustrativa y representativa ``Microred de Salud Altiplano-Puno''}. Se precisa, además, lo siguiente, específico de un Plan de Gestión de Proyecto: \textbf{el ``proyecto'' que gestiona este documento es el proyecto de tesis universitaria de HemoScan Andino (equivalente a la Fase 0 de validación ya definida en el Business Case), con una duración de ocho meses}, desde la gestión del convenio institucional hasta la sustentación final. Este Plan \textbf{no gestiona} la comercialización de las Fases 1 y 2 (piloto pagado y escalamiento regional), cuya lógica de negocio corresponde al Business Case (Entregable 2); cuando se haga referencia a dichas fases, será únicamente como contexto de cierre o de transición, nunca como parte del alcance gestionado aquí. Todas las fechas de este documento se expresan en \textbf{meses relativos (Mes 1 a Mes 8)} contados desde el inicio formal del proyecto de tesis, y no en fechas calendario absolutas, dado que el calendario académico oficial exacto (fecha de inicio de ciclo, semanas de exámenes, fecha de sustentación) es \textbf{{[}DATO PENDIENTE DE VALIDAR: calendario académico oficial vigente de la Escuela Profesional de Ingeniería de Sistemas, Filial Juliaca{]}}. El cronograma, el presupuesto distribuido por mes, el registro de riesgos y el backlog ágil presentados en este documento son \textbf{instrumentos de planificación construidos por el equipo con fines de gestión y de sustentación académica}; el único monto financiero comprometido de forma real (no ilustrativa) es el presupuesto total de Fase 0 de S/ 3,124, ya definido y detallado en el Entregable 2. Cuando un dato de planificación no puede derivarse razonablemente de los supuestos explícitos del proyecto, se señala como \textbf{{[}DATO PENDIENTE DE VALIDAR{]}}.
+\end{quote}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Resumen Ejecutivo}\label{resumen-ejecutivo}
+
+El presente Plan de Gestión del Proyecto desarrolla, bajo un enfoque híbrido PMBOK/Ágil, la planificación, ejecución, monitoreo y control del proyecto de tesis HemoScan Andino a lo largo de sus ocho meses de duración (Fase 0), organizados en seis fases macro ya definidas para el proyecto: Mes 1 (gestión del convenio institucional y del comité de ética), Mes 2-3 (diseño técnico y metodológico), Mes 4 (cierre del semestre 1, con la sustentación parcial de los cuatro entregables académicos), Mes 5-6 (implementación del prototipo), Mes 7 (validación de campo) y Mes 8 (sustentación final). Esta secuencia se mapea explícitamente, en la sección 3.3, a las seis fases de la metodología Design Science Research (Peffers et al., 2007), reforzando el rigor metodológico de un proyecto que, en esencia, diseña y evalúa un artefacto tecnológico (el sistema HemoScan Andino) para resolver un problema de salud pública ya diagnosticado.
+
+El Acta de Constitución (sección 3.1) formaliza que el ``proyecto'' gestionado por este documento es específicamente el proyecto de tesis de ocho meses (Fase 0), distinto del emprendimiento comercial completo de tres fases ya descrito en el Business Case; define un patrocinio tripartito (académico, financiero propio y, de forma pendiente, institucional externo), cinco objetivos SMART propios de la gestión de este proyecto, un alcance preliminar con límites explícitos de exclusión (entre ellos, el aprendizaje federado entre postas, técnicamente inviable con una sola microred piloto), restricciones y supuestos declarados, criterios de éxito verificables y una síntesis de los stakeholders ya identificados en el Entregable 1, ahora con una matriz de involucramiento específica para la ejecución de este plan. La Gestión del Alcance (sección 3.2) traduce dicho alcance en una Estructura de Desglose del Trabajo (EDT) de seis ramas ---que refleja explícitamente las tres áreas de competencia del equipo (Infraestructura Tecnológica, Gestión de TI e Ingeniería de Software) más la dirección de proyecto, la validación clínica y el cierre---, con un diccionario de EDT de más de veinticinco paquetes de trabajo y un procedimiento de control de cambios.
+
+La Gestión del Cronograma (sección 3.3) presenta una lista de actividades secuenciadas con predecesoras, un diagrama de Gantt de ocho meses en notación textual, seis hitos principales y un análisis de ruta crítica que distingue las actividades que condicionan la fecha de sustentación final de aquellas con holgura. La Gestión de Costos (sección 3.4) construye, a partir del presupuesto ya comprometido de S/ 3,124 (Entregable 2), una línea base de costos distribuida mes a mes ---verificada aritméticamente contra el subtotal y la reserva de contingencia ya definidos--- y un mecanismo de control presupuestal basado en umbrales de variación. La Gestión de Riesgos (sección 3.5) desarrolla un registro de doce riesgos de ejecución del proyecto (distintos, aunque vinculados, a los riesgos estratégicos de negocio del Entregable 2), con análisis cualitativo de probabilidad e impacto, un mapa de calor y planes de respuesta formales, incluyendo un plan de contingencia explícito ante el riesgo crítico de no formalizar el convenio institucional dentro del Mes 1. Finalmente, la Gestión Ágil (sección 3.6) organiza el trabajo técnico de diseño y construcción (Mes 2-3 y Mes 5-6) en ocho sprints quincenales con un product backlog de veinticinco historias de usuario priorizadas (MoSCoW), criterios de aceptación, roles ágiles adaptados a un equipo de tres integrantes y métricas de seguimiento (velocidad, quema de sprint).
+
+El documento concluye que la combinación de un marco predictivo (PMBOK) para las fases con dependencias institucionales fijas y de un marco ágil (Scrum) para las fases de construcción técnica constituye la respuesta metodológicamente más coherente a la naturaleza dual de este proyecto: procesos con hitos regulatorios y académicos no negociables, por un lado, y un desarrollo tecnológico iterativo con incertidumbre técnica real (fusión multisensor, autocalibración por altitud), por el otro. Se declara, con la misma disciplina de honestidad metodológica de los entregables anteriores, que las estimaciones de duración, costo mensual y velocidad de equipo son construcciones de planificación del equipo ---trazables y verificables aritméticamente--- y no mediciones de ejecución real, dado que el proyecto no ha iniciado su ejecución a la fecha de este documento.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Introducción y alcance del documento}\label{introducciuxf3n-y-alcance-del-documento}
+
+Este documento constituye el Entregable N.° 3 del proyecto HemoScan Andino y evalúa específicamente la competencia \textbf{CE012 --- Gestión de Proyectos}, bajo la responsabilidad principal del Integrante 2 (Líder de Gestión de TI), quien actúa además como Director/a de Proyecto (Project Manager) del presente plan. A diferencia de los Entregables 1, 2 y 4 ---de naturaleza más analítica y diagnóstica---, este Plan de Gestión tiene una naturaleza \textbf{prescriptiva y operativa}: no analiza qué hacer, sino \textbf{cómo, cuándo, con qué recursos y bajo qué controles} se ejecutará lo ya definido en los tres entregables antecedentes.
+
+Es importante precisar el objeto exacto de la planificación. El enunciado del proyecto define tres fases de negocio (Fase 0 Validación, Fase 1 Piloto pagado, Fase 2 Escalamiento), pero \textbf{el ``proyecto'' en el sentido estricto de la disciplina de gestión de proyectos ---con inicio y fin definidos, un equipo asignado y un entregable único (el prototipo validado y la tesis sustentada)--- es la Fase 0}, con una duración de ocho meses ya establecida en el Business Case (Entregable 2, objetivo específico OE1). Las Fases 1 y 2 son, en rigor, la fase de operaciones y de crecimiento comercial que \textbf{podría} iniciarse si este proyecto culmina exitosamente; su planificación de negocio ya fue desarrollada en el Business Case (sección 2.4) y no se repite aquí. Este Plan de Gestión, por tanto, cubre única y exclusivamente los ocho meses de la Fase 0, organizados en las seis fases macro ya definidas para el proyecto: Mes 1 (convenio institucional y ética), Mes 2-3 (diseño), Mes 4 (cierre del semestre 1), Mes 5-6 (implementación), Mes 7 (validación) y Mes 8 (sustentación).
+
+Asimismo, se aclara la secuencia real de elaboración de los cuatro entregables académicos de este semestre, por ser relevante para la propia Gestión del Alcance y del Cronograma desarrolladas más adelante (secciones 3.2 y 3.3): el Entregable 1 (Diagnóstico) se elaboró primero, por ser la base de todos los demás; el Entregable 2 (Business Case) y el Entregable 4 (Modelado de Procesos) se elaboraron a continuación, ambos apoyados directamente en el Entregable 1; y este Entregable 3 (Plan de Gestión) se elabora en último lugar dentro del semestre 1, precisamente porque \textbf{requiere como insumo tanto el presupuesto y los riesgos estratégicos ya definidos en el Entregable 2 como las catorce automatizaciones del proceso TO-BE ya definidas en el Entregable 4} para poder construir una Estructura de Desglose del Trabajo (EDT) y un backlog ágil realistas. Esta secuencia de dependencias entre entregables académicos se refleja, de forma consistente, en la propia planificación del Mes 1 al Mes 4 desarrollada en la sección 3.3.
+
+\textbf{Nota editorial sobre la extensión del documento.} Una verificación adversarial de este Plan frente al formato sugerido por la rúbrica (15-20 páginas al convertirse a Word/PDF) determinó que su versión íntegra ---al desarrollar en profundidad seis áreas de conocimiento (Acta de Constitución, Alcance, Cronograma, Costos, Riesgos y Gestión Ágil) para un proyecto de 28 paquetes de trabajo, 25 historias de usuario y 12 riesgos de ejecución--- excede con holgura ese rango. Para acercar el documento a la extensión sugerida sin eliminar contenido, se aplicaron dos decisiones editoriales explícitas: (a) el backlog ágil se presenta en el cuerpo principal (sección 3.6.3) en una versión condensada por historia (identificador, título breve, épica, prioridad MoSCoW, story points y sprint), mientras que el texto narrativo completo en formato ``Como/quiero/para'' y los criterios de aceptación detallados de las 25 historias se trasladan, íntegros, al \textbf{Anexo F}; y (b) los Anexos A-F (glosario, referencias, matriz RACI, índice de figuras, registro de supuestos y backlog narrativo completo) se tratan como material de referencia separado del cuerpo principal, siguiendo la práctica académica estándar de no contabilizar los anexos dentro del rango de páginas sugerido para dicho cuerpo. Se decidió, de forma deliberada, mantener íntegro en el cuerpo principal el diccionario de la EDT (sección 3.2.3, 28 paquetes de trabajo) por su carácter central para la evaluación de la Gestión del Alcance; en consecuencia, es probable que el cuerpo principal continúe superando el rango sugerido incluso tras esta reducción, lo cual se declara explícitamente en la sección de Autoevaluación, en lugar de forzar artificialmente el documento a 15-20 páginas al costo de omitir contenido evaluable.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{3. Plan de Gestión del Proyecto}\label{plan-de-gestiuxf3n-del-proyecto}
+
+\subsection{3.1 Acta de Constitución del Proyecto}\label{acta-de-constituciuxf3n-del-proyecto}
+
+\subsubsection{3.1.1 Propósito y encuadre del proyecto}\label{propuxf3sito-y-encuadre-del-proyecto}
+
+El proyecto que constituye esta Acta es el \textbf{proyecto de tesis HemoScan Andino --- Fase 0 de Validación}, cuyo propósito es diseñar, construir y validar clínicamente, en un plazo de ocho meses, un prototipo funcional de tamizaje no invasivo de anemia infantil con autocalibración por altitud, sobre una submuestra de 150 a 300 niños menores de 3 años de la organización ilustrativa Microred de Salud Altiplano-Puno, y sustentarlo como proyecto integrador/tesis ante la Universidad Peruana Unión, Filial Juliaca. El proyecto nace directamente de la brecha estratégica y tecnológica ya diagnosticada en el Entregable 1 (ausencia de un método de tamizaje no invasivo, auditable y ajustado a la altitud) y de la viabilidad económica y comparativa ya sustentada en el Entregable 2 (matriz de alternativas favorable a la solución multimodal, con 4.45/5.00 frente a 2.55/5.00 y 3.10/5.00 de las alternativas descartadas).
+
+\subsubsection{3.1.2 Patrocinio (Sponsor) del proyecto}\label{patrocinio-sponsor-del-proyecto}
+
+Dado que HemoScan Andino no cuenta todavía con un convenio institucional real, el patrocinio de este proyecto se estructura en tres niveles, declarados con la misma honestidad metodológica de los entregables anteriores:
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Nivel de patrocinio
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Entidad / rol
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Naturaleza del respaldo
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Estado
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Patrocinio académico-institucional & Universidad Peruana Unión --- Facultad de Ingeniería y Arquitectura, Escuela Profesional de Ingeniería de Sistemas (Filial Juliaca), representada por el docente asesor de tesis & Autorización curricular del proyecto de tesis, asesoría metodológica, evaluación de los entregables y de la sustentación final & Vigente (naturaleza propia del proyecto de tesis); nombre del asesor \textbf{{[}DATO PENDIENTE DE VALIDAR{]}} \\
+Patrocinio financiero & Equipo HemoScan Andino (los 3 integrantes, aporte propio) & Financiamiento íntegro del presupuesto de Fase 0 (S/ 3,124), ya comprometido según el Entregable 2 & Vigente y comprometido (única cifra financiera no ilustrativa del proyecto) \\
+Patrocinio institucional externo (potencial, no formalizado) & GERESA/DIRESA Puno y/o la microred real que eventualmente firme convenio & Autorización de acceso a la población infantil, respaldo logístico de campo, legitimidad institucional para la validación con datos reales de menores & \textbf{No existe a la fecha --- {[}DATO PENDIENTE DE VALIDAR{]}. Condición previa obligatoria para ejecutar la validación de campo del Mes 7 (ver riesgo RP1, sección 3.5)} \\
+\end{longtable}
+}
+
+El Director/a de Proyecto (Project Manager) responsable de la ejecución día a día de este Plan es el \textbf{Integrante 2 (Líder de Gestión de TI)}, quien reporta funcionalmente al docente asesor y coordina con los Integrantes 1 y 3 la ejecución de sus respectivas áreas de la Estructura de Desglose del Trabajo (sección 3.2).
+
+\subsubsection{3.1.3 Objetivos del proyecto (SMART)}\label{objetivos-del-proyecto-smart}
+
+Los siguientes cinco objetivos son específicos de la gestión de este proyecto de ocho meses (distintos, aunque plenamente consistentes, de los objetivos SMART de negocio OE1-OE5 ya formulados en el Business Case, Entregable 2, sección 2.1.2, que abarcan un horizonte de tres fases):
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+N.°
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Objetivo del proyecto
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+S --- Específico
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+M --- Medible
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+A --- Alcanzable
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+R --- Relevante
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+T --- Temporal
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+OP1 & Formalizar el convenio institucional con una microred de salud y obtener la aprobación de un comité de ética en investigación & Suscripción de convenio + dictamen favorable del comité de ética & 1 convenio firmado + 1 dictamen de aprobación ética & Alcanzable si se inicia la gestión institucional desde el primer día del proyecto (ver plan de contingencia, sección 3.5.3) & Condición previa obligatoria para cualquier trabajo de campo con datos reales de menores de edad & Fin del Mes 1 \\
+OP2 & Cerrar el diseño técnico integral (hardware, software, autocalibración por altitud, trazabilidad FHIR) y el protocolo de validación clínica & Documentos de arquitectura y protocolo aprobados internamente y por el asesor & 100 \% de los paquetes de trabajo de diseño (EDT 2.x-diseño y 4.1-4.2) cerrados con aprobación registrada & Alcanzable con la dedicación planificada de los 3 integrantes en 8 semanas (Mes 2-3) & Reduce el riesgo de retrabajo en la fase de implementación (Mes 5-6) & Fin del Mes 3 \\
+OP3 & Sustentar exitosamente el cierre del semestre 1 con los cuatro entregables académicos (Diagnóstico, Business Case, Plan de Gestión, Modelado de Procesos) aprobados & Aprobación formal de los 4 entregables por el docente asesor & 4 de 4 entregables aprobados, sin observaciones bloqueantes & Alcanzable dado que los 4 entregables ya se encuentran redactados a la fecha de este Plan & Condición curricular para continuar a la etapa de implementación & Fin del Mes 4 \\
+OP4 & Construir e integrar un prototipo funcional de extremo a extremo (nodo + aplicación móvil + backend FHIR) & Pruebas de integración end-to-end superadas & \textgreater= 90 \% de los casos de prueba end-to-end documentados en la sección 3.6 superados antes del inicio del Mes 7 & Alcanzable con el backlog ágil de 8 sprints definido en la sección 3.6 & Es la condición técnica indispensable para ejecutar la validación de campo & Fin del Mes 6 \\
+OP5 & Ejecutar la validación de campo y sustentar la tesis completa & Concordancia diagnóstica medida frente a HemoCue corregido por altitud + sustentación final aprobada & Sensibilidad \textgreater= 85 \% y especificidad \textgreater= 80 \% (meta propuesta, ver OE1 del Business Case) en una submuestra de 150-300 niños; sustentación final aprobada & Alcanzable si se cumplen OP1 a OP4 en la secuencia planificada & Es el objetivo de cierre de todo el proyecto de tesis & Fin del Mes 8 \\
+\end{longtable}
+}
+
+Al igual que en el Business Case, se precisa que las metas numéricas de la columna ``Medible'' son \textbf{metas de planificación propuestas por el equipo}, sujetas a ratificación por el asesor metodológico y, en lo que corresponda, por el comité de ética antes de iniciar el trabajo de campo.
+
+\subsubsection{3.1.4 Alcance preliminar}\label{alcance-preliminar}
+
+\textbf{Dentro del alcance de este proyecto (Fase 0, 8 meses):}
+
+\begin{itemize}
+\tightlist
+\item
+  La elaboración de los cuatro entregables académicos del semestre 1 (Entregables 1, 2, 3 y 4).
+\item
+  La gestión del convenio institucional y del proceso de aprobación ética.
+\item
+  El diseño y la construcción de un prototipo mínimo viable de 3 nodos de hardware (ESP32-S3 + AS7341 + MAX30102 + LED blanco alto CRI), una aplicación móvil Flutter/PWA offline-first, y un backend mínimo con trazabilidad FHIR (Observation, Provenance, AuditEvent, Consent, Device, Patient).
+\item
+  La implementación de la capa de autocalibración por altitud (GPS + Modelo Digital de Elevación) de forma auditable.
+\item
+  La implementación de un subconjunto priorizado de las catorce automatizaciones del proceso TO-BE definidas en el Entregable 4 (ver mapeo en la sección 3.2.3 y el backlog de la sección 3.6), suficiente para sostener la validación clínica del Mes 7.
+\item
+  La ejecución de la validación de campo (150-300 niños, 1 microred) y el análisis estadístico de concordancia diagnóstica frente a HemoCue corregido por altitud.
+\item
+  La sustentación final del proyecto de tesis.
+\end{itemize}
+
+\textbf{Fuera del alcance de este proyecto (corresponde a las Fases 1/2 de negocio, o queda explícitamente excluido):}
+
+\begin{itemize}
+\tightlist
+\item
+  La producción de hardware a escala (8 o más establecimientos) y la contratación comercial B2G real, cuya lógica de negocio ya fue desarrollada en el Business Case (Entregable 2, sección 2.4) y no se gestiona en este Plan.
+\item
+  La constitución legal de HemoScan Andino S.A.C., que el Business Case ubica como condición de transición hacia el inicio de la Fase 1 (fin de Fase 0), no como un entregable obligatorio dentro de los 8 meses de este Plan; se retoma como actividad de cierre potencial en la sección 3.2.3, pero sin comprometer una fecha dentro de la línea base de este Plan.
+\item
+  El \textbf{aprendizaje federado entre postas (Flower)}, excluido explícitamente del alcance de la Fase 0 por una razón técnica de fondo: el aprendizaje federado requiere, por definición, múltiples nodos/postas participando simultáneamente en la agregación de modelos, condición que no puede cumplirse en un piloto de una sola microred ilustrativa. Su implementación y prueba quedan condicionadas a la Fase 2 (expansión a varias microrredes).
+\item
+  El registro sanitario formal del dispositivo ante la autoridad competente (si aplicara según su clasificación de riesgo), ya señalado como \textbf{{[}DATO PENDIENTE DE VALIDAR{]}} en el Business Case (Entregable 2, sección 2.4.1) y no resuelto por este Plan.
+\item
+  La integración productiva y en tiempo real con el HIS-MINSA y el Padrón Nominal; dentro de este proyecto solo se implementa y prueba dicha sincronización en un \textbf{entorno simulado/sandbox} (ver historia de usuario HC13, sección 3.6), dado que no existe a la fecha un canal de acceso oficial confirmado a dichos sistemas.
+\end{itemize}
+
+\subsubsection{3.1.5 Restricciones}\label{restricciones}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+N.°
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Restricción
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Tipo
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+C1 & Presupuesto fijo de S/ 3,124 para los 8 meses, sin fuente de financiamiento adicional confirmada a la fecha & Financiera \\
+C2 & Equipo fijo de 3 integrantes, sin posibilidad presupuestada de contratación adicional de personal & De recursos \\
+C3 & Calendario académico de 8 meses con fecha de sustentación final no flexible dentro del ciclo 2026-I/II & De cronograma \\
+C4 & Ausencia de convenio institucional real y de comité de ética constituido al momento de iniciar el proyecto & De alcance / regulatoria \\
+C5 & Selección tecnológica de hardware ya definida (ESP32-S3, AS7341, MAX30102), sin margen presupuestal para evaluar componentes alternativos & Técnica \\
+C6 & Cumplimiento obligatorio y no negociable del DS 115-2025-PCM (supervisión humana y trazabilidad de sistemas de IA en salud) y de la Ley N.° 29733 (protección de datos personales de menores) & Regulatoria \\
+C7 & Alcance geográfico limitado a una sola microred (ilustrativa o real) para la validación de campo & De alcance \\
+\end{longtable}
+}
+
+\subsubsection{3.1.6 Supuestos}\label{supuestos}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+N.°
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Supuesto
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Estado
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+SP1 & El convenio institucional y la aprobación del comité de ética podrán formalizarse dentro del Mes 1 & Supuesto de planificación; riesgo crítico asociado RP1 (sección 3.5) \\
+SP2 & Cada integrante dedica un mínimo de horas semanales compatibles con sus demás obligaciones académicas al proyecto & \textbf{{[}DATO PENDIENTE DE VALIDAR: número de horas/semana realmente acordado entre los 3 integrantes{]}} \\
+SP3 & No habrá deserción ni ausencia prolongada de ningún integrante del equipo durante los 8 meses & Supuesto de planificación; riesgo asociado RP9 \\
+SP4 & El docente asesor brinda retroalimentación periódica (al menos mensual) sobre los avances & \textbf{{[}DATO PENDIENTE DE VALIDAR: disponibilidad real del asesor{]}} \\
+SP5 & La universidad provee o permite el uso de instalaciones básicas (laboratorio, impresión 3D) para el ensamblaje del prototipo & Supuesto de planificación, no confirmado formalmente \\
+SP6 & Los proveedores de componentes electrónicos (AS7341, MAX30102, ESP32-S3) entregan dentro de un plazo de 2 a 4 semanas desde el pedido & \textbf{{[}DATO PENDIENTE DE VALIDAR: proveedor específico y plazo real de entrega{]}}; riesgo asociado RP7 \\
+SP7 & La velocidad de equipo (team velocity) usada para planificar los sprints de la sección 3.6 es una estimación inicial sin historial previo (planning poker sin datos históricos), sujeta a recalibración tras el Sprint 1 & Supuesto metodológico explícito de la Gestión Ágil \\
+SP8 & Los 150-300 niños de la submuestra de validación son suficientes, desde un punto de vista estadístico básico, para estimar sensibilidad/especificidad con un margen de error aceptable & Supuesto heredado del Business Case (Entregable 2); su validación formal (cálculo de tamaño de muestra con nivel de confianza e intervalo definidos) es \textbf{{[}DATO PENDIENTE DE VALIDAR: cálculo formal de tamaño muestral con el asesor metodológico/bioestadístico{]}} \\
+\end{longtable}
+}
+
+\subsubsection{3.1.7 Criterios de éxito del proyecto}\label{criterios-de-uxe9xito-del-proyecto}
+
+El proyecto se considerará exitoso si, al término del Mes 8, se verifican de manera acumulativa los siguientes criterios:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  El convenio institucional y la aprobación ética se formalizaron (dentro del Mes 1 o, en su defecto, mediante la activación documentada del plan de contingencia de la sección 3.5.3).
+\item
+  Los cuatro entregables académicos del semestre 1 fueron aprobados por el docente asesor antes del cierre del Mes 4.
+\item
+  El prototipo integrado (nodo + aplicación + backend) superó al menos el 90 \% de los casos de prueba de integración end-to-end antes del inicio del Mes 7.
+\item
+  La validación de campo se ejecutó dentro del Mes 7 sobre la submuestra planificada (150-300 niños), con un informe de resultados que reporte de manera honesta las metas alcanzadas y no alcanzadas frente a las propuestas del Business Case (OE1).
+\item
+  La sustentación final del proyecto de tesis fue aprobada dentro del Mes 8.
+\item
+  La ejecución presupuestal se mantuvo dentro de una variación de costo (CV) de +/- 10 \% respecto de la línea base de S/ 3,124 (sección 3.4).
+\end{enumerate}
+
+\subsubsection{3.1.8 Stakeholders clave para la ejecución de este Plan}\label{stakeholders-clave-para-la-ejecuciuxf3n-de-este-plan}
+
+El mapa completo de catorce stakeholders del ecosistema de HemoScan Andino ya fue desarrollado en el Entregable 1 (sección 1.1.4) y no se repite íntegramente aquí. Para efectos de la ejecución de este Plan de Gestión, se resumen los stakeholders con mayor incidencia directa sobre el cronograma y los riesgos de los 8 meses, añadiendo una columna de rol de gestión específico de este documento:
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Stakeholder
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Influencia/Interés (Entregable 1)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Rol específico en la ejecución de este Plan
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Docente asesor del curso & Alto/Alto & Aprobador de los 4 entregables académicos (hito Mes 4) y de la sustentación final (hito Mes 8); fuente de retroalimentación metodológica \\
+Comité de Ética en Investigación (por constituir) & Alto (bloqueante)/Alto & Aprobador obligatorio previo a la validación de campo (Mes 7); condición de entrada del hito H1 (Mes 1) \\
+Jefatura de la Microred / Red de Salud (ilustrativa, a validar) & Alto/Alto & Firmante potencial del convenio institucional; facilitador logístico de la validación de campo \\
+Madres, padres y cuidadores & Medio-Alto/Alto & Otorgantes del consentimiento informado (FHIR Consent); participantes directos de la validación de campo (Mes 7) \\
+Personal de salud de la microred & Alto/Alto & Usuarios de prueba durante la validación de campo; fuente de retroalimentación de usabilidad \\
+Proveedores de componentes electrónicos & Bajo/Bajo & Condicionan el inicio de la fase de implementación (Mes 5); ver riesgo RP7 \\
+Universidad Peruana Unión (UPeU) & Alto/Alto & Patrocinador académico; marco curricular e institucional de todo el proyecto \\
+\end{longtable}
+}
+
+\subsubsection{3.1.9 Aprobación del Acta de Constitución}\label{aprobaciuxf3n-del-acta-de-constituciuxf3n}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Rol
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nombre
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Firma / conformidad
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Director/a de Proyecto & \textit{(Integrante 2, Líder de Gestión de TI -- nombre por completar)} & Pendiente de firma física/digital \\
+Miembro del equipo --- Infraestructura Tecnológica & \textit{(Integrante 1 -- nombre por completar)} & Pendiente de firma física/digital \\
+Miembro del equipo --- Ingeniería de Software & \textit{(Integrante 3 -- nombre por completar)} & Pendiente de firma física/digital \\
+Docente asesor / Patrocinador académico & {[}DATO PENDIENTE DE VALIDAR: nombre del asesor{]} & Pendiente de firma física/digital \\
+\end{longtable}
+}
+
+Esta Acta se considera un documento vivo: cualquier modificación sustantiva a los objetivos, el alcance preliminar o las restricciones aquí definidas debe tramitarse mediante el procedimiento de control de cambios descrito en la sección 3.2.4.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{3.2 Gestión del Alcance}\label{gestiuxf3n-del-alcance}
+
+\subsubsection{3.2.1 Enunciado del alcance}\label{enunciado-del-alcance}
+
+El enunciado del alcance de este proyecto se deriva directamente del alcance preliminar de la sección 3.1.4: construir, integrar y validar clínicamente, en 8 meses y con un presupuesto de S/ 3,124, un prototipo de tamizaje no invasivo de anemia infantil con autocalibración por altitud, compuesto por (a) tres nodos de hardware, (b) una aplicación móvil offline-first, (c) un backend con trazabilidad FHIR, y (d) un subconjunto priorizado de las automatizaciones de proceso definidas en el Entregable 4; y documentar todo el proceso en cuatro entregables académicos y una sustentación final. La Estructura de Desglose del Trabajo (EDT / WBS) que sigue traduce este enunciado en paquetes de trabajo verificables, organizados explícitamente según las tres áreas de competencia del equipo (Infraestructura Tecnológica, Gestión de TI e Ingeniería de Software), más tres ramas transversales de dirección de proyecto, validación clínica y cierre.
+
+\subsubsection{3.2.2 Estructura de Desglose del Trabajo (EDT / WBS)}\label{estructura-de-desglose-del-trabajo-edt-wbs}
+
+\begin{samepage}\begin{verbatim}
+EDT — HemoScan Andino, Proyecto de Tesis (Fase 0, 8 meses)
+Código raíz: 0
+
+0. HEMOSCAN ANDINO — PROYECTO DE TESIS (FASE 0)
+|
++-- 1. DIRECCIÓN Y GESTIÓN DEL PROYECTO (transversal — Integrante 2, CE01)
+|     +-- 1.1 Planificación y línea base (acta, EDT, cronograma, presupuesto, riesgos)
+|     +-- 1.2 Gestión del convenio institucional y del comité de ética
+|     +-- 1.3 Seguimiento, control y gestión de cambios (informes de avance, reuniones)
+|     +-- 1.4 Cierre del proyecto y lecciones aprendidas
+|
++-- 2. INFRAESTRUCTURA TECNOLÓGICA (Integrante 1 — CE03)
+|     +-- 2.1 Diseño de red y conectividad (BLE, estrategia offline-first)
+|     +-- 2.2 Aprovisionamiento de servidor/nube y base de datos (PostgreSQL/PostGIS)
+|     +-- 2.3 Seguridad, identidad y control de acceso (Keycloak OIDC/RBAC, cifrado)
+|     +-- 2.4 Ensamblaje y despliegue físico de los nodos (hardware + impresión 3D)
+|     +-- 2.5 Soporte de infraestructura durante la validación de campo (Mes 7)
+|
++-- 3. GESTIÓN DE TI — DIAGNÓSTICO, NEGOCIO Y PROCESOS (Integrante 2 — CE01)
+|     +-- 3.1 Entregable 1 — Diagnóstico organizacional y alineamiento estratégico
+|     +-- 3.2 Entregable 2 — Business Case del proyecto
+|     +-- 3.3 Entregable 3 — Plan de gestión del proyecto (este documento)
+|     +-- 3.4 Entregable 4 — Modelado de procesos AS-IS/TO-BE
+|     +-- 3.5 Coordinación del convenio institucional y aspectos éticos/regulatorios
+|     +-- 3.6 Gestión logística y de consentimiento informado de la validación de campo
+|
++-- 4. INGENIERÍA DE SOFTWARE (Integrante 3 — CE02)
+|     +-- 4.1 Ingeniería de requerimientos (funcionales y no funcionales)
+|     +-- 4.2 Modelo de datos y mapeo a recursos FHIR
+|     +-- 4.3 Firmware del nodo (captura multisensor, BLE, buffer offline)
+|     +-- 4.4 Motor de inferencia embebida (ONNX/TFLite) y autocalibración por altitud
+|     +-- 4.5 Aplicación móvil Flutter/PWA offline-first
+|     +-- 4.6 Backend de interoperabilidad FHIR, consejería y mapa geoespacial
+|     +-- 4.7 Aseguramiento de la calidad (pruebas unitarias, integración, UAT)
+|
++-- 5. VALIDACIÓN CLÍNICA Y ANÁLISIS DE RESULTADOS (transversal — todo el equipo, Mes 7)
+|     +-- 5.1 Ejecución de campo (tamizaje HemoScan vs. HemoCue corregido por altitud)
+|     +-- 5.2 Procesamiento y análisis estadístico de concordancia diagnóstica
+|     +-- 5.3 Informe de resultados de la validación
+|
++-- 6. CIERRE Y SUSTENTACIÓN (transversal, Mes 8)
+      +-- 6.1 Consolidación de entregables académicos finales
+      +-- 6.2 Preparación de la defensa/sustentación
+      +-- 6.3 Sustentación final y levantamiento de observaciones del jurado
+\end{verbatim}\end{samepage}
+
+La lógica de esta EDT es deliberada: las ramas 2 (Infraestructura), 3 (Gestión de TI) y 4 (Software) corresponden, una a una, a las tres áreas de competencia declaradas del equipo en la portada de todos los entregables del proyecto, de modo que cada integrante tiene una rama de la EDT bajo su responsabilidad principal; las ramas 1 (Dirección), 5 (Validación) y 6 (Cierre) son transversales porque requieren, por su naturaleza, la participación simultánea de los tres integrantes. Una precisión necesaria, verificada al revisar la coherencia interna de esta EDT: los paquetes \textbf{1.1} (rama Dirección de Proyecto) y \textbf{3.3} (rama Gestión de TI) están programados en el mismo periodo (M3-M4) y ambos se refieren, en apariencia, a la elaboración de este mismo Plan; el diccionario de la EDT (sección 3.2.3, inmediatamente abajo) distingue explícitamente el alcance de trabajo de cada uno para que esta coincidencia de calendario no se lea como un doble conteo de esfuerzo.
+
+\subsubsection{3.2.3 Diccionario de la EDT}\label{diccionario-de-la-edt}
+
+La siguiente tabla desarrolla el diccionario de la EDT a nivel de paquete de trabajo (nivel 2 y, donde aporta claridad, nivel 3), con su descripción, responsable, entregable/salida verificable y criterios de aceptación. Para los paquetes de la rama 4 (Ingeniería de Software), se indica explícitamente la automatización del Entregable 4 (A1-A14) a la que da cumplimiento, reforzando la trazabilidad entre el rediseño de procesos ya aprobado y la construcción técnica planificada en este documento.
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Código EDT
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Paquete de trabajo
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Descripción
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Responsable
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Entregable / salida
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Criterios de aceptación
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1.1 & Planificación y línea base (gobernanza interna) & Función de \textbf{dirección de proyecto}: fijar, custodiar y actualizar las líneas base de alcance (EDT), cronograma, presupuesto y riesgos como instrumentos internos de control del Director/a de Proyecto a lo largo de los 8 meses de ejecución. \textbf{No es la redacción del documento académico}: ver diferenciación explícita frente al paquete 3.3, nota al pie de esta tabla & Integrante 2 & Líneas base de alcance/cronograma/costos/riesgos congeladas y disponibles como instrumento de control del proyecto (no el documento de sustentación en sí) & Líneas base aprobadas internamente por el Director/a de Proyecto y disponibles para el equipo antes del cierre del Mes 4, sin observaciones bloqueantes \\
+1.2 & Convenio institucional y comité de ética & Gestión, negociación y formalización del convenio con una microred real y del dictamen del comité de ética & Integrante 2 (con apoyo de todo el equipo) & Convenio firmado + dictamen ético & Documentos firmados/emitidos antes de iniciar la validación de campo \\
+1.3 & Seguimiento, control y gestión de cambios & Reuniones periódicas de avance, informes de estado, procesamiento de solicitudes de cambio & Integrante 2 & Informes de avance mensuales & Un informe de avance por mes, sin brechas de reporte \\
+1.4 & Cierre del proyecto y lecciones aprendidas & Consolidación del cierre administrativo y de las lecciones aprendidas del proyecto & Integrante 2 & Informe de cierre y lecciones aprendidas & Documento de cierre entregado dentro del Mes 8 \\
+2.1 & Diseño de red y conectividad & Definición de la topología BLE dispositivo-app y de la estrategia offline-first de sincronización & Integrante 1 & Documento de arquitectura de red & Validado conjuntamente con Ingeniería de Software (paquete 4.3) \\
+2.2 & Servidor/nube y base de datos & Aprovisionamiento del servidor/nube y configuración de PostgreSQL/PostGIS & Integrante 1 & Ambiente de servidor operativo & Servidor accesible y base de datos con el esquema geoespacial inicial cargado \\
+2.3 & Seguridad, identidad y control de acceso & Configuración de Keycloak (OIDC/RBAC), políticas de cifrado en tránsito y en reposo & Integrante 1 & Ambiente de autenticación operativo + checklist de seguridad & Al menos 3 roles funcionales probados; checklist de seguridad firmado \\
+2.4 & Ensamblaje y despliegue físico de los nodos & Ensamblaje de los 3 nodos de hardware (ESP32-S3, AS7341, MAX30102, LED) e impresión 3D de carcasas & Integrante 1 & 3 nodos físicos ensamblados & Los 3 nodos encienden, capturan señal y se emparejan por BLE \\
+2.5 & Soporte de infraestructura en campo & Soporte técnico de conectividad, energía y contingencia durante la validación (Mes 7) & Integrante 1 & Bitácora de incidencias de campo & Disponibilidad operativa de los nodos \textgreater= 90 \% de las jornadas de campo \\
+3.1, 3.2, 3.4 & Entregables académicos 1, 2 y 4 & Redacción de los entregables de Diagnóstico Organizacional, Business Case y Modelado de Procesos AS-IS/TO-BE del semestre 1 & Integrante 2 (responsable principal), con insumos de Integrantes 1 y 3 & Tres documentos en Markdown/Word & Aprobados por el docente asesor antes del cierre del Mes 4 \\
+3.3 & Entregable 3 --- Plan de gestión del proyecto (producto académico) & Función de \textbf{Gestión de TI / competencia académica}: redacción, formato y consolidación final del documento que evidencia la competencia CE012 (este documento), \textbf{a partir de} las líneas base ya fijadas por la función de dirección de proyecto en el paquete 1.1 --- es decir, 1.1 gobierna y actualiza las líneas base como instrumento de control del proyecto, y 3.3 las documenta, redacta y sustenta ante el docente asesor como entregable calificable. Ambos comparten periodo (M3-M4) porque son dos facetas de un mismo bloque de trabajo de planificación (gobernanza interna vs.~evidencia académica formal) ejecutado una sola vez por el Integrante 2, no dos esfuerzos independientes ni acumulables en el cronograma & Integrante 2 & Este documento (Entregable 3), en su versión final aprobable & Aprobado por el docente asesor sin observaciones bloqueantes, antes del cierre del Mes 4 \\
+3.5 & Coordinación del convenio y aspectos regulatorios & Enlace institucional con la microred candidata, el comité de ética y verificación de cumplimiento normativo (NTS 213, DS 115-2025-PCM, Ley 29733) & Integrante 2 & Checklist de cumplimiento normativo & Checklist completo antes del inicio de la validación de campo \\
+3.6 & Gestión logística y de consentimiento de campo & Planificación logística de la jornada de campo y del proceso de consentimiento informado de los cuidadores & Integrante 2 & Plan logístico de campo + formatos de consentimiento & Plan aprobado por el asesor antes del inicio del Mes 7 \\
+4.1 & Ingeniería de requerimientos & Levantamiento de requerimientos funcionales y no funcionales del sistema completo & Integrante 3 & Especificación de requerimientos & Validada por los 3 integrantes y el asesor \\
+4.2 & Modelo de datos y mapeo FHIR & Diseño del modelo de datos y su mapeo a los 6 recursos FHIR del proyecto & Integrante 3 & Documento de modelo de datos/FHIR & Cada campo clínico mapeado a un recurso/atributo FHIR --- atiende A5, A14 (Entregable 4) \\
+4.3 & Firmware del nodo & Captura sincronizada de las 3 señales ópticas, comunicación BLE, buffer offline & Integrante 3 (con Integrante 1) & Firmware funcional en los 3 nodos & Atiende A1, A2 (Entregable 4); \textgreater= 50 capturas en buffer sin conexión \\
+4.4 & Inferencia embebida y autocalibración & Modelo ONNX/TFLite embebido + consulta a Modelo Digital de Elevación para autocalibración por altitud auditable & Integrante 3 & Módulo de inferencia + módulo de autocalibración & Atiende A3 (Entregable 4); inferencia \textless{} 3 s; corrección de altitud auditable y visible \\
+4.5 & Aplicación móvil & App Flutter/PWA offline-first, con FHIR Consent, pantalla de resultado y recordatorios & Integrante 3 & App instalable (Android mínimo) & Atiende A4, A10 (Entregable 4); funcional 72 h sin conectividad en prueba de banco \\
+4.6 & Backend FHIR, consejería y mapa geoespacial & Generación de recursos FHIR, motor de reglas de consejería nutricional, mapa de cobertura/riesgo (H3, MapLibre, PMTiles) & Integrante 3 (con Integrante 1 para el servidor) & Backend operativo + mapa funcional sobre datos de prueba & Atiende A5, A8, A9, A11, A12, A13, A14 (Entregable 4) \\
+4.7 & Aseguramiento de la calidad & Plan y ejecución de pruebas unitarias, de integración end-to-end y de aceptación de usuario (UAT) & Integrante 3 (con apoyo de Integrante 2 para UAT) & Plan de pruebas + reporte de resultados & \textgreater= 90 \% de casos de prueba end-to-end superados antes del inicio del Mes 7 \\
+5.1 & Ejecución de campo & Tamizaje con HemoScan Andino y con HemoCue corregido por altitud (método de referencia) sobre la submuestra de validación & Todo el equipo & Base de datos de campo (150-300 casos) & Datos recolectados con consentimiento informado completo, sin incidentes de seguridad de datos \\
+5.2 & Análisis estadístico de concordancia & Cálculo de sensibilidad, especificidad y concordancia frente al método de referencia & Integrante 2 (con apoyo metodológico del asesor) & Análisis estadístico documentado & Metodología estadística validada por el asesor antes de reportar resultados \\
+5.3 & Informe de resultados de validación & Consolidación de los resultados de campo y su comparación con las metas propuestas (OE1, Business Case) & Integrante 2 & Informe de validación & Informe honesto de metas alcanzadas/no alcanzadas, sin sobreestimar resultados \\
+6.1 & Consolidación de entregables finales & Integración de todos los entregables académicos y técnicos en el documento final de tesis & Todo el equipo & Documento de tesis consolidado & Aprobado por el asesor antes de la fecha límite de sustentación \\
+6.2 & Preparación de la sustentación & Elaboración de la presentación, ensayo de la defensa, preparación de la demostración en vivo del prototipo & Todo el equipo & Presentación + guion de demostración & Ensayo completo realizado al menos una vez antes de la fecha oficial \\
+6.3 & Sustentación final & Defensa oral ante el jurado evaluador & Todo el equipo & Acta de sustentación & Aprobación del jurado, con observaciones levantadas si las hubiera \\
+\end{longtable}
+}
+
+\textbf{Nota de diferenciación 1.1 vs.~3.3 (control de redundancia de la EDT).} Una verificación adversarial de este documento identificó que los paquetes 1.1 y 3.3, al compartir periodo (M3-M4) y referirse ambos, en apariencia, a la elaboración de este mismo Plan, podían leerse como una duplicación de esfuerzo dentro del cronograma. Se aclara explícitamente que \textbf{no son el mismo alcance de trabajo}: 1.1 es la actividad de \textbf{dirección y gobernanza del proyecto} (fijar y mantener las líneas base de alcance, cronograma, costos y riesgos como instrumento de control interno, función propia del rol de Director/a de Proyecto descrita en la sección 3.1.2), mientras que 3.3 es el \textbf{producto académico entregable} (la redacción, el formato y la sustentación de este documento ante el docente asesor como evidencia de la competencia CE012). En la práctica, ambos son ejecutados por el mismo responsable (Integrante 2) dentro de la misma ventana de tiempo porque son dos facetas de un único bloque de trabajo de planificación ---no dos esfuerzos secuenciales o acumulables---; en consecuencia, la lista de actividades de la sección 3.3.2 y el diagrama de Gantt de la sección 3.3.3 \textbf{no deben interpretarse como 16 semanas-persona de esfuerzo neto} (8 de 1.1 más 8 de 3.3), sino como una sola franja de trabajo de 8 semanas vista simultáneamente desde dos ramas organizacionales de la EDT (Dirección de Proyecto y Gestión de TI).
+
+\subsubsection{3.2.4 Control de cambios}\label{control-de-cambios}
+
+Dado el tamaño reducido del equipo (3 integrantes) y la naturaleza académica del proyecto, se define un procedimiento de control de cambios deliberadamente ligero pero formal, para no perder trazabilidad de las decisiones de alcance:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Solicitud de cambio.} Cualquier integrante que identifique la necesidad de modificar el alcance, el cronograma o el presupuesto de línea base documenta la solicitud en un formato breve (origen del cambio, paquete EDT afectado, justificación, impacto estimado en tiempo/costo/riesgo).
+\item
+  \textbf{Comité de cambios.} Las solicitudes se revisan en la reunión de seguimiento más próxima (paquete 1.3) por los 3 integrantes; cambios que afecten los hitos principales (sección 3.3.4), el presupuesto total o los objetivos del Acta de Constitución (sección 3.1) requieren, además, la conformidad expresa del docente asesor.
+\item
+  \textbf{Umbral de re-planificación.} Un cambio se considera ``menor'' (aprobable solo por el equipo) si no altera ningún hito principal en más de una semana ni el presupuesto total en más de 5 \%; en caso contrario, se considera ``mayor'' y activa una actualización formal de este Plan de Gestión, con registro de la versión modificada.
+\item
+  \textbf{Registro de cambios.} Todo cambio aprobado se anota en un registro de control de cambios (a incorporar como anexo vivo de este documento en su próxima actualización), indicando fecha, solicitante, descripción, decisión y paquete EDT afectado.
+\end{enumerate}
+
+Este procedimiento no ha sido activado a la fecha de este documento, dado que el proyecto no ha iniciado su ejecución.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{3.3 Gestión del Cronograma}\label{gestiuxf3n-del-cronograma}
+
+\subsubsection{3.3.1 Mapeo metodológico: Design Science Research y las seis fases del proyecto}\label{mapeo-metodoluxf3gico-design-science-research-y-las-seis-fases-del-proyecto}
+
+Antes de detallar la lista de actividades, se documenta explícitamente la correspondencia entre las seis fases macro ya definidas para el proyecto (Mes 1 a Mes 8) y las seis fases de la metodología \textbf{Design Science Research Methodology --- DSRM} (Peffers et al., 2007), pertinente dado que HemoScan Andino es, en esencia, el diseño y evaluación de un artefacto tecnológico frente a un problema organizacional ya identificado:
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Fase del cronograma
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Mes(es)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Fase equivalente de DSRM (Peffers et al., 2007)
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Convenio institucional y comité de ética & Mes 1 & Identificación del problema y motivación (ya cubierta en el Entregable 1) + condición de acceso habilitante \\
+Diseño & Mes 2-3 & Definición de los objetivos de una solución + Diseño y desarrollo (artefacto en diseño) \\
+Cierre del semestre 1 & Mes 4 & Punto de control académico (no es, en sí, una fase de DSRM, sino un hito institucional superpuesto) \\
+Implementación & Mes 5-6 & Diseño y desarrollo (construcción del artefacto) \\
+Validación & Mes 7 & Demostración + Evaluación \\
+Sustentación & Mes 8 & Comunicación \\
+\end{longtable}
+}
+
+Esta correspondencia no es meramente decorativa: justifica por qué el Mes 1 se trata como una fase de naturaleza predictiva (depende de terceros ---comité de ética, microred candidata--- y no admite iteración ágil), mientras que los Meses 2-3 y 5-6 sí se benefician de una gestión iterativa (sección 3.6), y por qué la validación (Mes 7) y la sustentación (Mes 8) se tratan nuevamente como fases de tipo stage-gate, con criterios de salida específicos y no negociables.
+
+\subsubsection{3.3.2 Lista de actividades secuenciadas}\label{lista-de-actividades-secuenciadas}
+
+La siguiente tabla presenta las 28 actividades de nivel 2 de la EDT (sección 3.2.2), con su duración estimada, mes(es) de ejecución, predecesoras (por código EDT) y responsable. Las duraciones se expresan en semanas, asumiendo meses de 4 semanas para fines de planificación.
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Código EDT
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Actividad
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Mes(es)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Duración (semanas)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Predecesora(s)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Responsable
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1.2 & Convenio institucional y comité de ética & M1 & 4 & --- (inicio del proyecto) & Integrante 2 \\
+3.5 & Coordinación del convenio y aspectos regulatorios & M1-M2 & 8 & 1.2 (en paralelo, de apoyo) & Integrante 2 \\
+3.1 & Entregable 1 --- Diagnóstico organizacional & M1-M2 & 8 & --- & Integrante 2 \\
+1.3 & Seguimiento, control y gestión de cambios & M1-M8 & 32 (continua) & --- & Integrante 2 \\
+4.1 & Ingeniería de requerimientos & M2 & 4 & 3.1, 3.4 & Integrante 3 \\
+2.1 & Diseño de red y conectividad & M2 & 4 & 3.1 & Integrante 1 \\
+3.4 & Entregable 4 --- Modelado de procesos AS-IS/TO-BE & M3 & 4 & 3.1 & Integrante 2 \\
+3.2 & Entregable 2 --- Business Case del proyecto & M2-M3 & 8 & 3.1 & Integrante 2 \\
+4.2 & Modelo de datos y mapeo FHIR & M2-M3 & 8 & 4.1 & Integrante 3 \\
+2.2 & Servidor/nube y base de datos & M2-M3 & 8 & 2.1 & Integrante 1 \\
+1.1 & Planificación y línea base (este Plan) & M3-M4 & 8 & 3.2, 3.4 & Integrante 2 \\
+3.3 & Entregable 3 --- Plan de gestión del proyecto & M3-M4 & 8 & 3.2, 3.4 & Integrante 2 \\
+2.3 & Seguridad, identidad y control de acceso & M5-M6 & 8 & 2.2, 4.2 & Integrante 1 \\
+2.4 & Ensamblaje y despliegue físico de los nodos & M5-M6 & 8 & 2.1, 4.1 (BOM y pedido de componentes en M3-M4) & Integrante 1 \\
+4.3 & Firmware del nodo & M5 & 4 & 2.1, 4.1, 2.4 (inicio) & Integrante 3 \\
+4.4 & Inferencia embebida y autocalibración por altitud & M5-M6 & 8 & 4.3, 4.2 & Integrante 3 \\
+4.5 & Aplicación móvil & M6 & 4 & 4.3, 4.2 & Integrante 3 \\
+4.6 & Backend FHIR, consejería y mapa geoespacial & M6 & 4 & 4.2, 2.2, 2.3 & Integrante 3 \\
+3.6 & Gestión logística y de consentimiento de campo & M6-M7 & 8 & 1.2, 4.7 (parcial) & Integrante 2 \\
+4.7 & Aseguramiento de la calidad (integración end-to-end) & M6 & 4 & 4.3, 4.4, 4.5, 4.6 & Integrante 3 \\
+2.5 & Soporte de infraestructura en campo & M7 & 4 & 2.4, 1.2 & Integrante 1 \\
+5.1 & Ejecución de campo & M7 & 3 & 1.2, 4.7, 3.6 & Todo el equipo \\
+5.2 & Análisis estadístico de concordancia & M7 (cierre) & 2 & 5.1 & Integrante 2 \\
+5.3 & Informe de resultados de la validación & M7-M8 & 3 & 5.2 & Integrante 2 \\
+6.1 & Consolidación de entregables finales & M8 & 2 & 5.3, 3.1, 3.2, 3.3, 3.4 & Todo el equipo \\
+6.2 & Preparación de la sustentación & M8 & 2 & 6.1 & Todo el equipo \\
+6.3 & Sustentación final & M8 & 1 & 6.2 & Todo el equipo \\
+1.4 & Cierre del proyecto y lecciones aprendidas & M8 & 1 & 6.3 & Integrante 2 \\
+\end{longtable}
+}
+
+\textbf{Nota sobre 1.1 y 3.3 (M3-M4, 8 semanas cada una).} Como se aclara en el diccionario de la EDT (sección 3.2.3), estas dos filas no representan 16 semanas-persona de esfuerzo acumulado: son la misma franja de trabajo de planificación (gobernanza interna de las líneas base, paquete 1.1, frente a la redacción del producto académico entregable, paquete 3.3), ejecutada una sola vez por el Integrante 2 y vista desde dos ramas organizacionales de la EDT.
+
+\subsubsection{3.3.3 Diagrama de Gantt (horizonte de 8 meses)}\label{diagrama-de-gantt-horizonte-de-8-meses}
+
+\textbf{Versión textual (tabla resumen por mes).} La siguiente tabla resume, en notación textual, las 28 actividades de la sección 3.3.2 mes a mes; sirve como referencia de lectura rápida y como fuente de datos verificable para el diagrama gráfico que se presenta a continuación de esta tabla.
+
+\textbf{Leyenda:} \# = mes de ejecución activa de la actividad · * = hito principal (ver sección 3.3.4) · fila en negrita = paquete transversal.
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.1000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.1000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.1000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.1000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.1000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.1000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.1000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.1000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.1000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.1000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Código
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Actividad
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+M1
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+M2
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+M3
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+M4
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+M5
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+M6
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+M7
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+M8
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1.2 & Convenio institucional y comité de ética & \#* & & & & & & & \\
+1.3 & Seguimiento, control y gestión de cambios & \# & \# & \# & \# & \# & \# & \# & \# \\
+1.1 & Planificación y línea base (Plan de Gestión) & & & \# & \# & & & & \\
+1.4 & Cierre del proyecto y lecciones aprendidas & & & & & & & & \# \\
+2.1 & Diseño de red y conectividad & & \# & & & & & & \\
+2.2 & Servidor/nube y base de datos & & \# & \# & & & & & \\
+2.3 & Seguridad, identidad y control de acceso & & & & & \# & \# & & \\
+2.4 & Ensamblaje y despliegue físico de nodos & & & & & \# & \# & & \\
+2.5 & Soporte de infraestructura en campo & & & & & & & \# & \\
+3.1 & Entregable 1 --- Diagnóstico & \# & \# & & & & & & \\
+3.2 & Entregable 2 --- Business Case & & \# & \# & & & & & \\
+3.3 & Entregable 3 --- Plan de Gestión (este doc.) & & & \# & \# & & & & \\
+3.4 & Entregable 4 --- Modelado AS-IS/TO-BE & & & \# & & & & & \\
+3.5 & Coordinación convenio/regulatorio & \# & \# & & & & & & \\
+3.6 & Gestión logística y consentimiento de campo & & & & & & \# & \# & \\
+4.1 & Ingeniería de requerimientos & & \# & & & & & & \\
+4.2 & Modelo de datos y mapeo FHIR & & \# & \# & & & & & \\
+4.3 & Firmware del nodo & & & & & \# & & & \\
+4.4 & Inferencia embebida y autocalibración & & & & & \# & \# & & \\
+4.5 & Aplicación móvil & & & & & & \# & & \\
+4.6 & Backend FHIR, consejería y mapa geoespacial & & & & & & \# & & \\
+4.7 & Aseguramiento de la calidad (end-to-end) & & & & & & \#* & & \\
+5.1 & Ejecución de campo & & & & & & & \# & \\
+5.2 & Análisis estadístico de concordancia & & & & & & & \# & \\
+5.3 & Informe de resultados de validación & & & & & & & \#* & \# \\
+6.1 & Consolidación de entregables finales & & & & & & & & \# \\
+6.2 & Preparación de la sustentación & & & & & & & & \# \\
+6.3 & Sustentación final & & & & & & & & \#* \\
+\end{longtable}
+}
+
+Adicionalmente, se marca con * el hito H3 (cierre del semestre 1) al final del Mes 4, aunque ninguna barra activa lo ocupe en la tabla anterior por tratarse de un hito de verificación (evento de duración cero) y no de una actividad con duración propia; se documenta en la tabla de hitos de la sección 3.3.4.
+
+\textbf{Versión gráfica (diagrama de barras con eje temporal).} Complementando la tabla textual anterior ---y en respuesta directa al formato sugerido por la rúbrica (``con diagrama de Gantt'')---, se presenta a continuación el mismo cronograma como un diagrama de Gantt gráfico propiamente dicho, con eje temporal continuo (Mes 1 a Mes 8), barras por actividad coloreadas por rama de responsabilidad de la EDT y marcadores de hito (*):
+
+\begin{figure}[H]
+\centering
+\pandocbounded{\includegraphics[width=0.88\linewidth,keepaspectratio]{assets/03-plan-gestion/gantt-diagrama.png}}
+\caption{Diagrama de Gantt gráfico --- HemoScan Andino, Proyecto de Tesis (Fase 0, 8 meses)}
+\end{figure}
+
+\emph{Figura 2b. Diagrama de Gantt gráfico de las 28 actividades de nivel 2 de la EDT (sección 3.3.2), agrupadas por rama de responsabilidad, con los 6 hitos principales (H1-H6, sección 3.3.4) señalados con marcadores en forma de diamante. Elaboración propia del equipo: generado programáticamente a partir de la misma tabla de datos de la sección 3.3.2 (no proviene de una cotización o de un registro exportado de una herramienta comercial de gestión de proyectos como MS Project; se declara así por honestidad metodológica, en línea con el resto de este documento).}
+
+\subsubsection{3.3.4 Hitos principales}\label{hitos-principales}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Código
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Hito
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Momento
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Criterio de verificación
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+H1 & Convenio institucional y comité de ética formalizados & Fin de Mes 1 & Convenio firmado + dictamen ético emitido (o activación documentada del plan de contingencia, sección 3.5.3) \\
+H2 & Diseño técnico y protocolo de validación cerrados & Fin de Mes 3 & Documentos de arquitectura (2.1, 4.1, 4.2) y protocolo de validación clínica aprobados internamente \\
+H3 & Cierre del semestre 1 (sustentación parcial) & Fin de Mes 4 & Los 4 entregables académicos aprobados por el docente asesor \\
+H4 & Prototipo integrado listo & Fin de Mes 6 & \textgreater= 90 \% de casos de prueba end-to-end (paquete 4.7) superados \\
+H5 & Validación de campo completada & Fin de Mes 7 & Base de datos de campo completa + informe preliminar de resultados (5.3) \\
+H6 & Sustentación final aprobada & Fin de Mes 8 & Acta de sustentación con resultado aprobatorio \\
+\end{longtable}
+}
+
+Estos seis hitos corresponden, de manera exactamente correlativa, a las seis fases macro del proyecto ya definidas (sección 3.3.1), de modo que el cumplimiento de cada hito es, a la vez, el criterio de salida de su fase y el criterio de entrada de la siguiente.
+
+\subsubsection{3.3.5 Análisis de ruta crítica}\label{anuxe1lisis-de-ruta-cruxedtica}
+
+El análisis de la red de precedencias de la sección 3.3.2 muestra que, bajo el supuesto de que el convenio institucional y la aprobación ética se formalizan dentro del plazo previsto (Mes 1, riesgo RP1 controlado), la \textbf{ruta crítica del proyecto discurre íntegramente por la cadena de construcción técnica}: 4.1 (requerimientos) -\textgreater{} 4.2 (modelo de datos/FHIR) -\textgreater{} 4.3 (firmware) -\textgreater{} 4.4 (inferencia y autocalibración) -\textgreater{} 4.5/4.6 (app y backend, en paralelo) -\textgreater{} 4.7 (aseguramiento de calidad) -\textgreater{} 5.1 (campo) -\textgreater{} 5.2 (análisis) -\textgreater{} 5.3 (informe) -\textgreater{} 6.1-6.3 (cierre y sustentación), con una duración acumulada que ocupa del Mes 2 al Mes 8 del proyecto. Esta cadena determina la fecha de sustentación final y no tiene holgura (float) disponible: cualquier retraso en el paquete 4.3, 4.4 o 4.7 se traslada directamente a la fecha de la validación de campo (Mes 7) y, por tanto, a la sustentación (Mes 8).
+
+Un segundo hallazgo, de mayor relevancia para la gestión de riesgos (sección 3.5), es que el paquete \textbf{1.2 (convenio institucional y comité de ética, Mes 1) no forma parte de la ruta crítica bajo el escenario normal}, dado que el trabajo técnico (rama 4) puede avanzar en paralelo sin depender de la firma del convenio; sin embargo, \textbf{su holgura es engañosamente pequeña}, porque el paquete 5.1 (ejecución de campo, Mes 7) sí depende estrictamente de 1.2. En otras palabras, 1.2 tiene holgura frente a la ruta crítica técnica solo mientras su atraso no exceda, aproximadamente, los cinco meses que separan el Mes 1 del inicio del Mes 7 ---un margen que parece amplio, pero que en la práctica se consume rápidamente si el convenio se retrasa más allá del Mes 2, dado que la gestión institucional real (identificación de una microred, negociación, aprobación de un comité de ética) rara vez es instantánea una vez iniciado el atraso. Por esta razón, 1.2 se trata en este Plan como una \textbf{ruta casi crítica (near-critical path)} que requiere seguimiento prioritario desde la primera semana del proyecto, y se refuerza con un plan de contingencia específico (sección 3.5.3), en lugar de asumir con optimismo que su holgura nominal de varios meses elimina el riesgo.
+
+Finalmente, la cadena de entregables académicos (3.1 -\textgreater{} 3.2/3.4 -\textgreater{} 3.3, Meses 1 a 4) tiene, en términos de red de precedencias pura, cierta holgura frente a la ruta crítica técnica (que se extiende hasta el Mes 8); no obstante, el hito H3 (cierre del semestre 1, Mes 4) es un \textbf{hito institucional de fecha fija impuesto por el calendario académico de la universidad}, no derivado del cálculo de la red. En consecuencia, el equipo trata este hito con holgura cero en la práctica, independientemente de lo que indique el análisis de red, en línea con la buena práctica de distinguir entre holgura calculada y restricciones de tipo ``fecha obligatoria'' (must-finish-on) en la gestión de cronogramas.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{3.4 Gestión de Costos}\label{gestiuxf3n-de-costos}
+
+\subsubsection{3.4.1 Presupuesto detallado}\label{presupuesto-detallado}
+
+El presupuesto total de este proyecto es de \textbf{S/ 3,124}, cifra ya comprometida y detallada en el Business Case (Entregable 2, sección 2.4.1), y que se reproduce aquí asignada a su paquete de la EDT, su mes de ejecución principal y su responsable, para que constituya una línea base de costos gestionable dentro de este Plan:
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Partida
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Monto (S/)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Paquete EDT relacionado
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Mes(es) de ejecución
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Responsable
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Hardware (3 nodos) & 900 & 2.4 --- Ensamblaje y despliegue físico de los nodos & M5-M6 & Integrante 1 \\
+Insumos de validación HemoCue & 400 & 5.1 --- Ejecución de campo & M7 & Integrante 2 \\
+Submuestra ferritina + PCR & 600 & 5.1 --- Ejecución de campo & M7 & Integrante 2 \\
+Servidor/nube (8 meses) & 320 & 2.2 --- Servidor/nube y base de datos & M1-M8 (continuo, S/ 40/mes) & Integrante 1 \\
+Impresión 3D & 120 & 2.4 --- Ensamblaje y despliegue físico de los nodos & M5-M6 & Integrante 1 \\
+Movilidad/campo & 400 & 1.2 (M1, gestión de convenio) y 5.1 (M7, campo) & M1 (S/ 100) y M7 (S/ 300) & Integrante 2 \\
+Materiales de gestión & 100 & 1.1/1.3 --- Planificación y seguimiento & M1, M4, M7, M8 (S/ 25 c/u) & Integrante 2 \\
+Contingencia (10 \%) & 284 & Reserva transversal del proyecto & Distribuida a lo largo de los 8 meses (ver 3.4.2) & Integrante 2 (custodio de la reserva) \\
+\textbf{TOTAL} & \textbf{3,124} & & & \\
+\end{longtable}
+}
+
+Esta asignación por paquete EDT y mes es una \textbf{construcción interna del equipo} para fines de programación y control (no proviene de una cotización desagregada por fecha de proveedores) y es consistente, en su cifra total, con el egreso de S/ 3,124 ya reportado como ``Año 0 (Fase 0)'' en el Anexo C del Business Case (Entregable 2), lo que garantiza continuidad financiera entre ambos documentos.
+
+\paragraph{3.4.1.1 Desglose referencial de costo unitario (evidencia externa de mercado)}\label{desglose-referencial-de-costo-unitario-evidencia-externa-de-mercado}
+
+Una verificación adversarial de este Plan frente a la rúbrica observó que, si bien el monto total (S/ 3,124) es una cifra real y comprometida (heredada del Business Case), la única fuente de trazabilidad del presupuesto detallado de la sección 3.4.1 era la reasignación interna del equipo, sin desglose de costo unitario por componente ni fuente de mercado de referencia. Para sostener la exigencia de ``estimaciones justificadas'' del nivel Excelente de la rúbrica, se incorpora a continuación un desglose referencial de costo unitario, construido con rangos de mercado consultados por el equipo --- \textbf{no con cotizaciones formales de proveedores con fecha}, que a la fecha de este documento no existen (ver Anexo E, supuesto SP9). Cada fila señala explícitamente su condición de dato pendiente de validar.
+
+\textbf{Tabla 3.4.1-A. Componentes de hardware (partida ``Hardware (3 nodos)'', S/ 900).}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Componente
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Cantidad (3 nodos)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Rango de precio unitario referencial (S/)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Valor usado
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Subtotal referencial (S/)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Fuente / naturaleza del dato
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Microcontrolador ESP32-S3 (DevKit-C1/WROOM o equivalente) & 3 & 30 -- 45 & 35 & \textasciitilde= 105 & Rango de mercado referencial de tiendas de electrónica e importadores (AliExpress, Mercado Libre Perú), consultado por el equipo --- \textbf{{[}DATO PENDIENTE DE VALIDAR: cotización formal con fecha y proveedor específico{]}} \\
+Sensor espectral AS7341 (breakout, 10 canales + NIR/flicker) & 3 & 60 -- 85 & 70 & \textasciitilde= 210 & Ídem --- \textbf{{[}DATO PENDIENTE DE VALIDAR{]}} \\
+Sensor óptico PPG/SpO2 MAX30102 (breakout) & 3 & 12 -- 22 & 18 & \textasciitilde= 54 & Ídem --- \textbf{{[}DATO PENDIENTE DE VALIDAR{]}} \\
+LED blanco alto CRI (\textgreater= 90 CRI, montaje SMD) + óptica difusora simple & 3 (más repuestos) & 6 -- 12 & 8 & \textasciitilde= 24 & Ídem --- \textbf{{[}DATO PENDIENTE DE VALIDAR{]}} \\
+\textbf{Subtotal componentes electrónicos activos (MCU + sensores + LED)} & & & & \textbf{\textasciitilde= 393} & Suma de las 4 filas anteriores \\
+Conectores, cableado, batería recargable Li-Po, hardware de montaje/protoboard y stock de repuesto ante fallas de ensamblaje & 3 kits & --- (sin desglose unitario disponible) & --- & \textbf{\textasciitilde= 507 (por diferencia frente al monto ya comprometido de la partida)} & Estimación agregada del equipo, sin cotización unitaria --- \textbf{{[}DATO PENDIENTE DE VALIDAR: cotización desagregada del kit de montaje por componente{]}} \\
+\textbf{TOTAL partida ``Hardware (3 nodos)'' (igual a la sección 3.4.1)} & & & & \textbf{900} & Cifra ya comprometida; el desglose de esta tabla es referencial y no altera el monto total \\
+\end{longtable}
+}
+
+\emph{(La partida ``Impresión 3D'' de S/ 120, sección 3.4.1, ya está presupuestada por separado y no se duplica en esta tabla.)}
+
+\textbf{Tabla 3.4.1-B. Insumos de validación clínica de campo (partidas ``Insumos de validación HemoCue'' S/ 400 y ``Submuestra ferritina + PCR'' S/ 600, Mes 7).}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Insumo
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Base de cálculo asumida
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Costo unitario referencial (S/)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Subtotal referencial (S/)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Fuente / naturaleza del dato
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Microcuvetas HemoCue Hb (o equivalente, método de referencia) & \textasciitilde= 300 determinaciones (límite superior de la submuestra de 150-300 niños, sección 3.1.1) + margen por repeticiones y control de calidad & \textasciitilde= 1.3 & \textasciitilde= 400 & Rango internacional referencial para microcuvetas HemoCue (del orden de USD 0.35-0.55 por unidad al tipo de cambio de referencia), consultado por el equipo --- \textbf{{[}DATO PENDIENTE DE VALIDAR: cotización del distribuidor autorizado de HemoCue en Perú, con fecha{]}} \\
+Reactivos/kits de ferritina sérica y proteína C-reactiva (PCR), por determinación, sobre una submuestra interna de contraste (no toda la submuestra de 150-300 recibe ambos marcadores) & Número real de determinaciones \textbf{no definido aún} por el equipo & No estimado por unidad (variable según se procese en laboratorio propio o se tercerice) & 600 (techo de partida heredado del Business Case, Entregable 2) & Monto agregado sin desglose por número de determinaciones ni proveedor de laboratorio --- \textbf{{[}DATO PENDIENTE DE VALIDAR: número de determinaciones planificadas y cotización del laboratorio/proveedor de reactivos{]}} \\
+\end{longtable}
+}
+
+Se declara explícitamente, con la misma honestidad metodológica del resto de este Plan, que los valores de las Tablas 3.4.1-A y 3.4.1-B son \textbf{estimaciones referenciales de mercado}, útiles para sustentar que el monto total de cada partida es plausible frente a precios reales observables, pero que \textbf{no sustituyen una cotización formal desagregada por fecha y proveedor}; dicha cotización sigue siendo, en su totalidad, un \textbf{{[}DATO PENDIENTE DE VALIDAR{]}} que el equipo deberá levantar antes de comprometer la orden de compra real en el Mes 3-4 (ver riesgo RP7, sección 3.5.2).
+
+\subsubsection{3.4.2 Línea base de costos}\label{luxednea-base-de-costos}
+
+A partir de la distribución mensual de cada partida (sección 3.4.1), se construye la siguiente línea base de costos acumulada, verificada aritméticamente: la suma de los costos directos mensuales reproduce exactamente el subtotal de S/ 2,840 ya reportado en el Business Case (antes de la contingencia), y la reserva de contingencia se prorratea de forma lineal a lo largo de los 8 meses (S/ 284 ÷ 8 = S/ 35.5/mes) para efectos de una línea base suave y gestionable, sin que ello implique que la contingencia se ``gasta'' mensualmente: es una reserva disponible en su totalidad desde el inicio, prorrateada aquí únicamente para fines de graficación de la curva S.
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Mes
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Costo directo del mes (S/)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Costo directo acumulado (S/)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Reserva de contingencia acumulada (S/)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Presupuesto acumulado total --- línea base (S/)}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\% acumulado de la línea base
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+M1 & 165.0 & 165.0 & 35.5 & 200.5 & 6.4 \% \\
+M2 & 40.0 & 205.0 & 71.0 & 276.0 & 8.8 \% \\
+M3 & 40.0 & 245.0 & 106.5 & 351.5 & 11.3 \% \\
+M4 & 65.0 & 310.0 & 142.0 & 452.0 & 14.5 \% \\
+M5 & 550.0 & 860.0 & 177.5 & 1,037.5 & 33.2 \% \\
+M6 & 550.0 & 1,410.0 & 213.0 & 1,623.0 & 52.0 \% \\
+M7 & 1,365.0 & 2,775.0 & 248.5 & 3,023.5 & 96.8 \% \\
+M8 & 65.0 & 2,840.0 & 284.0 & \textbf{3,124.0} & \textbf{100.0 \%} \\
+\end{longtable}
+}
+
+\textbf{Representación visual de la curva S de costos acumulados (escala: 1 bloque \textasciitilde= 5 \% del presupuesto total):}
+
+\begin{samepage}\begin{verbatim}
+M1  #...................   6.4 %   (S/    200.5)
+M2  ##..................   8.8 %   (S/    276.0)
+M3  ##..................  11.3 %   (S/    351.5)
+M4  ###.................  14.5 %   (S/    452.0)
+M5  #######.............  33.2 %   (S/  1,037.5)
+M6  ##########..........  52.0 %   (S/  1,623.0)
+M7  ###################.  96.8 %   (S/  3,023.5)
+M8  #################### 100.0 %   (S/  3,124.0)
+\end{verbatim}\end{samepage}
+
+La lectura de esta curva S es coherente con el resto del Plan: el gasto es bajo y estable durante la gestión del convenio y el diseño (Meses 1 a 4, alcanzando apenas 14.5 \% del presupuesto), se acelera fuertemente durante la implementación (Meses 5-6, por la compra y ensamblaje del hardware) y alcanza su mayor concentración en el Mes 7 (validación de campo), que por sí solo representa cerca del 44 \% del presupuesto total (insumos HemoCue, submuestra de ferritina/PCR y movilidad de campo), consistente con el hecho de que la validación clínica es, tanto operativa como financieramente, la actividad de mayor intensidad de recursos de todo el proyecto.
+
+\subsubsection{3.4.3 Fuente de financiamiento}\label{fuente-de-financiamiento}
+
+El presupuesto de S/ 3,124 es financiado en su totalidad mediante \textbf{aporte propio del equipo de tesis} (autofinanciamiento), tal como ya se estableció en el Business Case (Entregable 2) como la única cifra financiera comprometida ---no ilustrativa--- de todo el proyecto. No se ha gestionado ni confirmado a la fecha ninguna fuente de financiamiento adicional (fondo concursable universitario, premio de innovación, cooperación internacional): \textbf{{[}DATO PENDIENTE DE VALIDAR: gestión de fuentes de financiamiento complementarias, si el equipo decidiera buscarlas antes o durante la ejecución{]}}. Esta condición refuerza la importancia del control presupuestal estricto descrito a continuación, dado que no existe una reserva de gestión (management reserve) adicional a la contingencia del 10 \% ya presupuestada.
+
+\subsubsection{3.4.4 Mecanismo de control presupuestal}\label{mecanismo-de-control-presupuestal}
+
+Dado que el proyecto no ha iniciado su ejecución, este Plan define ---sin poder todavía aplicar--- el mecanismo de control presupuestal que regirá la Fase 0, basado en una adaptación ligera de la Gestión del Valor Ganado (Earned Value Management, PMI):
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Valor Planificado (PV).} Corresponde a la línea base de costos acumulada de la tabla de la sección 3.4.2, verificada mes a mes.
+\item
+  \textbf{Valor Ganado (EV) y Costo Real (AC).} En cada hito principal (H1 a H6, sección 3.3.4), el Director/a de Proyecto calculará el EV como el costo presupuestado de los paquetes de la EDT efectivamente completados, y el AC como el gasto real ejecutado a esa fecha, con soporte de comprobantes.
+\item
+  \textbf{Índices de desempeño.} Se calcularán el Índice de Desempeño del Costo (CPI = EV/AC) y el Índice de Desempeño del Cronograma (SPI = EV/PV) en cada hito.
+\item
+  \textbf{Umbrales de control.} Un CPI o SPI entre 0.90 y 1.10 se considera dentro de tolerancia normal. Un valor entre 0.75 y 0.90 activa una revisión de variación en la siguiente reunión de seguimiento (paquete 1.3) y puede autorizar el uso parcial de la reserva de contingencia (S/ 284). Un valor por debajo de 0.75 se considera una variación severa que obliga a una solicitud formal de cambio (sección 3.2.4) y a informar al docente asesor, evaluando opciones de mitigación (redistribución de horas, reducción acotada del alcance no crítico, o búsqueda de financiamiento adicional).
+\item
+  \textbf{Custodia de la reserva.} La liberación de cualquier monto de la reserva de contingencia requiere justificación escrita del Director/a de Proyecto (Integrante 2) y registro en la bitácora de control de cambios (sección 3.2.4), evitando su uso informal o no documentado.
+\end{enumerate}
+
+\subsubsection{3.4.5 Relación con el presupuesto de las Fases 1 y 2}\label{relaciuxf3n-con-el-presupuesto-de-las-fases-1-y-2}
+
+Se reitera, para evitar duplicación entre entregables, que el presupuesto y los indicadores financieros de la Fase 1 (piloto pagado) y de la Fase 2 (escalamiento) ---incluyendo el modelo financiero a tres años, el VAN (\textasciitilde= S/ 952), la TIR (\textasciitilde= 23.4 \%) y el punto de equilibrio (\textasciitilde= 6 establecimientos, tras la corrección aritmética documentada en el Anexo C del Business Case)--- ya fueron desarrollados en el Business Case (Entregable 2, secciones 2.3 y 2.4) y \textbf{no forman parte de la línea base de costos de este Plan de Gestión}, cuyo alcance se circunscribe estrictamente al presupuesto de S/ 3,124 de la Fase 0 (sección 3.1.4). Cualquier decisión de transición presupuestal hacia la Fase 1 queda fuera del alcance de este documento y correspondería a una actualización del Business Case una vez formalizado un contrato o convenio de piloto pagado.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{3.5 Gestión de Riesgos}\label{gestiuxf3n-de-riesgos}
+
+\subsubsection{3.5.1 Alcance de este registro de riesgos frente al Business Case}\label{alcance-de-este-registro-de-riesgos-frente-al-business-case}
+
+El Business Case (Entregable 2, sección 2.5) ya desarrolló un registro de doce \textbf{riesgos estratégicos de negocio} (R1-R12), de naturaleza comercial, regulatoria y financiera, con un alcance explícitamente preliminar. Este Plan de Gestión desarrolla un registro complementario, no redundante, de \textbf{riesgos de ejecución del proyecto de ocho meses} (identificados como RP1-RP12, ``Riesgo de Proyecto''), centrado en amenazas al cronograma, el alcance, el costo, la calidad técnica y los recursos de este Plan. Varios riesgos de ejecución están vinculados a un riesgo estratégico equivalente del Business Case, lo cual se indica explícitamente en cada ficha, reforzando la coherencia entre ambos documentos.
+
+\subsubsection{3.5.2 Identificación y análisis cualitativo de riesgos}\label{identificaciuxf3n-y-anuxe1lisis-cualitativo-de-riesgos}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+N.°
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Riesgo
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Categoría
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Probabilidad
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Impacto
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nivel de riesgo
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Vínculo con Business Case
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+RP1 & Retraso en la firma del convenio institucional y/o la aprobación del comité de ética más allá del Mes 1, que posterga toda actividad dependiente (en particular, la ejecución de campo del Mes 7) & Cronograma / Institucional & Alta & Crítico & \textbf{Crítico} & R3 \\
+RP2 & Disponibilidad horaria semanal insuficiente de uno o más integrantes por superposición con otros cursos o trabajo, que retrase paquetes de la ruta crítica & Recursos & Media & Alto & Alto & --- \\
+RP3 & Fallas de integración entre los 3 sensores (AS7341, MAX30102, cámara) y el firmware ESP32-S3/BLE que excedan el tiempo asignado (Mes 5-6) & Técnico & Media & Alto & Alto & --- \\
+RP4 & El modelo de inferencia embebido no alcanza los umbrales mínimos de sensibilidad (\textgreater= 85 \%) y especificidad (\textgreater= 80 \%) definidos en el protocolo de validación & Técnico / Clínico & Media & Crítico & \textbf{Crítico} & R2 \\
+RP5 & Indisponibilidad o incumplimiento logístico durante la ejecución de campo (Mes 7): clima altiplánico, transporte, disponibilidad de familias & Operativo / Ambiental & Media & Alto & Alto & R12 \\
+RP6 & Cambios de alcance no controlados (``scope creep'') por solicitudes adicionales del asesor o de la futura microred durante el desarrollo & Alcance & Media & Medio & Medio & --- \\
+RP7 & Retraso en la entrega de componentes electrónicos importados (AS7341, MAX30102, ESP32-S3) que impacte el inicio de la implementación (Mes 5) & Cadena de suministro & Baja & Alto & Medio & R6 \\
+RP8 & Brecha de protección de datos personales de menores durante la recolección de datos de campo (Mes 7) por controles insuficientes al momento de la validación & Legal / Datos personales & Baja & Crítico & Alto & R5 \\
+RP9 & Ausencia, enfermedad o indisponibilidad temporal de un integrante durante una fase crítica del proyecto & Recursos humanos & Baja & Alto & Medio & R9 \\
+RP10 & Descoordinación entre las 3 áreas del equipo (Infraestructura, Gestión, Software) que genere reprocesos por dependencias no gestionadas & Gestión / Integración & Media & Medio & Medio & --- \\
+RP11 & Cambios en el calendario académico oficial de la universidad que compriman el tiempo disponible del Mes 4 o del Mes 8 & Institucional / Académico & Media & Medio & Medio & --- \\
+RP12 & Los resultados de la validación de campo (Mes 7) resultan insuficientes, por tamaño de submuestra u otros factores estadísticos, para sustentar conclusiones sólidas en el Mes 8 & Metodológico & Baja & Alto & Medio & --- \\
+\end{longtable}
+}
+
+\textbf{Mapa de calor cualitativo (probabilidad × impacto):}
+
+\begin{samepage}\begin{verbatim}
+                     Probabilidad: Baja          Probabilidad: Media          Probabilidad: Alta
+Impacto Crítico  |   RP8                      |  RP4                       |  RP1
+Impacto Alto     |   RP7, RP9, RP12           |  RP2, RP3, RP5             |  —
+Impacto Medio    |   —                        |  RP6, RP10, RP11           |  —
+Impacto Bajo     |   —                        |  —                        |  —
+\end{verbatim}\end{samepage}
+
+De los doce riesgos identificados, \textbf{dos se clasifican en nivel crítico}: RP1 (retraso del convenio/comité de ética) y RP4 (insuficiencia del modelo de inferencia frente a los umbrales clínicos), que además son, precisamente, la traducción a nivel de ejecución de los dos riesgos estratégicos ya calificados como críticos en el Business Case (R3 y R2, respectivamente). Esta correspondencia no es casual: refuerza que los dos factores más determinantes para el éxito del proyecto ---adopción/acceso institucional y validez clínica del algoritmo--- son consistentes a lo largo de los tres documentos de gestión ya elaborados (Diagnóstico, Business Case y este Plan).
+
+\subsubsection{3.5.3 Plan de respuesta a riesgos}\label{plan-de-respuesta-a-riesgos}
+
+Para cada riesgo se define una estrategia de respuesta (evitar, mitigar, transferir o aceptar) y una acción específica con responsable asignado:
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+N.°
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Estrategia
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Acción específica
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Responsable
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+RP1 & Mitigar + Plan de contingencia formal (ver detalle abajo) & Iniciar gestiones institucionales desde el día 1 del proyecto; identificar 2-3 microrredes candidatas en paralelo (no solo una); preparar con antelación el expediente para el comité de ética & Integrante 2 \\
+RP2 & Mitigar & Acordar y documentar la disponibilidad horaria semanal mínima de cada integrante antes del inicio del Mes 2 (cierra el supuesto SP2); monitoreo semanal en las reuniones de seguimiento & Integrante 2 (seguimiento) / todo el equipo \\
+RP3 & Mitigar & Incluir pruebas de concepto (spikes) de la integración crítica durante los sprints de diseño (Sprints 1 y 3, sección 3.6) antes de comprometer fechas de producción; reservar 1 semana de colchón técnico dentro del Mes 6 & Integrante 3 (con apoyo de Integrante 1) \\
+RP4 & Mitigar + Aceptar residualmente & Reservar un ciclo de reajuste algorítmico dentro del Mes 6, antes de comprometer el inicio del campo; si el umbral no se alcanza, reportarlo honestamente en el informe de validación en lugar de forzar una conclusión favorable & Integrante 3 (técnico) / Integrante 2 (reporte honesto) \\
+RP5 & Mitigar & Planificar la jornada de campo con una ventana de reprogramación de al menos 1 semana dentro del propio Mes 7; coordinar fechas alternativas por comunidad con la Jefatura de microred & Integrante 2 (logística) / todo el equipo \\
+RP6 & Mitigar & Aplicar estrictamente el procedimiento de control de cambios (sección 3.2.4); recordar el alcance preliminar aprobado en cada reunión de seguimiento & Integrante 2 \\
+RP7 & Mitigar & Colocar el pedido de componentes tan pronto se cierre el diseño de hardware (fin de Mes 3), con 4-6 semanas de margen antes del Mes 5; identificar un proveedor alternativo de respaldo & Integrante 1 \\
+RP8 & Evitar (controles preventivos) + Mitigar & No autorizar el inicio de la ejecución de campo (5.1) sin que el checklist de seguridad (2.3) y el flujo de consentimiento informado digital (HC08) estén verificados y firmados conjuntamente & Integrante 1 (controles técnicos) / Integrante 2 (consentimiento) \\
+RP9 & Mitigar & Mantener una bitácora compartida y básica de avance técnico que permita continuidad ante una ausencia breve de cualquier integrante; evitar concentración de conocimiento crítico sin respaldo documental & Todo el equipo \\
+RP10 & Mitigar & Reforzar la revisión de dependencias entre paquetes EDT en cada sprint planning (sección 3.6.3); dar seguimiento reforzado a la carga concentrada del Sprint 8 & Integrante 2 (coordinación) / todo el equipo \\
+RP11 & Aceptar + Monitorear & Confirmar el calendario académico oficial con la Escuela Profesional en cuanto esté disponible; ajustar este Plan mediante el procedimiento de control de cambios si corresponde & Integrante 2 \\
+RP12 & Mitigar + Aceptar residualmente & Solicitar al asesor metodológico la validación formal del tamaño muestral antes de finalizar el Mes 3 (hito H2); si resulta insuficiente, reportar honestamente el nivel de incertidumbre estadística en el informe de validación & Integrante 2 \\
+\end{longtable}
+}
+
+\textbf{Plan de contingencia detallado para RP1 (retraso del convenio institucional/comité de ética).} Por ser el único riesgo de nivel crítico con probabilidad alta, se define un plan de contingencia escalonado:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Alerta temprana (semana 2 del Mes 1):} si no existe al menos una carta de intención o manifestación de interés de una microred candidata, se escala la gestión institucional con apoyo directo del docente asesor y, de ser posible, de la coordinación de la Escuela Profesional.
+\item
+  \textbf{Activación de candidatas alternativas (semana 3 del Mes 1):} si la microred candidata principal no responde, se activa formalmente el contacto con una segunda microred candidata identificada desde el inicio (evitando depender de una única vía de acceso institucional).
+\item
+  \textbf{Escalamiento formal (fin del Mes 1):} si al finalizar el Mes 1 no se ha formalizado ni el convenio ni la aprobación ética, se declara una variación de cronograma (procedimiento de la sección 3.2.4) y se evalúan dos opciones no excluyentes: (a) comprimir el Mes 2 destinando tiempo adicional a la gestión institucional en paralelo al inicio del diseño técnico (que no depende del convenio, según el análisis de ruta crítica de la sección 3.3.5), o (b) de persistir la imposibilidad de acceso a datos reales de menores hacia el Mes 3, sustituir la validación de campo planificada por una \textbf{validación de banco (bench validation) con datos de referencia documentados en la literatura y/o voluntarios adultos}, dejando expresamente consignado en la sustentación final que este escenario constituye una limitación metodológica significativa y no un sustituto equivalente de la validación clínica pediátrica originalmente planificada.
+\item
+  \textbf{Registro y trazabilidad:} cualquier activación de este plan de contingencia se documenta en el registro de control de cambios (sección 3.2.4) y se comunica formalmente al docente asesor.
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{3.6 Gestión Ágil}\label{gestiuxf3n-uxe1gil}
+
+\subsubsection{3.6.1 Justificación del enfoque híbrido}\label{justificaciuxf3n-del-enfoque-huxedbrido}
+
+Este Plan adopta un enfoque \textbf{híbrido PMBOK/Ágil}, y no uno puramente predictivo ni puramente ágil, por una razón estructural ya anticipada en la sección 3.3.1: los Meses 1, 4, 7 y 8 están gobernados por hitos de naturaleza \textbf{fija, institucional y no iterativa} (un convenio se firma o no se firma; una sustentación ocurre en una fecha determinada; una jornada de campo ejecuta un protocolo ya cerrado), para los cuales un marco predictivo de tipo stage-gate es más adecuado que Scrum, dado que no existe, en sentido estricto, un ``incremento de producto'' que entregar de forma iterativa durante la gestión de un convenio o durante una sustentación. En contraste, los Meses 2-3 (diseño) y 5-6 (implementación) concentran la \textbf{incertidumbre técnica real} del proyecto ---¿es viable la fusión sincronizada de las 3 señales ópticas?, ¿corre la inferencia embebida en el tiempo requerido?, ¿es auditable en la práctica la autocalibración por altitud?--- y por tanto se benefician de ciclos cortos, iterativos y verificables mediante incrementos de software/firmware funcionando, que es precisamente la propuesta de valor de un marco ágil tipo Scrum (Schwaber y Sutherland, 2020). Esta combinación no es una preferencia estética: es una decisión de diseño metodológico justificada por la naturaleza distinta de cada tramo del proyecto.
+
+\subsubsection{3.6.2 Roles ágiles del equipo}\label{roles-uxe1giles-del-equipo}
+
+Dado que el equipo de desarrollo tiene solo 3 integrantes ---y los 3 deben además ejecutar tareas fuera del desarrollo de software (gestión, infraestructura)---, los roles de Scrum se adaptan de la siguiente manera, en lugar de forzar una estructura pensada originalmente para equipos más grandes:
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Rol ágil
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Asignación
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Adaptación específica de este equipo
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Product Owner & Integrante 2 (Líder de Gestión de TI) & Mantiene y prioriza el product backlog; representa, ante la ausencia de un cliente real confirmado, la voz de la Microred de Salud Altiplano-Puno (caso ilustrativo) y del docente asesor; define los criterios de aceptación con apoyo técnico de los otros dos integrantes \\
+Scrum Master & Rotativo entre Integrante 1 e Integrante 3, cada 2 sprints & Facilita las ceremonias y remueve impedimentos; la rotación evita que el mismo integrante concentre simultáneamente el rol de Product Owner y de Scrum Master, preservando una separación mínima de responsabilidades pese al tamaño reducido del equipo \\
+Equipo de desarrollo & Los 3 integrantes, de forma multifuncional & Cada integrante aporta su especialidad (hardware/infraestructura, gestión/validación, software) a las historias de usuario que correspondan, sin rigidez estricta de ``solo su área'' cuando el sprint lo requiera \\
+\end{longtable}
+}
+
+\textbf{Ceremonias adoptadas (con adaptación explícita al contexto estudiantil de dedicación parcial):} Sprint Planning al inicio de cada sprint (1-2 horas); reuniones breves de coordinación 3 veces por semana en lugar de un daily estricto de Scrum, dado que los 3 integrantes no dedican tiempo completo al proyecto; Sprint Review al cierre de cada sprint, con demostración al docente asesor cuando su disponibilidad lo permita; y Sprint Retrospective al cierre de cada sprint. Esta adaptación de la cadencia de ceremonias se declara explícitamente como una desviación consciente de la guía estricta de Scrum (Schwaber y Sutherland, 2020), justificada por la naturaleza de dedicación parcial del equipo.
+
+\subsubsection{3.6.3 Product backlog}\label{product-backlog}
+
+El backlog se organiza en ocho épicas, siete de ellas trazables directamente a un componente técnico ya definido del proyecto o a una automatización del Entregable 4, y una octava dedicada al protocolo y la logística de la validación clínica:
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Épica
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Descripción
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Paquete(s) EDT relacionado(s)
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+E1 & Firmware y captura multisensor (ESP32-S3, AS7341, MAX30102, BLE, buffer offline) & 2.1, 2.4, 4.3 \\
+E2 & Autocalibración por altitud y motor de inferencia embebida & 4.4 \\
+E3 & Aplicación móvil Flutter/PWA offline-first & 4.5 \\
+E4 & Backend interoperable FHIR & 4.6, 2.2 \\
+E5 & Seguridad, identidad y control de acceso & 2.3 \\
+E6 & Consejería nutricional basada en reglas (NTS 213-MINSA/DGIESP-2024) & 4.6 \\
+E7 & Mapa de cobertura/riesgo geoespacial & 2.2, 4.6 \\
+E8 & Protocolo y logística de la validación clínica & 3.6, 5.1 \\
+\end{longtable}
+}
+
+\textbf{Nota editorial sobre esta subsección.} Para mantener la extensión del cuerpo principal de este Plan cercana al rango sugerido por la rúbrica (ver nota editorial de la Introducción y Autoevaluación final), las 25 historias de usuario se presentan aquí en \textbf{versión condensada} (identificador, título breve, épica, prioridad MoSCoW, story points y sprint). El texto narrativo completo en formato ``Como/quiero/para'' y los criterios de aceptación detallados de cada historia, sin ninguna omisión de contenido, se encuentran íntegros en el \textbf{Anexo F}.
+
+\textbf{Backlog de Diseño (Sprints 1-4, Meses 2-3).} Estas historias producen artefactos de diseño y pruebas de concepto (spikes), no necesariamente software listo para campo:
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+ID
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Título breve
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Épica
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+MoSCoW
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Story points
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Sprint
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+HD01 & Esquema de conexión hardware validado (ESP32-S3 + AS7341 + MAX30102) & E1 & Must & 5 & 1 \\
+HD02 & Prueba de concepto de emparejamiento BLE en breadboard & E1 & Must & 3 & 1 \\
+HD03 & Modelo de datos y mapeo a recursos FHIR documentado & E4 & Must & 5 & 2 \\
+HD04 & Prueba de concepto de consulta offline al Modelo Digital de Elevación & E2 & Must & 5 & 2 \\
+HD05 & Prueba de concepto de captura sincronizada de las 3 señales ópticas & E1 & Must & 8 & 3 \\
+HD06 & Prueba de concepto de inferencia ONNX/TFLite en hardware de referencia & E2 & Must & 8 & 3 \\
+HD07 & Protocolo de validación clínica aprobado por el asesor & E8 & Must & 8 & 4 \\
+HD08 & Diseño de seguridad (roles Keycloak) y de la estrategia de buffer offline & E5 / E1 & Must & 5 & 4 \\
+\end{longtable}
+}
+
+\textbf{Backlog de Construcción (Sprints 5-8, Meses 5-6).} Estas historias producen componentes de software/firmware listos para la validación de campo:
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+ID
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Título breve
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Épica
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+MoSCoW
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Story points
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Sprint
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+HC01 & Emparejamiento BLE del nodo en menos de 10 segundos & E1 & Must & 5 & 5 \\
+HC02 & Captura sincronizada multisensor integrada en el nodo físico & E1 & Must & 8 & 5 \\
+HC03 & Firmware con buffer offline persistente (\textgreater= 50 capturas) & E1 & Must & 5 & 5 \\
+HC04 & Autocalibración por altitud integrada en el flujo real (GPS + MDE) & E2 & Must & 8 & 5 \\
+HC05 & Inferencia embebida (ONNX/TFLite) integrada end-to-end, sin internet & E2 & Must & 8 & 6 \\
+HC06 & Pantalla/reporte de auditoría de la corrección de altitud aplicada & E2 & Must & 5 & 6 \\
+HC07 & Autenticación basada en roles (RBAC) vía Keycloak/OIDC & E5 & Must & 8 & 6 \\
+HC08 & Consentimiento informado digital (FHIR Consent) antes de la captura & E3 & Must & 5 & 6 \\
+HC09 & Pantalla de resultado en lenguaje simple, app operativa offline & E3 & Must & 8 & 7 \\
+HC10 & Generación de los 6 recursos FHIR por cada tamizaje & E4 & Must & 13 & 7 \\
+HC11 & Cifrado en tránsito y en reposo de la información de salud de menores & E5 & Must & 5 & 7 \\
+HC12 & Recordatorio automático (push/SMS) del próximo control mensual & E3 & Should & 5 & 8 \\
+HC13 & Sincronización FHIR con HIS-MINSA/Padrón Nominal en sandbox & E4 & Should & 8 & 8 \\
+HC14 & Consejería nutricional estructurada por edad y severidad & E6 & Should & 5 & 8 \\
+HC15 & Mapa de cobertura/riesgo con hexágonos H3 & E7 & Could & 8 & 8 \\
+HC16 & Plan de pruebas de integración end-to-end (nodo-\textgreater app-\textgreater backend) & QA transversal & Must & 8 & 8 \\
+HC17 & Comparación en banco frente a HemoCue sobre submuestra interna & E2 & Should & 5 & 8 \\
+\end{longtable}
+}
+
+El backlog completo asciende a \textbf{164 story points} (47 en el backlog de diseño, 117 en el de construcción), estimados mediante la técnica de Planning Poker con una escala de Fibonacci modificada (1, 2, 3, 5, 8, 13, 21). Se declara explícitamente, en línea con el supuesto SP7 (sección 3.1.6), que esta estimación inicial no cuenta con historial de velocidad previo del equipo y deberá recalibrarse tras el cierre del Sprint 1. El texto narrativo completo y los criterios de aceptación de cada una de estas 25 historias se conservan íntegros, sin resumir, en el \textbf{Anexo F}.
+
+\subsubsection{3.6.4 Sprint planning}\label{sprint-planning}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Sprint
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Fase / mes
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Objetivo del sprint (Sprint Goal)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Historias comprometidas
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Story points
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Sprint 1 & Diseño --- semanas 1-2 del Mes 2 & Cerrar el esquema de hardware y validar la viabilidad del emparejamiento BLE & HD01, HD02 & 8 \\
+Sprint 2 & Diseño --- semanas 3-4 del Mes 2 & Cerrar el modelo de datos/FHIR y validar la viabilidad de la consulta al Modelo Digital de Elevación & HD03, HD04 & 10 \\
+Sprint 3 & Diseño --- semanas 1-2 del Mes 3 & Validar la viabilidad de la captura sincronizada multisensor y de la inferencia embebida & HD05, HD06 & 16 \\
+Sprint 4 & Diseño --- semanas 3-4 del Mes 3 & Cerrar el protocolo de validación clínica y el diseño de seguridad/buffer offline, listos para el hito H2 & HD07, HD08 & 13 \\
+Sprint 5 & Construcción --- semanas 1-2 del Mes 5 & Firmware integrado de captura multisensor y autocalibración por altitud funcionando en el nodo físico & HC01, HC02, HC03, HC04 & 26 \\
+Sprint 6 & Construcción --- semanas 3-4 del Mes 5 & Inferencia embebida, auditoría de corrección de altitud y autenticación RBAC integradas & HC05, HC06, HC07, HC08 & 26 \\
+Sprint 7 & Construcción --- semanas 1-2 del Mes 6 & App móvil conectada de extremo a extremo (BLE-\textgreater App-\textgreater Backend FHIR), cifrada y con consentimiento digital & HC09, HC10, HC11 & 26 \\
+Sprint 8 & Construcción --- semanas 3-4 del Mes 6 & Cierre de funcionalidades complementarias y pruebas de integración end-to-end antes de la validación de campo & HC12, HC13, HC14, HC15, HC16, HC17 & 39 \\
+\end{longtable}
+}
+
+Se observa que el Sprint 8 concentra la mayor carga (39 puntos, frente a un promedio de 26 en los tres sprints de construcción anteriores). Esta es una decisión consciente de priorización ---consolidar y cerrar funcionalidades complementarias justo antes del hito H4 (prototipo integrado listo, fin de Mes 6)---, pero se identifica explícitamente como un punto de atención de gestión, vinculado al riesgo RP10 (sección 3.5). Se recomienda reforzar las reuniones de coordinación durante este sprint y, de ser necesario, degradar historias de prioridad ``Could'' (HC15) a un backlog posterior fuera del alcance de este Plan, en lugar de comprometer la fecha del hito H4.
+
+\subsubsection{3.6.5 Incrementos esperados}\label{incrementos-esperados}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Sprint
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Incremento entregado
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 & Esquema de hardware validado + spike de emparejamiento BLE funcionando en banco \\
+2 & Modelo de datos/FHIR documentado + spike de consulta offline a un Modelo Digital de Elevación \\
+3 & Spike de captura sincronizada de 3 señales + spike de inferencia embebida con tiempos medidos \\
+4 & Protocolo de validación clínica aprobado + diseño de seguridad y de buffer offline cerrados (listo para el hito H2 / cierre de diseño) \\
+5 & Firmware integrado (captura + buffer offline + autocalibración) operando en los 3 nodos físicos \\
+6 & Inferencia embebida end-to-end + pantalla de auditoría de altitud + autenticación RBAC operativas \\
+7 & Aplicación móvil conectada de extremo a extremo, con consentimiento digital, cifrado y generación de recursos FHIR \\
+8 & Sistema integrado y probado end-to-end (recordatorios, sincronización sandbox, consejería, mapa geoespacial), \textbf{listo para la validación de campo del Mes 7} (hito H4) \\
+\end{longtable}
+}
+
+\subsubsection{3.6.6 Definición de Listo y Definición de Terminado}\label{definiciuxf3n-de-listo-y-definiciuxf3n-de-terminado}
+
+\textbf{Definición de Listo (Definition of Ready) de una historia de usuario:} redactada en formato ``Como / quiero / para''; con criterios de aceptación explícitos; dependencias de otras historias o paquetes EDT identificadas; estimada en story points por el equipo completo; sin bloqueos conocidos que impidan iniciarla en el sprint asignado.
+
+\textbf{Definición de Terminado (Definition of Done) de una historia de usuario:} código o artefacto integrado en el repositorio/documento principal del proyecto; para historias de software, pruebas unitarias básicas ejecutadas y en verde; revisión por al menos otro integrante distinto de quien la desarrolló (revisión de pares); criterios de aceptación verificados explícitamente; documentación mínima actualizada (README técnico o equivalente); sin errores críticos abiertos asociados a la historia.
+
+\subsubsection{3.6.7 Métricas de seguimiento}\label{muxe9tricas-de-seguimiento}
+
+Dado que el proyecto no ha iniciado su ejecución, esta sección define la \textbf{plantilla de métricas} que se completará durante el desarrollo real de los 8 sprints, y no datos ya medidos:
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Sprint
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Story points planificados
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Story points completados (a registrar)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Velocidad acumulada (a registrar)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Cumplimiento del Sprint Goal (Sí/No/Parcial, a registrar)
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 & 8 & --- & --- & --- \\
+2 & 10 & --- & --- & --- \\
+3 & 16 & --- & --- & --- \\
+4 & 13 & --- & --- & --- \\
+5 & 26 & --- & --- & --- \\
+6 & 26 & --- & --- & --- \\
+7 & 26 & --- & --- & --- \\
+8 & 39 & --- & --- & --- \\
+\end{longtable}
+}
+
+Además de esta tabla de velocidad, el equipo llevará, durante la ejecución real: \textbf{(a)} un gráfico de quema de sprint (sprint burndown), graficando diariamente los story points restantes frente a la línea ideal; \textbf{(b)} un gráfico de avance por épica (burnup) que muestre qué proporción de cada una de las 8 épicas (sección 3.6.3) se encuentra completada en cada momento; y \textbf{(c)} la tasa de cumplimiento del Sprint Goal declarado (columna final de la tabla anterior), que constituye el indicador cualitativo más directo de si el equipo está gestionando bien su capacidad real frente a lo planificado. Se recomienda recalibrar la estimación de story points de los sprints de construcción (5-8) inmediatamente después de cerrar el Sprint 1, una vez que el equipo cuente con su primera medición real de velocidad (supuesto SP7, sección 3.1.6).
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Anexos}\label{anexos}
+
+\subsection{Anexo A --- Glosario de términos de gestión de proyectos (PMBOK/Ágil)}\label{anexo-a-glosario-de-tuxe9rminos-de-gestiuxf3n-de-proyectos-pmbokuxe1gil}
+
+\emph{(Complementa, sin repetir, el glosario técnico-clínico del Anexo A del Entregable 1 y el glosario financiero/de gestión del Anexo A del Entregable 2.)}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Sigla / término
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Definición
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Acta de Constitución (Project Charter) & Documento que autoriza formalmente la existencia de un proyecto y otorga al Director/a de Proyecto la autoridad para aplicar recursos a sus actividades \\
+AC (Actual Cost) & Costo Real: gasto efectivamente incurrido por el trabajo realizado a una fecha determinada \\
+Backlog (Product / Sprint) & Lista ordenada y priorizada de todo el trabajo pendiente de un producto (Product Backlog) o comprometido para un sprint específico (Sprint Backlog) \\
+Burndown / Burnup chart & Gráfico que muestra, respectivamente, el trabajo restante o el trabajo completado a lo largo de un sprint o de un proyecto \\
+CPI (Cost Performance Index) & Índice de Desempeño del Costo = EV/AC; un valor menor a 1 indica sobrecosto respecto de lo planificado \\
+Definition of Done (DoD) & Conjunto de criterios que debe cumplir un incremento de producto para considerarse terminado \\
+Definition of Ready (DoR) & Conjunto de criterios que debe cumplir una historia de usuario para poder ingresar a un sprint \\
+DSR / DSRM & Design Science Research / Design Science Research Methodology: metodología de investigación en sistemas de información orientada al diseño y evaluación de artefactos tecnológicos \\
+EDT / WBS (Work Breakdown Structure) & Estructura de Desglose del Trabajo: descomposición jerárquica del alcance total del proyecto en paquetes de trabajo manejables \\
+EV (Earned Value) & Valor Ganado: valor presupuestado del trabajo efectivamente completado a una fecha determinada \\
+Historia de usuario (User Story) & Descripción breve de una funcionalidad desde la perspectiva de quien la necesita, típicamente en formato ``Como/quiero/para'' \\
+Hito (Milestone) & Punto o evento significativo del proyecto, de duración cero, que marca la finalización de una fase o un entregable clave \\
+Holgura (Float / Slack) & Tiempo que una actividad puede retrasarse sin afectar la fecha de fin del proyecto (holgura total) o de la actividad sucesora inmediata (holgura libre) \\
+Línea base (Baseline) & Versión aprobada de un plan (de alcance, cronograma o costos) que sirve de referencia para medir el desempeño real del proyecto \\
+MoSCoW & Técnica de priorización que clasifica los requisitos en Must have, Should have, Could have y Won't have (this time) \\
+Planning Poker & Técnica de estimación colaborativa de historias de usuario mediante cartas con valores de una escala (habitualmente Fibonacci) \\
+PV (Planned Value) & Valor Planificado: costo presupuestado del trabajo programado a una fecha determinada, según la línea base \\
+RACI & Matriz de asignación de responsabilidades: Responsable (Responsible), Aprobador (Accountable), Consultado (Consulted), Informado (Informed) \\
+Reserva de contingencia & Fondo presupuestado para hacer frente a riesgos identificados y aceptados dentro de la línea base de costos \\
+Ruta crítica (Critical Path) & Secuencia de actividades con holgura total igual a cero, que determina la duración mínima posible del proyecto \\
+Scrum & Marco de trabajo ágil iterativo e incremental para el desarrollo de productos complejos, organizado en sprints \\
+Sprint & Bloque de tiempo fijo (en este documento, dos semanas) durante el cual el equipo construye un incremento de producto potencialmente utilizable \\
+SPI (Schedule Performance Index) & Índice de Desempeño del Cronograma = EV/PV; un valor menor a 1 indica atraso respecto de lo planificado \\
+Spike & Historia técnica de duración acotada dedicada a investigar o probar la viabilidad de una solución, sin producir necesariamente software de producción \\
+Stage-gate & Modelo de gestión predictivo que organiza el proyecto en fases separadas por puntos de control (gates) que autorizan el avance a la siguiente fase \\
+Story point & Unidad relativa y adimensional usada para estimar el esfuerzo/complejidad de una historia de usuario \\
+Velocidad (Velocity) & Cantidad de story points que un equipo ágil completa, en promedio, por sprint \\
+\end{longtable}
+}
+
+\subsection{Anexo B --- Fuentes y referencias}\label{anexo-b-fuentes-y-referencias}
+
+\begin{itemize}
+\tightlist
+\item
+  Project Management Institute (PMI). (2021). \emph{A Guide to the Project Management Body of Knowledge (PMBOK® Guide) --- Seventh Edition}. Newtown Square, PA: PMI.
+\item
+  Schwaber, K., y Sutherland, J. (2020). \emph{La Guía de Scrum: La Guía Definitiva de Scrum: Las Reglas del Juego}.
+\item
+  Peffers, K., Tuunanen, T., Rothenberger, M. A., y Chatterjee, S. (2007). A Design Science Research Methodology for Information Systems Research. \emph{Journal of Management Information Systems}, 24(3), 45-77.
+\item
+  Encuesta Demográfica y de Salud Familiar (ENDES) 2025. Instituto Nacional de Estadística e Informática (INEI). Indicador de prevalencia de anemia infantil en menores de 3 años, región Puno (56.1 \%).
+\item
+  Ministerio de Salud del Perú. Norma Técnica de Salud NTS 213-MINSA/DGIESP-2024 para el manejo terapéutico y preventivo de la anemia.
+\item
+  Presidencia del Consejo de Ministros del Perú. Decreto Supremo N.° 115-2025-PCM, reglamento de la Ley N.° 31814 (Ley que promueve el uso de la Inteligencia Artificial en favor del desarrollo del país).
+\item
+  Congreso de la República del Perú. Ley N.° 29733, Ley de Protección de Datos Personales.
+\item
+  HemoScan Andino, Equipo de tesis (2026). Entregable N.° 1 --- Diagnóstico Organizacional y Alineamiento Estratégico. Documento interno del proyecto, Universidad Peruana Unión, sede Juliaca.
+\item
+  HemoScan Andino, Equipo de tesis (2026). Entregable N.° 2 --- Business Case del Proyecto. Documento interno del proyecto, Universidad Peruana Unión, sede Juliaca.
+\item
+  HemoScan Andino, Equipo de tesis (2026). Entregable N.° 4 --- Modelado de Procesos AS-IS/TO-BE. Documento interno del proyecto, Universidad Peruana Unión, sede Juliaca.
+\item
+  Gonzales, G. F. et al.~(2025). {[}DATO PENDIENTE DE VALIDAR: título completo del artículo, revista, volumen y DOI --- solo se cuenta con autor y año según el enunciado del proyecto{]}. Referencia sobre el riesgo de sobrediagnóstico de anemia por corrección inadecuada de hemoglobina en altitud.
+\item
+  Baquerizo-Sedano, L. et al.~(2025). {[}DATO PENDIENTE DE VALIDAR: título completo del artículo, revista, volumen y DOI --- solo se cuenta con autor y año según el enunciado del proyecto{]}. Referencia complementaria sobre el mismo riesgo de sobrediagnóstico por altitud.
+\end{itemize}
+
+\textbf{Nota:} se reitera que las referencias a Gonzales et al.~(2025) y Baquerizo-Sedano et al.~(2025) se citan tal como fueron provistas en el enunciado del proyecto (autor y año), sin acceso directo a la ficha bibliográfica completa. Las referencias a PMBOK, la Guía de Scrum y Peffers et al.~(2007) corresponden a marcos metodológicos estándar y ampliamente documentados de la disciplina de gestión de proyectos y de investigación en sistemas de información, por lo que se citan con confianza plena, a diferencia de las referencias clínicas específicas del proyecto.
+
+\subsection{Anexo C --- Matriz RACI (paquetes principales de la EDT)}\label{anexo-c-matriz-raci-paquetes-principales-de-la-edt}
+
+\textbf{Leyenda:} R = Responsable de ejecutar · A = Aprobador/rinde cuentas del resultado · C = Consultado · I = Informado.
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Paquete EDT
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Integrante 1 (Infraestructura)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Integrante 2 (Gestión de TI / PM)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Integrante 3 (Software)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Docente asesor
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Microred / Comité de Ética (externo)
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1.1 Planificación y línea base & C & R/A & C & I & --- \\
+1.2 Convenio institucional y comité de ética & I & R/A & I & C & A (aprueba/firma) \\
+2.1-2.5 Infraestructura Tecnológica (conjunto) & R/A & I & C & I & --- \\
+3.1-3.4 Entregables académicos & C & R/A & C & A (aprueba) & --- \\
+3.6 Logística y consentimiento de campo & I & R/A & C & I & C \\
+4.1-4.7 Ingeniería de Software (conjunto) & C & I & R/A & I & --- \\
+5.1 Ejecución de campo & C & R/A & C & I & A (autoriza el acceso) \\
+5.2-5.3 Análisis e informe de validación & I & R/A & C & C & --- \\
+6.1-6.3 Cierre y sustentación & C & R/A & C & A (evalúa) & --- \\
+\end{longtable}
+}
+
+\subsection{Anexo D --- Índice de diagramas y figuras presentados en el cuerpo del documento}\label{anexo-d-uxedndice-de-diagramas-y-figuras-presentados-en-el-cuerpo-del-documento}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Figura
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Descripción
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Ubicación
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Diagrama 1 & Estructura de Desglose del Trabajo (EDT/WBS) de seis ramas & Sección 3.2.2 \\
+Diagrama 2a & Diagrama de Gantt, versión textual (tabla resumen por mes), de 8 meses y 28 actividades & Sección 3.3.3 \\
+Diagrama 2b & Diagrama de Gantt, versión gráfica (barras con eje temporal, coloreadas por rama, con hitos H1-H6), imagen \texttt{assets/03-plan-gestion/gantt-diagrama.png} & Sección 3.3.3 \\
+Diagrama 3 & Curva S de costos acumulados (línea base de costos) & Sección 3.4.2 \\
+Diagrama 4 & Mapa de calor cualitativo de riesgos de proyecto (probabilidad × impacto) & Sección 3.5.2 \\
+\end{longtable}
+}
+
+\subsection{Anexo E --- Registro consolidado de supuestos de este Plan de Gestión}\label{anexo-e-registro-consolidado-de-supuestos-de-este-plan-de-gestiuxf3n}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+N.°
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Supuesto
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Valor usado en este documento
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Estado
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+SP1 & Plazo para formalizar el convenio institucional y la aprobación ética & Dentro del Mes 1 & Supuesto de planificación; riesgo crítico asociado RP1 \\
+SP2 & Disponibilidad horaria semanal de cada integrante & No cuantificada & \textbf{{[}DATO PENDIENTE DE VALIDAR: horas/semana acordadas entre los 3 integrantes{]}} \\
+SP3 & Continuidad del equipo sin deserción durante los 8 meses & Asumida & Supuesto de planificación; riesgo asociado RP9 \\
+SP4 & Disponibilidad de retroalimentación del docente asesor & Al menos mensual & \textbf{{[}DATO PENDIENTE DE VALIDAR: disponibilidad real del asesor{]}} \\
+SP5 & Acceso a instalaciones universitarias básicas (laboratorio, impresión 3D) & Asumido & No confirmado formalmente \\
+SP6 & Plazo de entrega de componentes electrónicos importados & 2 a 4 semanas desde el pedido & \textbf{{[}DATO PENDIENTE DE VALIDAR: proveedor y plazo real{]}}; riesgo asociado RP7 \\
+SP7 & Velocidad de equipo (story points/sprint) sin historial previo & Estimación inicial vía Planning Poker (ver sección 3.6.3) & Supuesto metodológico explícito; a recalibrar tras el Sprint 1 \\
+SP8 & Suficiencia estadística de la submuestra de 150-300 niños & Heredado del Business Case (Entregable 2) & \textbf{{[}DATO PENDIENTE DE VALIDAR: cálculo formal de tamaño muestral con el asesor{]}}; riesgo asociado RP12 \\
+SP9 & Distribución mensual de cada partida presupuestal (sección 3.4.1-3.4.2) y desglose de costo unitario por componente (Tablas 3.4.1-A y 3.4.1-B) & Construcción interna del equipo, con rangos de precio unitario referenciales de mercado, sin cotización formal desagregada por fecha de proveedor & Ilustrativo, aunque verificado aritméticamente contra el total de S/ 3,124; \textbf{{[}DATO PENDIENTE DE VALIDAR: cotización formal por proveedor con fecha, para cada componente e insumo{]}} \\
+SP10 & Prorrateo lineal de la reserva de contingencia (S/ 284) a lo largo de los 8 meses & S/ 35.5/mes, solo para fines de graficación de la curva S & Convención de planificación, no implica gasto mensual real de la reserva \\
+SP11 & Equivalencia de 4 semanas por mes para fines de conversión de duraciones & Usada en toda la sección 3.3 & Convención de planificación; el calendario académico oficial exacto es \textbf{{[}DATO PENDIENTE DE VALIDAR{]}} \\
+SP12 & Asignación de roles ágiles (Product Owner = Integrante 2; Scrum Master rotativo) & Ver sección 3.6.2 & Decisión de diseño del equipo, adaptada a un equipo de 3 integrantes; no es una regla estándar de Scrum \\
+\end{longtable}
+}
+
+\subsection{Anexo F --- Backlog completo de historias de usuario (texto narrativo y criterios de aceptación)}\label{anexo-f-backlog-completo-de-historias-de-usuario-texto-narrativo-y-criterios-de-aceptaciuxf3n}
+
+\emph{(Versión íntegra y sin resumir de las 25 historias presentadas en versión condensada en la sección 3.6.3, trasladada a este anexo por razones exclusivamente de extensión del documento --- ver nota editorial de la Introducción y de la Autoevaluación final. Ningún contenido fue omitido: cada fila reproduce exactamente el texto de la versión de trabajo original de este Plan.)}
+
+\textbf{Backlog de Diseño (Sprints 1-4, Meses 2-3).} Estas historias producen artefactos de diseño y pruebas de concepto (spikes), no necesariamente software listo para campo:
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+ID
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Historia de usuario
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Épica
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+MoSCoW
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Story points
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Sprint
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Criterios de aceptación (resumen)
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+HD01 & Como equipo de hardware, quiero un esquema de conexión validado ESP32-S3+AS7341+MAX30102, para iniciar el ensamblaje sin errores de integración & E1 & Must & 5 & 1 & Diagrama revisado conjuntamente por Integrante 1 e Integrante 3 \\
+HD02 & Como equipo, quiero una prueba de concepto de emparejamiento BLE en breadboard, para confirmar la viabilidad del protocolo elegido & E1 & Must & 3 & 1 & Emparejamiento exitoso demostrado al menos una vez en banco de pruebas \\
+HD03 & Como equipo de software, quiero un modelo de datos y mapeo a recursos FHIR documentado, para evitar retrabajo en la construcción & E4 & Must & 5 & 2 & Cada campo clínico mapeado a un recurso/atributo FHIR y revisado por el equipo \\
+HD04 & Como equipo, quiero una prueba de concepto de consulta a un Modelo Digital de Elevación offline a partir de coordenadas GPS, para validar la viabilidad de la autocalibración & E2 & Must & 5 & 2 & Consulta offline funcional con error de altitud \textless{} 30 m frente a una referencia conocida \\
+HD05 & Como equipo, quiero una prueba de concepto de captura sincronizada de las 3 señales ópticas con marca de tiempo común, para validar la fusión multisensor & E1 & Must & 8 & 3 & Captura sincronizada demostrada con desfase menor al umbral definido por el equipo \\
+HD06 & Como equipo, quiero una prueba de concepto del modelo de inferencia (ONNX/TFLite) corriendo en el hardware de referencia, para confirmar tiempos de respuesta aceptables & E2 & Must & 8 & 3 & Inferencia de prueba ejecutada en \textless{} 3 segundos en el hardware de referencia \\
+HD07 & Como equipo de tesis, quiero un protocolo de validación clínica formalmente aprobado por el asesor (y el comité de ética, si ya constituido), para ejecutar el campo del Mes 7 con respaldo metodológico & E8 & Must & 8 & 4 & Documento de protocolo aprobado antes del cierre del Mes 3 (hito H2) \\
+HD08 & Como equipo, quiero un diseño de la arquitectura de seguridad (roles Keycloak) y de la estrategia de buffer offline del firmware, para iniciar la construcción sobre una base sólida & E5 / E1 & Must & 5 & 4 & Diseño de roles y de la estrategia de buffer revisado y aprobado internamente \\
+\end{longtable}
+}
+
+\textbf{Backlog de Construcción (Sprints 5-8, Meses 5-6).} Estas historias producen componentes de software/firmware listos para la validación de campo:
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1429}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+ID
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Historia de usuario
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Épica
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+MoSCoW
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Story points
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Sprint
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Criterios de aceptación (resumen)
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+HC01 & Como técnico de salud, quiero emparejar el nodo por BLE en menos de 10 segundos, para iniciar el tamizaje sin fricción técnica & E1 & Must & 5 & 5 & Emparejamiento exitoso en \textgreater= 95 \% de intentos, tiempo medido \textless{} 10 s \\
+HC02 & Como sistema, quiero capturar simultáneamente la imagen de conjuntiva, el espectro AS7341 y la señal PPG del MAX30102, integradas en el nodo físico & E1 & Must & 8 & 5 & Captura sincronizada operando en los 3 nodos físicos ensamblados \\
+HC03 & Como desarrollador, quiero un firmware con buffer offline persistente (\textgreater= 50 capturas) que sincronice al reconectar, para garantizar continuidad en campo & E1 & Must & 5 & 5 & Buffer persiste \textgreater= 50 capturas sin conexión; sincronización automática verificada \\
+HC04 & Como sistema, quiero la autocalibración por altitud integrada en el flujo real (GPS + Modelo Digital de Elevación), para ajustar el umbral de hemoglobina de forma transparente & E2 & Must & 8 & 5 & Corrección aplicada automáticamente en cada captura, con registro auditable \\
+HC05 & Como sistema, quiero el modelo de inferencia (ONNX/TFLite) integrado en el flujo real de la app/dispositivo, sin conexión a internet & E2 & Must & 8 & 6 & Inferencia completa en \textless{} 3 s en el flujo end-to-end, sin llamadas de red \\
+HC06 & Como personal de salud, quiero ver de forma transparente qué corrección de altitud se aplicó a cada resultado, para poder auditarla & E2 & Must & 5 & 6 & Pantalla/reporte muestra altitud usada, versión del modelo y valor antes/después \\
+HC07 & Como administrador del sistema, quiero autenticación basada en roles (RBAC) vía Keycloak/OIDC, para que cada usuario acceda solo a lo que le corresponde & E5 & Must & 8 & 6 & Al menos 3 roles definidos y probados (acceso permitido/denegado documentado) \\
+HC08 & Como personal CRED, quiero registrar el consentimiento informado digital (FHIR Consent) antes de cualquier captura, para cumplir la Ley N.° 29733 & E3 & Must & 5 & 6 & No se permite iniciar captura sin Consent firmado; recurso FHIR Consent válido generado \\
+HC09 & Como cuidador, quiero ver el resultado del tamizaje en lenguaje simple y no alarmista, en una app que funcione completamente offline & E3 & Must & 8 & 7 & Pantalla validada con revisión de lenguaje claro; app operativa 72 h sin conectividad en prueba de banco \\
+HC10 & Como sistema, quiero generar los recursos FHIR Observation, Provenance, AuditEvent, Consent, Device y Patient por cada tamizaje, para asegurar trazabilidad completa & E4 & Must & 13 & 7 & Recursos válidos contra el esquema FHIR estándar; revisión cruzada del equipo \\
+HC11 & Como responsable de datos, quiero que toda la información de salud de menores esté cifrada en tránsito y en reposo, para cumplir la Ley N.° 29733 & E5 & Must & 5 & 7 & TLS en tránsito y cifrado de base de datos en reposo verificados en checklist de seguridad \\
+HC12 & Como cuidador, quiero recibir un recordatorio automático (push/SMS) del próximo control mensual, para no olvidar la cita & E3 & Should & 5 & 8 & Notificación programada configurable; registro de envío exitoso/fallido \\
+HC13 & Como backend, quiero sincronizar los recursos FHIR con el HIS-MINSA/Padrón Nominal en un entorno simulado (sandbox), para reducir el subregistro & E4 & Should & 8 & 8 & Sincronización exitosa en entorno sandbox, con manejo de reintentos \\
+HC14 & Como personal CRED, quiero entregar consejería nutricional estructurada según edad y severidad, para reforzar el tratamiento & E6 & Should & 5 & 8 & Motor de reglas cubre al menos 3 rangos de severidad, contenido validado contra la NTS 213 por el equipo \\
+HC15 & Como Jefatura de microred, quiero un mapa de cobertura/riesgo con datos agregados por hexágonos H3, para focalizar recursos & E7 & Could & 8 & 8 & Mapa renderiza con MapLibre GL JS/PMTiles sobre datos de prueba, con al menos 1 capa de riesgo \\
+HC16 & Como equipo de software, quiero un plan de pruebas de integración end-to-end (nodo-\textgreater app-\textgreater backend) antes de la validación de campo & QA transversal & Must & 8 & 8 & \textgreater= 10 casos de prueba end-to-end documentados, con \textgreater= 90 \% de éxito antes de iniciar el Mes 7 \\
+HC17 & Como equipo de tesis, quiero comparar en banco de pruebas el prototipo frente a HemoCue en una submuestra interna, para detectar errores gruesos antes del campo & E2 & Should & 5 & 8 & Reporte de comparación preliminar documentado; discrepancias mayores resueltas o registradas como riesgo (RP4) \\
+\end{longtable}
+}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Autoevaluación frente a la rúbrica}\label{autoevaluaciuxf3n-frente-a-la-ruxfabrica}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Criterio
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nivel alcanzado
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Justificación
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Acta de Constitución & Bueno, con elementos de Excelente & El Acta formula cinco objetivos SMART propios de este proyecto de 8 meses, una justificación estratégica trazable a los Entregables 1 y 2, un mapa de stakeholders con rol específico de ejecución y seis criterios de éxito verificables. No alcanza el nivel ``Excelente'' pleno porque su componente más estructural ---el patrocinio (sponsor)--- no puede cerrarse por completo: el patrocinador académico carece aún de nombre confirmado, y el patrocinador institucional externo (GERESA/DIRESA o una microred real) sencillamente no existe a la fecha, a diferencia de otros elementos del Acta que sí son enteramente construibles en gabinete. \\
+Gestión del Alcance & Excelente & La EDT de seis ramas refleja de manera explícita y verificable las tres áreas de competencia del equipo más las funciones transversales de dirección, validación y cierre; el diccionario de la EDT desarrolla 28 paquetes de trabajo con responsable, entregable y criterios de aceptación propios, incluyendo una trazabilidad explícita hacia las 14 automatizaciones del Entregable 4; y se define un procedimiento de control de cambios con umbrales concretos de re-planificación. Este es un ejercicio de planificación enteramente construible con la información ya disponible en los Entregables 1, 2 y 4, sin depender de datos de campo aún inexistentes. Una verificación adversarial detectó, además, un riesgo específico de redundancia entre los paquetes 1.1 y 3.3 (mismo periodo M3-M4, aparente mismo entregable); se corrigió mediante una diferenciación explícita en el diccionario de la EDT (sección 3.2.3: 1.1 = gobernanza/dirección del plan, 3.3 = producto académico entregable) y una nota aclaratoria en la lista de actividades (sección 3.3.2) advirtiendo que ambas franjas no son esfuerzo acumulable. Precisamente esta capacidad de resolver con claridad una ambigüedad de este tipo ---en lugar de dejarla implícita--- es lo que sostiene el nivel Excelente de un diccionario de EDT. \\
+Gestión del Cronograma & Bueno, con elementos de Excelente & Se presenta una lista de 28 actividades secuenciadas con predecesoras explícitas, un diagrama de Gantt de 8 meses ---ahora en \textbf{doble formato}: la tabla textual original (sección 3.3.3, Diagrama 2a) y, añadido tras la verificación adversarial, un \textbf{diagrama de Gantt gráfico real} con eje temporal continuo, barras por rama de responsabilidad y marcadores de hito (Diagrama 2b, imagen \texttt{assets/03-plan-gestion/gantt-diagrama.png}), cerrando así la brecha literal frente al formato sugerido por la rúbrica (``con diagrama de Gantt'')---, 6 hitos principales correlacionados uno a uno con las fases macro del proyecto, y un análisis de ruta crítica que además identifica una ruta casi crítica (el convenio institucional) de especial atención gerencial. La limitación que persiste para alcanzar el nivel ``Excelente'' pleno ya no es de formato, sino de fondo: las duraciones y la propia equivalencia de semanas por mes son estimaciones internas del equipo ---no calculadas con una herramienta de programación (por ejemplo, con un cálculo formal de holgura en días mediante paso adelante/paso atrás)--- y dependen, en última instancia, de un calendario académico oficial y de plazos reales de proveedores que hoy son \textbf{{[}DATO PENDIENTE DE VALIDAR{]}}. \\
+Gestión de Costos & Bueno, con elementos de Excelente & El presupuesto detallado asigna cada una de las 8 partidas ya comprometidas (S/ 3,124) a un paquete EDT, un mes y un responsable; la línea base de costos mensual se verifica aritméticamente de forma exacta contra el subtotal y la contingencia ya establecidos en el Business Case, y se define un mecanismo de control presupuestal basado en CPI/SPI con umbrales concretos de variación. Tras la verificación adversarial, se incorporó además un \textbf{desglose referencial de costo unitario por componente} (Tablas 3.4.1-A y 3.4.1-B: ESP32-S3, AS7341, MAX30102, LED alto CRI, microcuvetas HemoCue, reactivos de ferritina/PCR), con rangos de mercado consultados por el equipo, para sostener con evidencia externa ---y no solo con la reasignación interna del monto global--- la exigencia de ``estimaciones justificadas'' del nivel Excelente. No alcanza, aun así, el nivel ``Excelente'' pleno porque esos rangos de mercado \textbf{no son cotizaciones formales de proveedores con fecha} ---se marcan explícitamente como \textbf{{[}DATO PENDIENTE DE VALIDAR{]}} en ambas tablas---, y porque la distribución específica mes a mes de cada partida sigue sin estar anclada a fechas de compra confirmadas ni a un convenio institucional que fije la fecha real de inicio del trabajo de campo. \\
+Gestión de Riesgos & Excelente & Se desarrolla un registro de 12 riesgos de ejecución del proyecto, cada uno con categoría, probabilidad, impacto y nivel de riesgo consolidado, complementado con un mapa de calor cualitativo, una tabla de respuesta con estrategia y responsable para cada riesgo, y un plan de contingencia formal de cuatro pasos para el riesgo crítico de mayor probabilidad (RP1). El alcance exigido por la rúbrica para un plan de gestión de riesgos (identificación, análisis cualitativo y plan de respuesta) se cumple de manera completa y, además, se refuerza la coherencia del proyecto al vincular explícitamente cada riesgo de ejecución con su riesgo estratégico equivalente ya identificado en el Business Case (Entregable 2). \\
+Gestión Ágil & Excelente & Se integra un marco ágil coherente y justificado metodológicamente (sección 3.6.1): un product backlog de 25 historias de usuario organizadas en 8 épicas, priorizadas con MoSCoW, con criterios de aceptación explícitos para cada una; 8 sprints quincenales con objetivo, historias comprometidas y story points; roles ágiles adaptados de forma realista a un equipo de 3 integrantes; y una sección de métricas de seguimiento (velocidad, quema de sprint, avance por épica) presentada como plantilla lista para completarse en la ejecución real. La ausencia de un historial de velocidad previo es una condición inherente a cualquier proyecto ágil en su primer sprint, no una brecha metodológica de este documento, y se gestiona explícitamente mediante el compromiso de recalibración tras el Sprint 1. (El texto narrativo completo de las 25 historias se presenta ahora en versión condensada en el cuerpo principal, sección 3.6.3, con el detalle íntegro en el Anexo F; ver fila ``Formato general'' de esta tabla.) \\
+Formato general (extensión del documento) & Aceptable, con mejora aplicada (aún por encima del rango sugerido) & La verificación adversarial identificó que la versión íntegra de este Plan ---765 líneas de Markdown en su primera versión, con tablas muy extensas de diccionario de EDT, backlog completo de 25 historias, matriz de riesgos y RACI--- excede con holgura las 15-20 páginas sugeridas por el formato de la rúbrica al convertirse a Word/PDF. Se aplicó una reducción real de extensión: el texto narrativo completo del backlog (25 historias en formato ``Como/quiero/para'' con criterios de aceptación detallados) se trasladó íntegro al \textbf{Anexo F}, dejando en el cuerpo principal (sección 3.6.3) solo una versión condensada por identificador, título breve, épica, MoSCoW, story points y sprint, sin pérdida de contenido. Se decidió, de forma deliberada y transparente, mantener íntegro en el cuerpo principal el diccionario de la EDT (28 paquetes de trabajo, sección 3.2.3) por su centralidad para la Gestión del Alcance. Aun con esta reducción, la exhaustividad exigida por seis áreas de conocimiento distintas hace probable que el cuerpo principal continúe superando el rango sugerido al convertirse a Word/PDF; no se fuerza el documento a 15-20 páginas al costo de omitir contenido evaluable, y se deja como recomendación explícita una revisión de compactación adicional del texto narrativo (no solo de tablas) antes de la entrega final, si el docente asesor lo considera necesario. \\
+\end{longtable}
+}
+
+\textbf{Limitación transversal declarada:} los tres criterios calificados como ``Bueno, con elementos de Excelente'' (Acta de Constitución, Gestión del Cronograma y Gestión de Costos) comparten una misma raíz: dependen, en algún componente específico, de información institucional externa que hoy no existe ---el nombre y la firma de un patrocinador real, el calendario académico oficial de la universidad, y las fechas confirmadas de proveedores y de inicio de campo---. Ninguna de estas tres brechas se puede cerrar mediante trabajo adicional de gabinete del equipo: todas requieren, como condición necesaria, la formalización del convenio institucional (riesgo RP1) y la confirmación de información administrativa de la universidad, ambas fuera del control directo del equipo de tesis. En contraste, los tres criterios calificados como ``Excelente'' (Gestión del Alcance, Gestión de Riesgos y Gestión Ágil) corresponden a ejercicios de planificación enteramente completables con la información ya disponible en los Entregables 1, 2 y 4, lo que explica de forma consistente por qué alcanzan un nivel de rigor pleno en esta etapa del proyecto. La fila adicional ``Formato general'' registra un hallazgo de naturaleza distinta ---de extensión documental, no de contenido sustantivo--- identificado y parcialmente corregido en la misma verificación adversarial que motivó las precisiones anteriores sobre Costos, Cronograma y Alcance.
+
+
+\end{document}

@@ -1,0 +1,1015 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{geometry}
+\geometry{margin=2.6cm}
+\usepackage{calc}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[table]{xcolor}
+\usepackage{caption}
+\captionsetup{skip=6pt}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\usepackage{parskip}
+\usepackage{needspace}
+\usepackage{etoolbox}
+\setlength{\parskip}{0.55em}
+\setlist{itemsep=0.2em}
+
+% evita titulos "huerfanos" solos al final de una pagina, empujandolos a la
+% siguiente si no queda espacio para el titulo mas unas lineas de contenido
+\pretocmd{\section}{\needspace{5\baselineskip}}{}{}
+\pretocmd{\subsection}{\needspace{4\baselineskip}}{}{}
+\pretocmd{\subsubsection}{\needspace{3\baselineskip}}{}{}
+
+% --- Macros pandoc espera que existan (normalmente las inyecta su modo -s) ---
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\pandocbounded}[1]{#1}
+\newcommand{\passthrough}[1]{#1}
+
+\hypersetup{
+  pdftitle={HemoScan Andino},
+  pdfauthor={Equipo HemoScan Andino -- UPeU Juliaca},
+  colorlinks=false,
+  bookmarksopen=true
+}
+
+% El contenido ya trae su propia numeracion manual (1., 1.1, 1.1.1...) escrita
+% en el texto de cada encabezado, asi que se desactiva la numeracion automatica
+% de LaTeX para evitar una doble numeracion en el indice y en el cuerpo.
+\setcounter{secnumdepth}{-2}
+\setcounter{tocdepth}{4}
+\titleformat{\section}{\normalfont\Large\bfseries}{}{0em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries}{}{0em}{}
+\titleformat{\subsubsection}{\normalfont\normalsize\bfseries}{}{0em}{}
+
+% Encabezado con dos etiquetas CORTAS y de ancho fijo (nunca texto largo o
+% dinamico por subseccion) para que jamas puedan solaparse entre si.
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small HemoScan Andino}
+\fancyhead[R]{\small Entregable 4 --- AS-IS / TO-BE}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\begin{document}
+
+\begin{titlepage}
+\centering
+\vspace*{1.2cm}
+{\large UNIVERSIDAD PERUANA UNI\'ON\par}
+{\normalsize Facultad de Ingenier\'ia y Arquitectura\par}
+{\normalsize Escuela Profesional de Ingenier\'ia de Sistemas --- Filial Juliaca\par}
+\vspace{0.5cm}
+\rule{0.6\linewidth}{0.4pt}
+\vspace{1.6cm}
+
+{\large PROYECTO DE TESIS / PROYECTO INTEGRADOR\par}
+\vspace{1.0cm}
+{\huge\bfseries HemoScan Andino\par}
+\vspace{0.6cm}
+{\Large Sistema no invasivo de tamizaje de anemia infantil con fusi\'on \'optica multisensor y autocalibraci\'on por altitud\par}
+\vspace{1.6cm}
+\rule{0.6\linewidth}{0.4pt}
+\vspace{1.6cm}
+
+{\Large\bfseries Entregable 4 (CE0131-CE0135) --- Modelado de Procesos AS-IS / TO-BE\par}
+\vspace{2.0cm}
+
+{\normalsize Juliaca, Puno, Per\'u \par}
+{\normalsize Julio de 2026\par}
+
+\vfill
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\textbf{Entregable N.° 4 --- Modelado de Procesos AS-IS / TO-BE}
+
+\textbf{Área de competencia:} Área B --- Gestión de Tecnologías de Información (GTI)
+\textbf{Competencia:} CE013 --- Gestión de Procesos
+\textbf{Evidencia que cubre este documento:} CE013 (Modelado de Procesos AS-IS/TO-BE de la cascada de atención de la anemia infantil, conforme a la NTS 213-MINSA/DGIESP-2024)
+\textbf{Proceso modelado:} Cascada de atención de la anemia infantil --- Tamizaje -\textgreater{} Derivación -\textgreater{} Confirmación -\textgreater{} Inicio de hierro -\textgreater{} Controles mensuales -\textgreater{} Dosaje de control a 6 meses -\textgreater{} Recuperación
+
+\textbf{Organización diagnosticada (caso ilustrativo y representativo):} Microred de Salud Altiplano-Puno
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Integrantes del equipo:}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+N.°
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Integrante
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Rol / Área de competencia
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 & \textbf{{[}DATO PENDIENTE DE VALIDAR: nombre completo --- Integrante 1, Líder de Infraestructura Tecnológica{]}} & CE03 --- Infraestructura Tecnológica (red, seguridad, centro de datos) \\
+2 & \textbf{{[}DATO PENDIENTE DE VALIDAR: nombre completo --- Integrante 2, Líder de Gestión de TI{]}} & CE01 --- Gestión de TI (diagnóstico, business case, plan de gestión, procesos) --- \textbf{responsable principal de este entregable} \\
+3 & \textbf{{[}DATO PENDIENTE DE VALIDAR: nombre completo --- Integrante 3, Líder de Ingeniería de Software{]}} & CE02 --- Ingeniería de Software (requerimientos, datos, sistema, calidad) \\
+\end{longtable}
+}
+
+\textbf{Docente asesor(a) del curso:} \textit{(nombre del docente asesor por completar)}
+\textbf{Curso / Sílabo:} \textit{(nombre del curso / s\'ilabo por completar)}
+\textbf{Ciclo académico:} 2026-I (supuesto, a confirmar con la programación académica vigente)
+
+\begin{quote}
+\textbf{Acción administrativa pendiente antes de la entrega final o sustentación:} los campos anteriores (nombres completos de los tres integrantes, docente asesor y curso/sílabo) son datos institucionales específicos de la sección/aula asignada que este documento no puede completar de forma autónoma sin inventar información; deben ser completados por el equipo con la información real antes de la entrega final, reemplazando cada marcador \textbf{{[}DATO PENDIENTE DE VALIDAR: \ldots{]}} por el dato correspondiente.
+\end{quote}
+
+\textbf{Lugar y fecha:} Juliaca, Puno, Perú --- 06 de julio de 2026
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{quote}
+\textbf{Nota metodológica y alcance (léase antes de continuar).} Este documento es el Entregable N.° 4 del proyecto HemoScan Andino y se apoya directamente en el diagnóstico organizacional desarrollado en el \textbf{Entregable N.° 1 (Diagnóstico Organizacional y Alineamiento Estratégico)}, particularmente en la estructura organizacional (sección 1.1.2), la cadena de valor (sección 1.1.3), el diagnóstico digital/TI (sección 1.3) y la identificación del problema (sección 1.4) allí desarrollados, los cuales no se repiten íntegramente aquí. Se mantiene vigente la misma advertencia metodológica: HemoScan Andino \textbf{no cuenta todavía con un convenio real} con ninguna microred o posta de salud, por lo que el proceso modelado corresponde a la organización \textbf{ilustrativa y representativa ``Microred de Salud Altiplano-Puno''}. Adicionalmente, y de forma específica para este entregable, se declara que \textbf{los indicadores de tiempo, costo y calidad presentados a lo largo del documento son estimaciones ilustrativas construidas por el equipo de tesis}, a partir de (a) los parámetros explícitos ya definidos en el proyecto (por ejemplo, el presupuesto de Fase 0), (b) la lógica operativa típica de un establecimiento de primer nivel de atención rural altoandino documentada en el Entregable 1, y (c) el razonamiento técnico sobre el efecto esperado de cada automatización propuesta. \textbf{No constituyen mediciones de campo ni resultados de un piloto ejecutado}, y su validación empírica es uno de los objetivos centrales de la Fase 0 (150-300 niños en una microred). Cuando una cifra no puede derivarse razonablemente de lo anterior, se señala explícitamente como \textbf{{[}DATO PENDIENTE DE VALIDAR{]}}. Asimismo, los procedimientos clínicos aquí descritos (esquema general de tamizaje, derivación, confirmación y suplementación con hierro) seguirán los lineamientos atribuidos por el enunciado del proyecto a la \textbf{NTS 213-MINSA/DGIESP-2024}; el equipo no tuvo acceso directo al texto íntegro y vigente de dicha norma al momento de elaborar este entregable, por lo que se describen las etapas y su secuencia lógica \textbf{sin fijar dosis, plazos exactos en días u otros parámetros clínicos específicos que no hayan sido provistos explícitamente en el enunciado del proyecto}, dejando ese nivel de detalle como \textbf{{[}DATO PENDIENTE DE VALIDAR: texto íntegro y vigente de la NTS 213-MINSA/DGIESP-2024{]}}. Por la misma disciplina de honestidad metodológica, se deja constancia de que el equipo tampoco tuvo acceso directo a una fuente primaria oficial (p.~ej., publicación en el diario oficial El Peruano) que confirme la existencia, numeración exacta y texto íntegro y vigente del \textbf{Decreto Supremo N.° 115-2025-PCM} (reglamento de la Ley N.° 31814), citado a lo largo de este documento como marco de gobierno de IA aplicable al sector salud; en consecuencia, todas las menciones a dicho decreto en este entregable deben leerse como el marco normativo \textbf{atribuido} por el enunciado del proyecto, y no como un cumplimiento normativo ya verificado por el equipo contra una fuente primaria, quedando su verificación como \textbf{{[}DATO PENDIENTE DE VALIDAR: existencia, numeración exacta y texto íntegro y vigente del DS 115-2025-PCM{]}}.
+\end{quote}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Resumen Ejecutivo}\label{resumen-ejecutivo}
+
+El presente entregable desarrolla el modelado de procesos AS-IS/TO-BE de la cascada de atención de la anemia infantil ---tamizaje, derivación, confirmación, inicio de hierro, controles mensuales, dosaje de control a los 6 meses y recuperación--- en la organización ilustrativa \textbf{Microred de Salud Altiplano-Puno}, en cumplimiento de la competencia CE013 (Gestión de Procesos). El objetivo es doble: primero, representar de manera estructurada el proceso actual (AS-IS) tal como opera hoy, sin la intervención de HemoScan Andino, identificando de forma crítica sus ineficiencias, puntos de fricción y riesgos; y segundo, proponer un rediseño (TO-BE) que incorpora los componentes tecnológicos ya definidos del proyecto ---fusión óptica multisensor no invasiva (conjuntiva palpebral, espectrometría AS7341, fotopletismografía MAX30102), inferencia embebida offline-first, autocalibración por altitud auditable (GPS + Modelo Digital de Elevación) y trazabilidad FHIR (Observation, Provenance, AuditEvent, Consent, Device, Patient)--- para automatizar, acelerar y hacer auditable cada etapa de la cascada, sin sustituir en ningún momento el criterio clínico humano, en línea con el principio de supervisión humana que el enunciado del proyecto atribuye al DS 115-2025-PCM (norma cuya existencia, numeración exacta y texto íntegro no han sido verificados por el equipo contra una fuente primaria; ver Nota metodológica y Anexo B).
+
+El análisis del proceso actual (sección 4.1) describe narrativamente las siete etapas de la cascada, documenta once indicadores de línea base (tiempos de ciclo, tasas de adherencia y abandono, costos unitarios de insumos, nivel de trazabilidad y de automatización), presenta un diagrama BPMN (en notación Mermaid, un estándar de diagrama-como-código que renderiza formas gráficas reales --- rectángulos, rombos, óvalos --- equivalentes a la notación BPMN) con cinco carriles (madre/cuidador, personal CRED, laboratorio/personal médico, farmacia/almacén y sistemas de información) y detalla ocho problemas operativos concretos, todos ellos trazables a las brechas tecnológicas y causas raíz ya identificadas en el Entregable 1. El rediseño propuesto (sección 4.2) desarrolla un segundo diagrama BPMN (también en notación Mermaid), estructuralmente paralelo al primero, en el que catorce automatizaciones concretas ---cada una mapeada de manera explícita a la ineficiencia AS-IS que resuelve--- sustituyen o refuerzan las tareas manuales, incorporando dos carriles adicionales (el dispositivo/app HemoScan Andino y un backend interoperable), y proyecta once indicadores objetivo equivalentes a los de línea base.
+
+El análisis comparativo (sección 4.3) cuantifica, de manera transparente y con metodología de cálculo explícita, una reducción estimada del tiempo total del ciclo de tamizaje a inicio de tratamiento de aproximadamente 65 \% en escenarios con conectividad y de aproximadamente 33 \% en zonas sin cobertura; una reducción de costos en los \textbf{cinco componentes identificados} (insumos, registro administrativo, desplazamiento familiar, quiebre de stock y CAPEX), incluyendo una reducción de al menos un orden de magnitud en el costo marginal de insumos por determinación (de S/ 1.3-2.7 a un rango estimado de S/ 0.15-0.60, según vida útil asumida del nodo); y una mejora sustancial en nueve dimensiones de calidad, entre ellas el paso de una trazabilidad auditable nula (0 \%) a una trazabilidad completa (100 \%) y la reducción del registro duplicado de cuatro sistemas manuales a un registro único sincronizado. Todas estas cifras se presentan explícitamente como proyecciones o supuestos de cálculo del equipo, no como mediciones de campo, y su validación empírica queda planteada como el objetivo central del piloto de Fase 0. El documento cierra con una autoevaluación honesta frente a la rúbrica, reconociendo que el nivel ``Excelente'' en sentido estrictamente empírico, en los tres criterios, requiere, como condición necesaria, datos primarios de un proceso real observado en campo ---insumo que hoy no existe y que constituye la principal limitación declarada de este entregable--- y con un checklist consolidado de acciones administrativas y de verificación documental pendientes (exportación de los diagramas Mermaid a imagen, verificación del DS 115-2025-PCM y de la cifra de ENDES 2025, y datos de portada).
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Introducción y alcance del documento}\label{introducciuxf3n-y-alcance-del-documento}
+
+Este documento constituye el Entregable N.° 4 del proyecto HemoScan Andino y evalúa específicamente la competencia \textbf{CE013 --- Gestión de Procesos}, bajo la responsabilidad principal del Integrante 2 (Líder de Gestión de TI), en coordinación con el Integrante 3 (Ingeniería de Software), cuyos entregables posteriores deberán traducir las automatizaciones aquí propuestas en requerimientos funcionales y no funcionales concretos, y con el Integrante 1 (Infraestructura Tecnológica), responsable de validar la factibilidad de conectividad, energía y seguridad de red que varias de estas automatizaciones asumen.
+
+El alcance del modelado se circunscribe deliberadamente a un único proceso: la \textbf{cascada de atención de la anemia infantil}, definida por el enunciado del proyecto en siete etapas secuenciales (tamizaje, derivación, confirmación, inicio de hierro, controles mensuales, dosaje de control a los 6 meses y recuperación) y regida por la \textbf{NTS 213-MINSA/DGIESP-2024}. Se eligió este proceso, y no otro de los muchos que ocurren en una microred de salud, porque es precisamente el proceso en el que la cadena de valor de la organización ilustrativa (sección 1.1.3 del Entregable 1) señala el \textbf{punto de inserción primario de HemoScan Andino}: la actividad de ``Tamizaje'', con efectos secundarios directos sobre ``Sistemas de información y TI'' y sobre ``Seguimiento y monitoreo''. No se modelan en este entregable otros procesos administrativos o clínicos de la microred (por ejemplo, la gestión logística general de SIGA o la atención de otras patologías), que exceden el alcance de la competencia evaluada.
+
+Para representar los diagramas de proceso, este entregable utiliza \textbf{notación Mermaid (diagrama-como-código)}: eventos de inicio y fin, tareas, compuertas de decisión (gateways) y carriles (lanes) se codifican con la sintaxis \texttt{flowchart} de Mermaid (sección 4.1.3), un estándar ampliamente soportado (GitHub, GitLab, VS Code, Obsidian, Notion, y pipelines de exportación como mermaid-cli/mermaid.live) que renderiza automáticamente \textbf{formas gráficas reales} ---rectángulos para tareas, rombos para compuertas, óvalos/estadios para eventos de inicio y fin, y subgrafos para carriles--- equivalentes a la notación BPMN estándar, en lugar del arte ASCII utilizado en una versión previa de este entregable. Esta convención se aplica de manera consistente en los cinco diagramas del documento (dos vistas de alto nivel y dos diagramas detallados por carriles para los procesos AS-IS y TO-BE, más el diagrama comparativo de tiempos de la sección 4.3.1) y se complementa con tablas de ``matriz de carriles'' que resumen, para cada etapa, el responsable, la entrada, la actividad principal, la salida y el sistema de registro, reforzando la trazabilidad del análisis. \textbf{Nota de honestidad sobre el formato de entrega:} el código Mermaid incluido en este documento es una especificación completa y sin ambigüedad de nodos, carriles, compuertas y eventos, pero sigue siendo código fuente de diagrama, no una imagen ya renderizada. Para la entrega final en Word/PDF, conforme al formato sugerido por la rúbrica (``con diagramas BPMN''), el equipo debe (a) renderizar cada bloque Mermaid a imagen PNG/SVG (por ejemplo, con mermaid.live o la extensión de Mermaid de VS Code) e insertar esa imagen en el documento, o (b) recrear el diagrama 1:1 en una herramienta de modelado BPMN dedicada (Bizagi Modeler, Camunda Modeler, draw.io/diagrams.net o Visio, todas compatibles con el estándar BPMN 2.0), usando la especificación de carriles, tareas y compuertas ya definida aquí como insumo directo. Esta conversión a imagen queda como una tarea pendiente de ejecución manual por el equipo antes de la sustentación, ya que excede la capacidad de edición de texto de este entregable.
+
+Finalmente, se reitera que todo el análisis cuantitativo de este documento ---indicadores AS-IS, indicadores TO-BE y comparación de tiempos, costos y calidad--- es una \textbf{construcción metodológica ilustrativa del equipo}, no una medición de campo. Esta decisión se explica en detalle en el Anexo C (Nota metodológica sobre la estimación de indicadores de proceso) y se aplica de forma consistente con la disciplina de honestidad metodológica ya establecida en el Entregable 1.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{4. Modelado de Procesos AS-IS / TO-BE}\label{modelado-de-procesos-as-is-to-be}
+
+\subsection{4.1 Proceso Actual (AS-IS)}\label{proceso-actual-as-is}
+
+\subsubsection{4.1.1 Descripción narrativa del proceso}\label{descripciuxf3n-narrativa-del-proceso}
+
+El proceso descrito a continuación corresponde a la cascada de atención de la anemia infantil \textbf{tal como opera actualmente}, sin la intervención de HemoScan Andino, en la organización ilustrativa Microred de Salud Altiplano-Puno. La descripción integra la secuencia de siete etapas explícitamente definida por el proyecto con los hallazgos del diagnóstico digital y organizacional del Entregable 1 (inventario de sistemas, madurez digital, brechas tecnológicas y causas raíz).
+
+\textbf{Antecedente --- captación.} Los niños ingresan al proceso principalmente a través de los controles de Crecimiento y Desarrollo (CRED) del Centro de Salud I-4 ``Altiplano'' (cabecera de microred) o de los Puestos de Salud I-1/I-2 de las comunidades circundantes, ya sea porque el cuidador acude de forma programada o porque una brigada itinerante visita la comunidad en el caso de los establecimientos más dispersos. Esta captación no forma parte de las siete etapas explícitas de la cascada evaluada, pero condiciona su punto de entrada: la cobertura efectiva del tamizaje de anemia depende, en última instancia, de la cobertura previa del propio programa CRED, la cual no se mide en este entregable.
+
+\textbf{Tamizaje.} Al momento del control CRED, el personal de salud ---típicamente personal técnico o de enfermería en los Puestos de Salud I-1/I-2, y personal de laboratorio en el Centro de Salud I-4--- verifica la disponibilidad de insumos HemoCue (microcuvetas y lancetas) y, de haberlos, realiza la punción capilar y la lectura del hemoglobinómetro portátil. El valor de hemoglobina (Hb) obtenido se contrasta contra un umbral que debe ajustarse por la altitud referencial de 3,800 m s. n.~m. de la jurisdicción; sin embargo, como ya se documentó en el Entregable 1 (sección 1.3.3, brecha tecnológica N.° 3), este ajuste se realiza hoy mediante una fórmula genérica, aplicada manualmente y \textbf{sin registro auditable} de qué corrección se aplicó ni por qué, lo que constituye el núcleo del riesgo de sobre o subdiagnóstico señalado por Gonzales et al.~(2025) y Baquerizo-Sedano et al.~(2025). El resultado se registra manualmente en un cuaderno físico y, con rezago, en el aplicativo HIS.
+
+\textbf{Derivación.} Si el resultado corregido está por debajo del umbral, el personal de salud deriva al niño hacia confirmación clínica. Cuando el tamizaje ocurrió en un Puesto de Salud I-1/I-2 sin médico ni laboratorio propio ---la situación más frecuente en la microred ilustrativa, dado que solo el Centro de Salud I-4 cabecera concentra estas capacidades (sección 1.1.2, Entregable 1)---, la derivación implica un traslado físico de la familia hacia la cabecera de microred, sujeto a la disponibilidad de transporte y a la dispersión geográfica de la zona altoandina. No existe hoy un mecanismo digital de priorización por severidad: todas las derivaciones se gestionan con el mismo nivel de urgencia administrativa, independientemente de qué tan bajo esté el valor de Hb.
+
+\textbf{Confirmación.} En el Centro de Salud I-4, el personal médico realiza la evaluación clínica del caso derivado, que típicamente incluye la repetición del dosaje de hemoglobina y, cuando corresponde, el descarte de otras causas de anemia. Esta etapa es la única del proceso actual donde interviene de manera sistemática un criterio médico pleno, y su resultado determina si el caso se confirma como anemia (y avanza a tratamiento) o se descarta.
+
+\textbf{Inicio de hierro.} Confirmado el diagnóstico, el personal médico prescribe la suplementación con hierro (sulfato ferroso o hierro polimaltosado, según el esquema posológico ajustado a la edad del niño que establece la NTS 213-MINSA/DGIESP-2024) y la Farmacia/Almacén de la microred dispensa el insumo, sujeto a la disponibilidad registrada en el Sistema Integrado de Gestión Administrativa (SIGA). Como ya se documentó en el Entregable 1 (Debilidad D1), los quiebres de stock de insumos son un riesgo recurrente en la cadena logística rural, y hoy no existe un mecanismo de alerta temprana basado en consumo proyectado: el desabastecimiento se detecta de forma reactiva, cuando ya ocurrió.
+
+\textbf{Controles mensuales.} Iniciado el tratamiento, el personal CRED realiza controles mensuales de seguimiento para verificar la adherencia y tolerancia al hierro y reforzar la consejería nutricional (que, según se documentó en el diagrama de causas raíz del Entregable 1, sección 1.4.2, suele ser informal y no estructurada). Esta es una actividad de tipo bucle: se repite mes a mes hasta completar el período de tratamiento. No existe hoy ningún mecanismo automatizado de recordatorio para el cuidador, por lo que la asistencia depende enteramente de la iniciativa de la familia y de la capacidad del personal de salud para hacer seguimiento manual, en un contexto de alta dispersión geográfica y de alta rotación de personal por el régimen SERUMS (sección 1.1.1 y 1.3.4, Entregable 1).
+
+\textbf{Dosaje de control a los 6 meses.} Al cierre del período de tratamiento, se repite el procedimiento de punción capilar con HemoCue para verificar la respuesta del niño a la suplementación. Esta es, junto con el tamizaje inicial, la segunda ocasión en que el niño es sometido al procedimiento invasivo, lo que ---como se señaló en el Entregable 1, sección 1.4.3--- incrementa el riesgo de rechazo del cuidador frente a tamizajes repetidos.
+
+\textbf{Recuperación.} Si el valor de hemoglobina se ha normalizado, el personal de salud da de alta el caso, y el niño retorna al esquema regular de controles CRED preventivos. Si el valor persiste por debajo del umbral, el personal médico reevalúa el caso, pudiendo ajustar el tratamiento o derivarlo a un establecimiento de mayor complejidad. En cualquiera de los dos desenlaces, el cierre del caso se registra ---una vez más, de forma manual y fragmentada--- en el HIS, el SIEN y, cuando corresponde, el Padrón Nominal, sin una vista longitudinal única y estructurada del episodio completo del niño.
+
+A lo largo de las siete etapas descritas, un patrón se repite de forma transversal: \textbf{el registro de información se realiza de manera manual, fragmentada y no auditable en al menos cuatro puntos distintos del proceso} (tamizaje, confirmación, inicio de hierro y dosaje de control), replicando a nivel de proceso la fragmentación de sistemas de información ya diagnosticada de forma estructural en la sección 1.3.1 del Entregable 1.
+
+\subsubsection{4.1.2 Indicadores actuales}\label{indicadores-actuales}
+
+La siguiente tabla presenta once indicadores de línea base para el proceso AS-IS. Conforme a la nota metodológica de este documento, se trata de \textbf{estimaciones ilustrativas} construidas por el equipo ---algunas derivadas directamente de hallazgos ya documentados en el Entregable 1 (indicadores I5, I6, I9, I10 e I11, de naturaleza más estructural y por tanto más sólida), y otras estimadas por rango a partir del conocimiento general sobre la operación de establecimientos rurales de primer nivel de atención en zonas altoandinas (indicadores I1 a I4, I7 e I8, de naturaleza más proyectiva)---, no mediciones de campo verificadas.
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+N.°
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Indicador
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Valor actual estimado (AS-IS)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Naturaleza de la estimación
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+I1 & Tiempo de tamizaje por niño (verificación de insumos + punción capilar + lectura + registro manual) & 8 a 12 minutos por niño & Estimación ilustrativa basada en el procedimiento estándar de HemoCue más el registro manual adicional en cuaderno e HIS \\
+I2 & Tiempo desde el tamizaje hasta la derivación formal (cuando el establecimiento de origen no cuenta con médico) & 3 a 15 días & Estimación ilustrativa asociada a la dispersión geográfica y dependencia de brigadas itinerantes/transporte descrita en la sección 1.1.1 del Entregable 1 \\
+I3 & Tiempo desde la derivación hasta la confirmación clínica efectiva & 7 a 21 días & Estimación ilustrativa sujeta a la disponibilidad de transporte y de personal médico en el C.S. I-4 cabecera \\
+I4 & Tiempo desde la confirmación hasta el inicio efectivo de la suplementación con hierro & 0 a 7 días & Depende de la disponibilidad de stock en SIGA (Debilidad D1, Entregable 1) \\
+I5 & N.° de sistemas/soportes en los que se registra manualmente el mismo caso a lo largo de la cascada & 4 (cuaderno HemoCue, HIS, SIEN, Padrón Nominal) & Derivado directamente del inventario de sistemas de información (sección 1.3.1, Entregable 1) \\
+I6 & Trazabilidad auditable de la corrección de hemoglobina por altitud aplicada & 0 \% (no existe registro estructurado del ajuste aplicado) & Derivado directamente de la brecha tecnológica N.° 3 (sección 1.3.3, Entregable 1) \\
+I7 & Tasa estimada de adherencia a los controles mensuales de seguimiento & 50 \% a 70 \% & Estimación ilustrativa asociada a la dispersión geográfica, la rotación de personal (SERUMS) y la ausencia de recordatorios automatizados \\
+I8 & Tasa estimada de abandono del seguimiento antes del dosaje de control a los 6 meses & 20 \% a 40 \% & Estimación ilustrativa consistente con el riesgo de deserción del control CRED señalado en la sección 1.4.3 del Entregable 1 \\
+I9 & Costo unitario aproximado de insumos por determinación de hemoglobina (microcuveta + lanceta HemoCue) & S/ 1.3 a S/ 2.7 por niño & Cálculo derivado del presupuesto de Fase 0 (S/ 400 de insumos de validación HemoCue entre una submuestra de 150 a 300 niños) \\
+I10 & Nivel de automatización del cálculo de corrección por altitud & 0 \% (cálculo manual, no auditable) & Derivado de la brecha tecnológica N.° 3 (sección 1.3.3, Entregable 1) \\
+I11 & Visibilidad agregada, en tiempo casi real, del throughput de la cascada para la Jefatura de microred/DIRESA & Nula (consolidación manual periódica, con rezago) & Derivado del problema operativo ``Demoras en la consolidación de reportes agregados'' (sección 1.3.4, Entregable 1) \\
+\end{longtable}
+}
+
+De este conjunto de indicadores se desprende una lectura relevante para el análisis comparativo posterior (sección 4.3): los indicadores más sólidos ---aquellos derivados directamente de hallazgos estructurales del Entregable 1 (I5, I6, I9, I10, I11)--- describen una situación de partida inequívoca (fragmentación, ausencia total de trazabilidad y de automatización), mientras que los indicadores de tiempo y adherencia (I1 a I4, I7, I8), al ser estimaciones proyectivas, deberán tratarse con mayor cautela hasta contar con una línea base medida en campo.
+
+\subsubsection{4.1.3 Diagrama BPMN (AS-IS)}\label{diagrama-bpmn-as-is}
+
+Se representa el proceso en \textbf{notación Mermaid} (\texttt{flowchart}), un lenguaje de diagrama-como-código que se renderiza como diagrama gráfico vectorial real ---rectángulos, rombos, óvalos--- en cualquier visor compatible (GitHub, GitLab, VS Code, Obsidian, Notion, mermaid-cli/mermaid.live), reemplazando el arte ASCII de una versión previa de este entregable. La equivalencia de formas con la notación BPMN estándar es la siguiente:
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Forma en Mermaid
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Elemento BPMN equivalente
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{((\ Texto\ ))} --- círculo/estadio & Evento de inicio o de fin (start/end event); los eventos de fin se etiquetan con el desenlace del proceso \\
+\texttt{{[}\ Texto\ {]}} --- rectángulo & Actividad / tarea manual o de usuario \\
+\texttt{{[}\ (config)\ Texto\ {]}} --- rectángulo, prefijo (config) & Actividad automatizada / de sistema (solo en los diagramas TO-BE) \\
+\texttt{\{\ Texto\ \}} --- rombo & Compuerta exclusiva (gateway XOR); una sola rama se activa según la condición evaluada \\
+\texttt{subgraph} & Carril (lane) responsable, dentro del pool del proceso \\
+\texttt{-\/-\textgreater{}} & Flujo de secuencia (sequence flow) \\
+\texttt{-.-\textgreater{}} & Flujo de mensaje / interacción entre carriles distintos \\
+\end{longtable}
+}
+
+\textbf{Nota de honestidad sobre el formato de entrega:} los bloques Mermaid que siguen especifican, sin ambigüedad, los carriles, tareas, compuertas y eventos del proceso. Para la entrega final en Word/PDF conforme al formato sugerido por la rúbrica, el equipo debe renderizar cada bloque a imagen (PNG/SVG, vía mermaid.live o la extensión de VS Code) o recrear el diagrama 1:1 en una herramienta de modelado BPMN dedicada (Bizagi Modeler, Camunda Modeler, draw.io/diagrams.net o Visio) e insertar la imagen resultante, en lugar de dejar el código fuente. Esta conversión a imagen queda pendiente de ejecución manual por el equipo, ya que excede la capacidad de edición de texto de este entregable.
+
+\textbf{Diagrama 1 --- Vista de alto nivel del proceso AS-IS.} Antes del detalle por carriles, se presenta una vista simplificada de las siete etapas en secuencia:
+
+\begin{samepage}\begin{verbatim}
+flowchart LR
+    A(["Tamizaje\nHemoCue: punción capilar,\ncorrección manual no auditable"]) --> B(["Derivación\nReferencia interna\nal C.S. I-4"])
+    B --> C(["Confirmación\nEvaluación médica"])
+    C --> D(["Inicio de hierro\nPrescripción + dispensación\n(sujeta a stock SIGA)"])
+    D --> E(["Controles mensuales (sync)\nAdherencia y tolerancia\n(sin recordatorio automático)"])
+    E --> F(["Dosaje de control 6m\nHemoCue, repetición"])
+    F --> G(["Recuperación\nAlta o reevaluación/referencia\na mayor complejidad"])
+\end{verbatim}\end{samepage}
+
+\emph{Características transversales del AS-IS: 100 \% manual · 0 \% de trazabilidad auditable de la corrección por altitud · registro duplicado en hasta 4 sistemas · sin mecanismo de alerta temprana de abandono ni de quiebre de stock.}
+
+\textbf{Diagrama 2 --- BPMN detallado del proceso AS-IS, por carriles (lanes).}
+
+\begin{samepage}\begin{verbatim}
+flowchart TD
+    Start(("Inicio: cuidador lleva\nal niño a control CRED")) --> V1
+
+    subgraph LANE1["Carril 1 — Madre / Padre / Cuidador"]
+        Start
+        Traslado["Trasladarse al C.S. I-4 cabecera\n(demora por distancia y transporte)"]
+        Administrar["Administrar hierro en el hogar\n(adherencia dependiente del cuidador)"]
+    end
+
+    subgraph LANE2["Carril 2 — Personal CRED (Puesto I-1/I-2 o C.S. I-4)"]
+        V1["Verificar disponibilidad de\ninsumos HemoCue"]
+        G1{"¿Hay insumos\ndisponibles?"}
+        Puncion["Realizar punción capilar y\nlectura de Hb con HemoCue"]
+        G2{"¿Cuidador/niño acepta\nel procedimiento?"}
+        Rechazo["Registrar rechazo,\nbrindar consejería"]
+        Correccion["Aplicar corrección de Hb por altitud\n(fórmula genérica, cálculo manual\nno auditable)"]
+        G3{"¿Hb corregida está\nbajo el umbral?"}
+        ConsejeriaPrev["Brindar consejería\npreventiva general"]
+        Derivar["Derivar a\nconfirmación clínica"]
+        G4{"¿Establecimiento de origen\ncuenta con médico/laboratorio?"}
+        ConsejeriaNutr["Brindar consejería nutricional\n(informal, contenido variable)"]
+        ControlMensual["Realizar control mensual de\nseguimiento (actividad de bucle (sync))"]
+        G6{"¿Cuidador asiste al\ncontrol mensual?"}
+        Alta["Registrar recuperación,\ndar de alta"]
+    end
+
+    subgraph LANE3["Carril 3 — Laboratorio / Personal médico (C.S. I-4, cabecera de microred)"]
+        Confirmacion["Realizar confirmación clínica\n(evaluación + repetición de dosaje de Hb)"]
+        G5{"¿Se confirma\nanemia?"}
+        Descarte["Registrar descarte /\nindicar otras pruebas"]
+        Prescribir["Prescribir suplementación con hierro\n(según NTS 213-MINSA/DGIESP-2024)"]
+        Dosaje6m["Realizar dosaje de control\nde Hb a los 6 meses"]
+        G7{"¿Hemoglobina se\nnormalizó?"}
+        Reevaluar["Reevaluar caso, ajustar\ntratamiento o referir a\nmayor complejidad"]
+    end
+
+    subgraph LANE4["Carril 4 — Farmacia / Almacén (SIGA)"]
+        Dispensar["Verificar y dispensar hierro\n(sulfato ferroso / hierro polimaltosado)"]
+        G8{"¿Hay stock disponible\nen SIGA?"}
+        Desabasto["Registrar desabastecimiento;\nderivar a otro establecimiento\no posponer inicio"]
+    end
+
+    subgraph LANE5["Carril 5 — Sistemas de información (HIS / SIEN / Padrón Nominal, registro manual)"]
+        Registro["Registrar resultado manualmente\n(cuaderno físico + HIS, con rezago)"]
+    end
+
+    EndDiferido(("Fin: Tamizaje\ndiferido"))
+    EndNoRealizado(("Fin: Tamizaje\nno realizado"))
+    EndSinAnemia(("Fin: Niño sin anemia\n— continúa CRED regular"))
+    EndDescartado(("Fin: Caso\ndescartado"))
+    EndAbandono(("Fin (implícito): abandono\nsilencioso no detectado"))
+    EndRecuperado(("Fin: Niño\nrecuperado"))
+    EndPersistente(("Fin: Caso persistente\n/ referencia"))
+
+    V1 --> G1
+    G1 -- No --> Desabasto2["Registrar desabastecimiento,\nreprogramar tamizaje"] --> EndDiferido
+    G1 -- Sí --> Puncion --> G2
+    G2 -- No --> Rechazo --> EndNoRealizado
+    G2 -- Sí --> Correccion --> Registro --> G3
+    G3 -- No --> ConsejeriaPrev --> EndSinAnemia
+    G3 -- "Sí (sospecha de anemia)" --> Derivar --> G4
+    G4 -- No --> Traslado --> Confirmacion
+    G4 -- Sí --> Confirmacion
+    Confirmacion --> G5
+    G5 -- No --> Descarte --> EndDescartado
+    G5 -- Sí --> Prescribir --> Dispensar --> G8
+    G8 -- No --> Desabasto --> ConsejeriaNutr
+    G8 -- Sí --> ConsejeriaNutr
+    ConsejeriaNutr --> Administrar --> ControlMensual --> G6
+    G6 -- "No (sin alerta: riesgo\nde abandono silencioso)" --> EndAbandono
+    G6 -- "Sí (repetir (sync) mensualmente\nhasta completar tratamiento)" --> Dosaje6m
+    Dosaje6m --> G7
+    G7 -- Sí --> Alta --> EndRecuperado
+    G7 -- No --> Reevaluar --> EndPersistente
+\end{verbatim}\end{samepage}
+
+\emph{Nota transversal (ver también indicadores I5 e I6, sección 4.1.2): la actividad de ``Registrar manualmente'' (carril 5) ocurre de forma independiente y no interoperable en al menos cuatro puntos de la cascada (tamizaje, confirmación, inicio de hierro, dosaje de control), sin un mecanismo único de trazabilidad de extremo a extremo; por simplicidad visual, el diagrama anterior representa explícitamente esta actividad solo en el punto del tamizaje, y esta nota dispensa de repetir el nodo en cada carril.}
+
+La siguiente matriz de carriles resume, para cada etapa, el responsable, la entrada, la actividad principal, la salida y el sistema de registro, complementando el diagrama anterior en formato tabular:
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Etapa
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Carril (lane) responsable
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Entrada
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Actividad principal
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Salida
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Registro
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Tamizaje & Personal CRED (Puesto I-1/I-2 o C.S. I-4) & Niño en control CRED + disponibilidad de insumos HemoCue & Punción capilar, lectura de Hb, corrección manual por altitud & Resultado de Hb corregido, no auditable & Cuaderno físico + HIS (manual) \\
+Derivación & Personal CRED -\textgreater{} Madre/Cuidador & Resultado de Hb bajo el umbral & Derivar a confirmación clínica; traslado físico si el establecimiento no cuenta con médico & Caso referido al C.S. I-4 & Registro manual de referencia (variable) \\
+Confirmación & Laboratorio / Personal médico (C.S. I-4) & Caso referido & Evaluación médica y repetición del dosaje de Hb & Diagnóstico confirmado o descartado & HIS (manual) \\
+Inicio de hierro & Personal médico + Farmacia (SIGA) & Diagnóstico confirmado & Prescripción y dispensación de hierro, sujeta a stock & Tratamiento iniciado (o postergado por quiebre de stock) & SIGA (parcial) + HIS (manual) \\
+Controles mensuales & Personal CRED \textless-\textgreater{} Madre/Cuidador & Tratamiento en curso & Verificar adherencia y tolerancia (bucle mensual, sin recordatorio automatizado) & Continuidad del tratamiento o abandono no detectado & Cuaderno físico + HIS (manual) \\
+Dosaje de control a 6 meses & Laboratorio / Personal médico & Fin del período de tratamiento & Repetir HemoCue para verificar la respuesta al tratamiento & Hemoglobina normalizada o persistente & HIS (manual) \\
+Recuperación & Personal CRED / Personal médico & Resultado del dosaje de control & Alta y retorno a CRED regular, o reevaluación/referencia & Caso cerrado o derivado a mayor complejidad & HIS, SIEN, Padrón Nominal (manual, con rezago) \\
+\end{longtable}
+}
+
+\subsubsection{4.1.4 Problemas detectados}\label{problemas-detectados}
+
+Del análisis narrativo, de los indicadores y del diagrama BPMN anteriores se identifican ocho problemas operativos concretos en el proceso actual, cada uno trazable a los hallazgos del Entregable 1:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Naturaleza invasiva del método de tamizaje}, que expone al niño a una punción capilar en al menos dos ocasiones (tamizaje inicial y dosaje de control a los 6 meses), con riesgo de rechazo del cuidador, especialmente en tamizajes repetidos (etapas Tamizaje y Dosaje de control; ref. sección 1.4.3, Entregable 1).
+\item
+  \textbf{Ausencia de trazabilidad auditable de la corrección de hemoglobina por altitud}: la fórmula aplicada no queda registrada de forma estructurada, lo que impide auditar si el ajuste fue correcto y eleva el riesgo de sobre o subdiagnóstico (etapa Tamizaje; indicador I6; brecha tecnológica N.° 3, Entregable 1).
+\item
+  \textbf{Registro manual duplicado en hasta cuatro sistemas distintos} (cuaderno HemoCue, HIS, SIEN, Padrón Nominal), sin interoperabilidad entre ellos, lo que incrementa la carga administrativa del personal y el riesgo de error de transcripción (todas las etapas; indicador I5; sección 1.3.1, Entregable 1).
+\item
+  \textbf{Doble desplazamiento físico de la familia} (tamizaje en el puesto de origen + confirmación en el C.S. I-4 cabecera) cuando el establecimiento de origen no cuenta con médico ni laboratorio, lo que encarece el proceso para la familia y retrasa el inicio del tratamiento (etapa Derivación; indicador I2; sección 1.1.1, Entregable 1).
+\item
+  \textbf{Ausencia de un mecanismo de alerta temprana de quiebre de stock} de insumos HemoCue o de hierro: el desabastecimiento se detecta de forma reactiva, cuando ya impide continuar el proceso (etapas Tamizaje e Inicio de hierro; Debilidad D1, Entregable 1).
+\item
+  \textbf{Ausencia de recordatorios y de alertas de inasistencia} en los controles mensuales, lo que impide detectar oportunamente el abandono del seguimiento y contribuye a una tasa de deserción no cuantificada con precisión (etapa Controles mensuales; indicador I8; sección 1.4.3, Entregable 1).
+\item
+  \textbf{Consejería nutricional informal y de contenido variable}, dependiente del criterio individual del personal de salud, sin un soporte estructurado que garantice consistencia con la NTS 213-MINSA/DGIESP-2024 (etapa Inicio de hierro; causa raíz de categoría Método, sección 1.4.2, Entregable 1).
+\item
+  \textbf{Nula visibilidad agregada, en tiempo casi real, del throughput de la cascada} para la Jefatura de la microred o la DIRESA: la consolidación de indicadores depende de reportes manuales periódicos, lo que retrasa la toma de decisiones de priorización de recursos (todas las etapas, de forma transversal; indicador I11; sección 1.3.4, Entregable 1).
+\end{enumerate}
+
+Estos ocho problemas no son de naturaleza homogénea: los problemas 1, 4 y 5 tienen un componente estructural/físico (invasividad, geografía, logística) que la tecnología puede compensar pero no eliminar por completo; los problemas 2, 3, 6 y 8 son fundamentalmente brechas de digitalización y automatización, directamente atendibles por la propuesta de HemoScan Andino; y el problema 7 es de naturaleza organizacional/formativa, atendible solo parcialmente mediante tecnología (a través de un motor de reglas de consejería), pero que requiere complementarse con capacitación del personal, un aspecto que excede el alcance de este entregable y que deberá desarrollarse en el plan de gestión del cambio del proyecto.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{4.2 Proceso Propuesto (TO-BE)}\label{proceso-propuesto-to-be}
+
+\subsubsection{4.2.1 Rediseño del flujo}\label{rediseuxf1o-del-flujo}
+
+El rediseño propuesto mantiene la misma secuencia lógica de siete etapas de la cascada ---por exigencia normativa y de continuidad asistencial, ninguna etapa clínicamente necesaria se elimina---, pero sustituye o refuerza con automatización cada tarea manual identificada como ineficiente en la sección 4.1, preservando en todo momento la intervención humana en las decisiones clínicas de mayor riesgo (confirmación diagnóstica y prescripción de tratamiento), en línea con el principio de supervisión humana que el enunciado del proyecto atribuye al DS 115-2025-PCM para sistemas de inteligencia artificial en el sector salud (norma cuyo texto íntegro y vigente no ha sido verificado por el equipo contra una fuente primaria; ver Nota metodológica y Anexo B).
+
+\textbf{Diagrama 3 --- Vista de alto nivel del proceso TO-BE.}
+
+\begin{samepage}\begin{verbatim}
+flowchart LR
+    A(["(config) Tamizaje\nHemoScan Andino: no invasivo,\nautocalibrado por altitud, auditable"]) --> B(["(config) Derivación\nAlerta automática de severidad\ny priorización"])
+    B --> C(["Confirmación\nEvaluación médica 100 % humana\n(DS 115-2025-PCM, no verificado)"])
+    C --> D(["Inicio de hierro\nPrescripción + verificación\nautomática de stock proyectado"])
+    D --> E(["(config) Controles mensuales (sync)\nRecordatorio automático + tamizaje\nno invasivo repetido + alerta de inasistencia"])
+    E --> F(["(config) Dosaje de control 6m\nHemoScan Andino, no invasivo"])
+    F --> G(["(config) Recuperación\nRegistro + mapa de cobertura\nactualizado"])
+\end{verbatim}\end{samepage}
+
+\emph{Características transversales del TO-BE: registro único FHIR sincronizado · 100 \% de trazabilidad auditable de la corrección por altitud · alertas automáticas de severidad, stock e inasistencia · analítica geoespacial continua para priorización de recursos · decisión clínica final 100 \% humana en toda la cascada.}
+
+\textbf{Diagrama 4 --- BPMN detallado del proceso TO-BE, por carriles (lanes).}
+
+\begin{samepage}\begin{verbatim}
+flowchart TD
+    Start(("Inicio: cuidador lleva al niño a\ncontrol CRED (sin cambio vs. AS-IS)")) --> Consent
+
+    subgraph L1["Carril 1 — Madre / Padre / Cuidador"]
+        Start
+        Administrar["Administrar hierro en el hogar\n(con recordatorios push/SMS)"]
+        VisitaCoord["Coordinar cita de confirmación\n(brigada itinerante o traslado)"]
+    end
+
+    subgraph L2["Carril 2 — Personal CRED (con app HemoScan Andino)"]
+        Consent["Registrar consentimiento informado\ndigital (FHIR Consent), una sola vez"]
+        Gtele{"¿Hay telemedicina o médico\npresencial disponible?"}
+        VisitaDom["Realizar visita domiciliaria\ndirigida de seguimiento"]
+    end
+
+    subgraph L3["Carril 3 — Dispositivo + App HemoScan Andino (ESP32-S3, AS7341, MAX30102)"]
+        Captura["(config) Capturar señales (conjuntiva +\nAS7341 + MAX30102) vía BLE"]
+        Inferencia["(config) Ejecutar inferencia local (offline)\n+ autocalibración por altitud"]
+        GenObs["(config) Generar FHIR Observation (resultado\n+ corrección auditable)"]
+        Gumbral{"¿Hb corregida está\nbajo el umbral?"}
+        RegNormal["(config) Registrar resultado normal +\nrecomendación preventiva"]
+        Clasificar["(config) Clasificar severidad y generar\nalerta de derivación priorizada"]
+        ConsejeriaEst["(config) Entregar consejería nutricional\nestructurada (motor de reglas,\nNTS 213-MINSA/DGIESP-2024)"]
+        RecordControl["(config) Enviar recordatorio + realizar\ncontrol mensual no invasivo ((sync))"]
+        Gasiste{"¿Cuidador asiste al\ncontrol mensual?"}
+        EscalarAlerta["(config) Escalar alerta automática\nde inasistencia"]
+        Dosaje6mTO["(config) Realizar dosaje de control no\ninvasivo a 6 meses + reporte de evolución"]
+        GhbTO{"¿Hemoglobina se\nnormalizó?"}
+        CierreAuto["(config) Registrar recuperación, cerrar\ncaso, actualizar mapa de cobertura"]
+    end
+
+    subgraph L4["Carril 4 — Personal médico (confirmación clínica, presencial o telemedicina)"]
+        ConfirmTO["Realizar confirmación clínica, con datos\npre-cargados (decisión 100 % humana —\nDS 115-2025-PCM, no verificado)"]
+        Gconfirma{"¿Se confirma\nanemia?"}
+        DescarteTO["Registrar descarte (retroalimenta\nanalítica agregada, anonimizada)"]
+        PrescribirTO["Prescribir hierro digitalmente\n(según NTS 213-MINSA/DGIESP-2024)"]
+        ReevaluarTO["Reevaluar caso con historial\nlongitudinal, ajustar o referir"]
+    end
+
+    subgraph L5["Carril 5 — Farmacia / Almacén (SIGA, con alerta automática de stock)"]
+        VerificarStockTO["(config) Verificar stock (alerta si consumo\nproyectado supera disponible) y dispensar"]
+        Gstock{"¿Hay stock\ndisponible?"}
+        AlertaStockTO["(config) Activar alerta a SIGA/Jefatura;\nsugerir establecimiento con stock"]
+    end
+
+    subgraph L6["Carril 6 — Backend interoperable (HIS-MINSA, Padrón Nominal, mapa de cobertura, Jefatura/DIRESA)"]
+        SyncFHIR["(config) Sincronizar recursos FHIR (Observation,\nProvenance, AuditEvent, Consent, Device,\nPatient), offline-first; alimentar mapa\nde cobertura/riesgo geoespacial (H3,\nMapLibre GL JS, PMTiles; Getis-Ord Gi*, LISA)"]
+    end
+
+    EndSinAnemiaTO(("Fin: Niño sin anemia\n— continúa CRED regular"))
+    EndDescartadoTO(("Fin: Caso\ndescartado"))
+    EndRecuperadoTO(("Fin: Niño\nrecuperado"))
+    EndPersistenteTO(("Fin: Caso persistente\n/ referencia"))
+    EndAbandonoTO(("Fin: inasistencia escalada\na visita domiciliaria"))
+
+    Consent --> Captura --> Inferencia --> GenObs --> Gumbral
+    Gumbral -- No --> RegNormal --> EndSinAnemiaTO
+    Gumbral -- "Sí (sospecha de anemia)" --> Clasificar --> Gtele
+    Gtele -- No --> VisitaCoord --> ConfirmTO
+    Gtele -- "Sí (telemedicina)" --> ConfirmTO
+    ConfirmTO --> Gconfirma
+    Gconfirma -- No --> DescarteTO --> EndDescartadoTO
+    Gconfirma -- Sí --> PrescribirTO --> VerificarStockTO --> Gstock
+    Gstock -- No --> AlertaStockTO --> ConsejeriaEst
+    Gstock -- Sí --> ConsejeriaEst
+    ConsejeriaEst --> Administrar --> RecordControl --> Gasiste
+    Gasiste -- No --> EscalarAlerta --> VisitaDom --> EndAbandonoTO
+    Gasiste -- "Sí (repetir (sync) hasta\ncompletar tratamiento)" --> Dosaje6mTO
+    Dosaje6mTO --> GhbTO
+    GhbTO -- Sí --> CierreAuto --> EndRecuperadoTO
+    GhbTO -- No --> ReevaluarTO --> EndPersistenteTO
+
+    SyncFHIR -.-> GenObs
+    SyncFHIR -.-> Clasificar
+    SyncFHIR -.-> ConfirmTO
+    SyncFHIR -.-> Dosaje6mTO
+\end{verbatim}\end{samepage}
+
+\emph{Nota: el carril 6 (Backend interoperable) es una actividad transversal que se ejecuta en paralelo (compuerta AND) a todo el flujo anterior, sincronizando cada recurso FHIR generado en los carriles 2 a 5 en cuanto hay conectividad disponible (arquitectura offline-first); las flechas punteadas del diagrama representan estos flujos de mensaje/interacción entre carriles.}
+
+La siguiente matriz de carriles resume el rediseño por etapa, en el mismo formato utilizado para el proceso AS-IS, facilitando la comparación directa entre ambas versiones del proceso:
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Etapa
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Carril (lane) responsable
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Entrada
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Actividad principal (automatizada donde aplica)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Salida
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Registro
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Tamizaje & Dispositivo + App HemoScan Andino, con Personal CRED & Niño en control CRED + consentimiento digital & {[}(config){]} Captura de señales, inferencia local y autocalibración por altitud auditable & Recurso FHIR Observation con corrección trazable & Registro único, sincronización automática \\
+Derivación & App HemoScan Andino -\textgreater{} Personal CRED & Hb corregida bajo el umbral & {[}(config){]} Clasificación automática de severidad y alerta priorizada de derivación & Caso referido, priorizado por severidad & Registro automático + notificación \\
+Confirmación & Personal médico (presencial o telemedicina) & Caso referido, con datos pre-cargados & Evaluación médica humana (sin automatizar la decisión) & Diagnóstico confirmado o descartado & FHIR Observation + AuditEvent \\
+Inicio de hierro & Personal médico + Farmacia (SIGA) & Diagnóstico confirmado & Prescripción digital + {[}(config){]} verificación automática de stock proyectado & Tratamiento iniciado, con alerta temprana si hay riesgo de quiebre & Registro estructurado, sincronizado \\
+Controles mensuales & App HemoScan Andino \textless-\textgreater{} Personal CRED \textless-\textgreater{} Madre/Cuidador & Tratamiento en curso & {[}(config){]} Recordatorio automático + tamizaje no invasivo repetido + {[}(config){]} alerta de inasistencia & Continuidad monitoreada del tratamiento; abandono detectado tempranamente & FHIR Observation por cada control \\
+Dosaje de control a 6 meses & Dispositivo + App HemoScan Andino & Fin del período de tratamiento & {[}(config){]} Dosaje no invasivo + generación automática de reporte de evolución & Hemoglobina normalizada o persistente, con tendencia visible & FHIR Observation + Provenance \\
+Recuperación & App HemoScan Andino / Personal médico & Resultado del dosaje de control & {[}(config){]} Cierre automático de caso o reevaluación médica humana & Caso cerrado (con historial completo) o derivado & Registro único, mapa de cobertura actualizado \\
+\end{longtable}
+}
+
+\subsubsection{4.2.2 Automatizaciones propuestas}\label{automatizaciones-propuestas}
+
+La siguiente tabla detalla las catorce automatizaciones concretas que sustentan el rediseño, vinculando cada una a la tecnología habilitante, a la etapa de la cascada donde se inserta y al problema AS-IS (sección 4.1.4) que atiende directamente:
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+N.°
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Automatización propuesta
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Tecnología habilitante
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Etapa de la cascada
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Problema AS-IS que atiende
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+A1 & Captura y fusión de señales ópticas no invasivas & AS7341 (espectrometría, 11 canales) + MAX30102 (PPG) + ESP32-S3 (BLE) & Tamizaje, Controles mensuales, Dosaje de control & Problema 1 --- Naturaleza invasiva del método \\
+A2 & Inferencia embebida offline & ONNX / TFLite ejecutados en el dispositivo/app & Tamizaje, Controles mensuales, Dosaje de control & Dependencia de conectividad para obtener el resultado \\
+A3 & Autocalibración por altitud auditable & GPS + Modelo Digital de Elevación (MDE), motor de reglas en la app & Tamizaje & Problema 2 --- Ausencia de trazabilidad de la corrección por altitud \\
+A4 & Generación automática de consentimiento informado digital & Recurso FHIR Consent & Tamizaje (antecedente) & Ausencia de consentimiento trazable frente a la Ley N.° 29733 \\
+A5 & Registro estructurado único, con sincronización & Recursos FHIR Observation, Device, Patient; sincronización con HIS-MINSA y Padrón Nominal & Todas las etapas & Problema 3 --- Registro manual duplicado en hasta 4 sistemas \\
+A6 & Alerta automática de derivación por severidad & Motor de reglas de la app (clasificación leve/moderada/severa) & Derivación & Ausencia de priorización de casos en la derivación \\
+A7 & Consulta de confirmación por telemedicina (donde hay conectividad) & Videollamada / mensajería asíncrona integrada a la app (propuesta complementaria de este entregable) & Confirmación & Problema 4 --- Doble desplazamiento físico de la familia \\
+A8 & Consejería nutricional estructurada automática & Motor de reglas basado en la NTS 213-MINSA/DGIESP-2024 & Inicio de hierro & Problema 7 --- Consejería informal y de contenido variable \\
+A9 & Alerta temprana de quiebre de stock & Analítica de consumo proyectado, integración con SIGA & Inicio de hierro & Problema 5 --- Ausencia de alerta temprana de desabastecimiento \\
+A10 & Recordatorios automáticos de controles mensuales & Notificaciones push / SMS & Controles mensuales & Problema 6 --- Ausencia de recordatorios \\
+A11 & Alerta de inasistencia con escalamiento a visita domiciliaria & Motor de reglas + notificación dirigida a Personal CRED & Controles mensuales & Problema 6 --- Detección tardía o nula del abandono \\
+A12 & Reporte automático de evolución longitudinal de hemoglobina & Dashboard/app con historial FHIR Observation & Dosaje de control a 6 meses & Reconstrucción manual del historial clínico \\
+A13 & Mapa de cobertura/riesgo geoespacial & H3 + MapLibre GL JS + PMTiles; Getis-Ord Gi*, LISA, SaTScan, GWR/MGWR & Transversal (Jefatura/DIRESA) & Problema 8 --- Nula visibilidad agregada del throughput \\
+A14 & Trazabilidad y auditoría automática, con control de acceso & Recursos FHIR Provenance/AuditEvent; autenticación Keycloak (OIDC/RBAC) & Transversal & Problema 2 y 3 --- Ausencia de trazabilidad y de control de acceso \\
+\end{longtable}
+}
+
+Es necesario precisar dos aspectos de honestidad técnica sobre esta lista. Primero, la automatización A7 (telemedicina) es una \textbf{propuesta complementaria de proceso formulada específicamente en este entregable de Gestión de Procesos}, y no un componente ya especificado en la arquitectura de hardware/software definida originalmente para HemoScan Andino; su factibilidad técnica (ancho de banda mínimo requerido, disponibilidad de personal médico remoto) deberá evaluarse en los entregables de Ingeniería de Software e Infraestructura Tecnológica antes de considerarse parte del alcance validado del producto. Segundo, la prescripción digital de hierro (etapa Inicio de hierro) se registra, en esta propuesta, como una anotación estructurada asociada al recurso FHIR Observation correspondiente, dentro de los seis recursos FHIR ya definidos en el alcance original del proyecto (Observation, Provenance, AuditEvent, Consent, Device, Patient); la eventual incorporación de un recurso FHIR adicional especializado en órdenes de tratamiento (equivalente a MedicationRequest) se plantea aquí únicamente como una sugerencia a futuro para el área de Ingeniería de Software, no como una decisión de alcance ya tomada.
+
+\subsubsection{4.2.3 Nuevos indicadores}\label{nuevos-indicadores}
+
+La siguiente tabla presenta once indicadores objetivo para el proceso TO-BE, en correspondencia directa con los once indicadores de línea base de la sección 4.1.2 (I1\textless-\textgreater N1, I2\textless-\textgreater N2, \ldots, I11\textless-\textgreater N11), lo que permite la comparación sistemática desarrollada en la sección 4.3.
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+N.°
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Indicador
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Meta estimada (TO-BE)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Racional / mecanismo habilitante
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+N1 & Tiempo de tamizaje por niño (captura de señales + inferencia local + registro automático) & 2 a 4 minutos por niño & Elimina la punción capilar y el registro manual posterior (A1, A2, A5) \\
+N2 & Tiempo desde el tamizaje hasta la derivación formal & Menos de 1 día con conectividad/telemedicina disponible; 3 a 10 días en zonas sin cobertura (mismo cuello de botella físico que en AS-IS) & Alerta automática de derivación por severidad (A6); el traslado físico solo persiste donde no hay telemedicina \\
+N3 & Tiempo desde la derivación hasta la confirmación clínica efectiva & 3 a 10 días con conectividad/telemedicina; 3 a 14 días sin cobertura & Datos pre-cargados y priorización por severidad (A6, A7); el cuello de botella de disponibilidad de personal médico presencial no se elimina por completo \\
+N4 & Tiempo desde la confirmación hasta el inicio efectivo de hierro & 0 a 3 días & Alerta temprana de stock basada en consumo proyectado (A9), en lugar de detección reactiva \\
+N5 & N.° de sistemas en los que se registra manualmente el mismo caso & 1 (registro único FHIR con sincronización automática hacia HIS/Padrón Nominal) & Interoperabilidad basada en recursos FHIR (A5) \\
+N6 & Trazabilidad auditable de la corrección de hemoglobina por altitud aplicada & 100 \% (registro estructurado y auditable en cada determinación) & Autocalibración por altitud con generación automática de recurso FHIR Provenance (A3, A14) \\
+N7 & Tasa estimada de adherencia a los controles mensuales de seguimiento & 70 \% a 85 \% & Recordatorios automáticos y escalamiento de alertas de inasistencia a visita domiciliaria dirigida (A10, A11) \\
+N8 & Tasa estimada de abandono del seguimiento antes del dosaje de control a los 6 meses & 10 \% a 20 \% & Idem, más el atractivo de un método no invasivo para controles repetidos, que reduce el rechazo del cuidador (A1, A10, A11) \\
+N9 & Costo unitario aproximado por determinación (una vez amortizado el hardware) & S/ 0.15 a S/ 0.60 por determinación, según vida útil asumida del nodo & El hardware (AS7341, MAX30102, ESP32-S3) es reutilizable; no consume microcuvetas ni lancetas por determinación (A1) \\
+N10 & Nivel de automatización del cálculo de corrección por altitud & 100 \% (motor de reglas embebido, ejecutado en cada determinación) & Autocalibración por altitud embebida en el dispositivo/app (A3) \\
+N11 & Visibilidad agregada, en tiempo casi real, del throughput de la cascada para la Jefatura de microred/DIRESA & Alta (mapa de cobertura/riesgo actualizado con cada sincronización) & Analítica geoespacial alimentada por datos agregados y anonimizados (A13) \\
+\end{longtable}
+}
+
+\subsubsection{4.2.4 Mejora estimada en eficiencia}\label{mejora-estimada-en-eficiencia}
+
+En conjunto, las catorce automatizaciones descritas permiten proyectar tres tipos de mejora que se desarrollan con detalle metodológico en la sección 4.3: \textbf{(a)} una reducción del tiempo total del ciclo de tamizaje a inicio de tratamiento de aproximadamente 65 \% en escenarios con conectividad y telemedicina disponible, y de aproximadamente 33 \% en zonas sin cobertura (sección 4.3.1); \textbf{(b)} una reducción de al menos un orden de magnitud en el costo marginal de insumos por determinación, al eliminarse por completo el consumo de microcuvetas y lancetas (sección 4.3.2); y \textbf{(c)} una mejora sustancial y, en varias dimensiones, binaria (de 0 \% a 100 \%) en trazabilidad auditable, consolidación del registro y cumplimiento normativo proactivo (sección 4.3.3).
+
+Es importante subrayar que esta mejora en eficiencia \textbf{no es uniforme a lo largo de la cascada}: las etapas más automatizables (Tamizaje, Controles mensuales, Dosaje de control) muestran las mayores ganancias proyectadas, porque en ellas el proceso AS-IS era enteramente manual y no auditable; en cambio, la etapa de Confirmación clínica mantiene, por diseño y por exigencia regulatoria, una intervención humana plena, por lo que su mejora de eficiencia proviene únicamente de la reducción de tiempos de espera y de la disponibilidad de información pre-cargada, no de la automatización de la decisión en sí misma. Esta distinción es consistente con el principio, ya establecido en el Entregable 1 (sección 1.1.3), de que HemoScan Andino es un sistema de tamizaje que deriva a confirmación clínica, nunca un diagnóstico autónomo. Finalmente, se reitera que estas proyecciones son estimaciones ilustrativas del equipo, no mediciones de un piloto ejecutado, y su validación empírica es uno de los objetivos centrales de la Fase 0 de validación.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{4.3 Análisis Comparativo}\label{anuxe1lisis-comparativo}
+
+\subsubsection{4.3.1 Reducción de tiempos}\label{reducciuxf3n-de-tiempos}
+
+La siguiente tabla compara, etapa por etapa, los tiempos estimados del proceso AS-IS (sección 4.1.2) con los del proceso TO-BE (sección 4.2.3), calculando el porcentaje de reducción a partir del punto medio de cada rango, de forma transparente y replicable:
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Etapa / tramo
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Tiempo AS-IS (estimado)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Tiempo TO-BE (estimado)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Reducción estimada
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Tamizaje (por niño) & 8-12 min (punto medio: 10 min) & 2-4 min (punto medio: 3 min) & \textasciitilde= 70 \% \\
+Tamizaje -\textgreater{} Derivación & 3-15 días (punto medio: 9 días) & Con conectividad: \textless1 día (\textasciitilde= 0.5 días) · Sin cobertura: 3-10 días (punto medio: 6.5 días) & \textasciitilde= 94 \% (con conectividad) · \textasciitilde= 28 \% (sin cobertura) \\
+Derivación -\textgreater{} Confirmación & 7-21 días (punto medio: 14 días) & Con conectividad: 3-10 días (punto medio: 6.5 días) · Sin cobertura: 3-14 días (punto medio: 8.5 días) & \textasciitilde= 54 \% (con conectividad) · \textasciitilde= 39 \% (sin cobertura) \\
+Confirmación -\textgreater{} Inicio de hierro & 0-7 días (punto medio: 3.5 días) & 0-3 días (punto medio: 1.5 días) & \textasciitilde= 57 \% \\
+\end{longtable}
+}
+
+A partir de estos tramos, se calcula el \textbf{tiempo total del ciclo} (desde el tamizaje hasta el inicio efectivo del tratamiento) como la suma de los puntos medios de cada tramo, bajo dos escenarios TO-BE diferenciados según disponibilidad de conectividad:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{AS-IS:} 9 + 14 + 3.5 \textasciitilde= \textbf{27 días} (rango combinado referencial: 10 a 43 días).
+\item
+  \textbf{TO-BE con conectividad/telemedicina:} 0.5 + 6.5 + 1.5 \textasciitilde= \textbf{9.5 días} (rango combinado referencial: 3 a 23 días) -\textgreater{} reducción estimada de \textbf{\textasciitilde= 65 \%} respecto al AS-IS.
+\item
+  \textbf{TO-BE sin cobertura de conectividad:} 6.5 + 8.5 + 1.5 \textasciitilde= \textbf{16.5 días} (rango combinado referencial: 6 a 27 días) -\textgreater{} reducción estimada de \textbf{\textasciitilde= 39 \%} respecto al AS-IS.
+\end{itemize}
+
+\textbf{Diagrama 5 --- Comparación ilustrativa del tiempo total de ciclo (tamizaje -\textgreater{} inicio de hierro).}
+
+\begin{samepage}\begin{verbatim}
+xychart-beta
+    title "Tiempo total de ciclo: tamizaje -> inicio de hierro (días, punto medio estimado)"
+    x-axis ["AS-IS", "TO-BE sin conectividad", "TO-BE con conectividad"]
+    y-axis "Días" 0 --> 30
+    bar [27, 16.5, 9.5]
+\end{verbatim}\end{samepage}
+
+\emph{Nota: gráfico generado a partir de los puntos medios calculados en el cuerpo de esta sección (no de una escala aproximada por bloques de texto, como en una versión previa de este entregable). Cifras estimadas por el equipo (ver metodología de cálculo arriba y el Anexo C); pendientes de validación empírica con datos de campo de la Fase 0. Para la entrega final en Word/PDF, este gráfico debe renderizarse a imagen (vía mermaid.live o la extensión de VS Code) o recrearse en una herramienta de hojas de cálculo/gráficos convencional (Excel, Google Sheets), insertando la imagen resultante.}
+
+La lectura central de este análisis es que la ganancia de tiempo más significativa depende críticamente de la disponibilidad de conectividad para habilitar la alerta automática de derivación y, opcionalmente, la telemedicina: en su ausencia, la mejora de tiempos sigue siendo relevante (\textasciitilde= 39 \%) pero considerablemente menor, porque el cuello de botella físico de transporte y disponibilidad de personal médico presencial ---una limitación estructural de la zona altoandina ya diagnosticada en el Entregable 1 (sección 1.1.1)--- no puede resolverse únicamente con tecnología de tamizaje.
+
+\subsubsection{4.3.2 Reducción de costos}\label{reducciuxf3n-de-costos}
+
+El análisis de costos se circunscribe, de manera deliberada, al nivel de \textbf{costo de proceso} (insumos, tiempo de personal y desplazamientos), que es el nivel pertinente para un entregable de Gestión de Procesos; el modelo de negocio, la estructura de precios de venta/alquiler del hardware y la suscripción SaaS corresponden al futuro \textbf{Caso de Negocio (competencia CE0113)}, evitando así la duplicación de contenido entre entregables.
+
+Siguiendo la misma metodología de estimación por rango ya aplicada a los indicadores de tiempo I1-I4, I7 e I8 (sección 4.1.2, Anexo C --- Nivel 2), y no únicamente al componente de insumos fungibles, se construyen a continuación estimaciones ilustrativas en soles para los cinco componentes de costo, a partir de parámetros que el equipo \textbf{asume explícitamente} cuando el dato real no existe. Son estos parámetros asumidos ---y no los resultados que se derivan de ellos--- los que quedan marcados como pendientes de validación:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Costo-hora ilustrativo de personal técnico/de enfermería:} S/ 15 por hora (equivalente a una remuneración mensual referencial de aproximadamente S/ 2,600 por 173.33 horas/mes), asumido únicamente para este cálculo y no verificado contra la escala remunerativa real de MINSA/CAS de la microred ilustrativa.
+\item
+  \textbf{Costo ilustrativo de transporte rural interprovincial (ida y vuelta):} S/ 15 a S/ 30 por desplazamiento, asumido a partir del conocimiento general sobre tarifas de transporte rural altoandino, sin verificar contra tarifas reales de la zona de intervención.
+\item
+  \textbf{Costo de oportunidad ilustrativo de un día de trabajo perdido por el cuidador:} S/ 40 a S/ 60 por desplazamiento, asumido de forma análoga.
+\item
+  \textbf{Tasa de incidencia ilustrativa de quiebre de stock que interrumpe un tratamiento en curso:} 5 \% a 10 \% de los casos, asumida a falta de un registro histórico real de quiebres de stock en la microred ilustrativa.
+\end{itemize}
+
+Ninguno de estos cuatro parámetros ha sido medido en campo ni verificado contra una fuente institucional; se declaran explícitamente como supuestos de cálculo, y quedan marcados individualmente como \textbf{{[}DATO PENDIENTE DE VALIDAR{]}} en la tabla siguiente.
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Componente de costo
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+AS-IS (estimado)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+TO-BE (estimado)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Observación
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Insumos fungibles por determinación & S/ 1.3 a S/ 2.7 (microcuveta + lanceta HemoCue) & S/ 0.15 a S/ 0.60 (amortización del nodo reutilizable, sin consumibles) & Cálculo TO-BE basado en un costo de nodo de Fase 0 de S/ 300 (S/ 900 ÷ 3 nodos) amortizado sobre una vida útil asumida de 500 a 2,000 determinaciones; el costo de producción a escala y la vida útil real del nodo son \textbf{{[}DATO PENDIENTE DE VALIDAR{]}}, a precisar en el Caso de Negocio \\
+Registro administrativo por caso & Hasta 4 registros manuales (cuaderno, HIS, SIEN, Padrón Nominal), 15 a 30 min adicionales de personal por caso \textasciitilde= \textbf{S/ 3.75 a S/ 7.50 por caso} (ilustrativo) & 1 registro automático con sincronización FHIR, 0 a 5 min de verificación \textasciitilde= \textbf{S/ 0 a S/ 1.25 por caso} (ilustrativo) & Ahorro ilustrativo estimado: S/ 2.50 a S/ 7.50 por caso = minutos (I5/N5) × costo-hora ilustrativo asumido de S/ 15/hora. El costo-hora real del personal de salud de una microred específica es \textbf{{[}DATO PENDIENTE DE VALIDAR{]}} \\
+Costo de oportunidad por desplazamientos físicos de la familia & Hasta 2 desplazamientos (tamizaje + confirmación) cuando el establecimiento de origen no cuenta con médico \textasciitilde= \textbf{S/ 110 a S/ 180 por caso} (ilustrativo: 2 × {[}S/ 15-30 transporte + S/ 40-60 día de trabajo perdido{]}) & 1 desplazamiento típico con telemedicina disponible \textasciitilde= \textbf{S/ 55 a S/ 90 por caso}; sin cambio (S/ 110-180) en zonas sin cobertura & Ahorro ilustrativo estimado (con telemedicina): S/ 55 a S/ 90 por caso. El costo real de transporte y el costo de oportunidad real del cuidador en la zona de intervención son \textbf{{[}DATO PENDIENTE DE VALIDAR{]}} \\
+Costo de tratamiento discontinuado por quiebre de stock no anticipado & No cuantificado en frecuencia real; asumiendo ilustrativamente una incidencia de 5 \% a 10 \% de los casos \textasciitilde= \textbf{S/ 0.19 a S/ 0.75 por caso atendido} (5-10 \% × S/ 3.75-7.50 de repetir Inicio de hierro) & Reducción esperada por alerta automática de consumo proyectado (A9); ahorro exacto \textbf{{[}DATO PENDIENTE DE VALIDAR{]}} sin datos históricos de la tasa real de quiebre evitada & Estimación de doble supuesto (tasa de incidencia + costo-hora, ambos asumidos), la de menor solidez de esta tabla. La tasa real histórica de quiebres de stock que interrumpen tratamientos en curso es \textbf{{[}DATO PENDIENTE DE VALIDAR{]}} \\
+Inversión inicial (CAPEX) & No aplica (proceso 100 \% manual, sin hardware propio) & Costo del nodo HemoScan Andino: referencial de Fase 0, S/ 300 por nodo (prototipo) & El modelo de negocio B2G (venta/alquiler + suscripción SaaS) se detalla en el Caso de Negocio (Entregable 2, CE0113); el costo de producción a escala es \textbf{{[}DATO PENDIENTE DE VALIDAR{]}} (ver fila de insumos fungibles) \\
+\end{longtable}
+}
+
+La lectura honesta de esta tabla es que los cinco componentes de costo cuentan ahora con una cuantificación explícita, pero con niveles de solidez distintos: el costo unitario de insumos fungibles es el \textbf{más sólido}, al derivarse directamente de cifras ya definidas en el proyecto (presupuesto de Fase 0); los tres componentes de registro administrativo, desplazamiento familiar y quiebre de stock son estimaciones \textbf{ilustrativas de menor solidez}, construidas a partir de parámetros explícitamente asumidos por el equipo (costo-hora, tarifa de transporte, costo de oportunidad y tasa de incidencia de quiebre de stock) que no han sido verificados en campo ni contra una fuente institucional, y se marcan individualmente como pendientes de validación. Esta jerarquía de solidez es análoga, en su lógica, a la ya aplicada a los indicadores de tiempo I1-I4, I7 e I8 (Anexo C, Nivel 2): se prefiere mostrar una estimación transparente y explícitamente etiquetada como ilustrativa, antes que omitir por completo la cuantificación de un componente de costo relevante.
+
+\subsubsection{4.3.3 Mejora en calidad}\label{mejora-en-calidad}
+
+La siguiente tabla compara nueve dimensiones de calidad del proceso, varias de ellas cuantificables de forma binaria (0 \%/100 \%) por derivarse directamente de hallazgos ya documentados en el Entregable 1, y otras de naturaleza cualitativa que constituyen hipótesis a validar en el piloto de Fase 0:
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Dimensión de calidad
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+AS-IS
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+TO-BE
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Mecanismo habilitante
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Invasividad del método & Invasivo (punción capilar, al menos 2 veces por caso) & No invasivo (0 punciones) & A1 --- Fusión óptica multisensor \\
+Trazabilidad auditable de la corrección por altitud & 0 \% & 100 \% & A3, A14 --- Autocalibración auditable + FHIR Provenance \\
+Precisión diagnóstica ajustada a altitud & Riesgo documentado de sobre/subdiagnóstico (Gonzales et al., 2025; Baquerizo-Sedano et al., 2025) & Corrección transparente y auditable, orientada a mitigar dicho riesgo (hipótesis a validar clínicamente) & A3 --- GPS + Modelo Digital de Elevación \\
+Duplicidad de registro & Hasta 4 sistemas manuales no interoperables & 1 registro único, sincronizado & A5 --- Recursos FHIR interoperables \\
+Consentimiento informado & Informal, no siempre documentado de forma auditable & Digital, auditable, conforme a la Ley N.° 29733 & A4 --- FHIR Consent \\
+Consejería nutricional & Informal, de contenido variable según el personal & Estructurada, basada en reglas de la NTS 213-MINSA/DGIESP-2024, personalizada & A8 --- Motor de reglas de consejería \\
+Cumplimiento del marco de gobierno de IA (DS 115-2025-PCM)* & Sin marco documentado de supervisión humana ni trazabilidad de decisiones & Trazabilidad y supervisión humana explícitas y documentadas en cada etapa & A14 --- FHIR Provenance/AuditEvent + decisión clínica humana preservada \\
+Detección de abandono del seguimiento & Nula o tardía (sin recordatorios ni alertas) & Alertas automáticas de inasistencia, con escalamiento a visita domiciliaria & A10, A11 --- Recordatorios y alertas \\
+Visibilidad para la priorización de recursos de salud pública & Nula (consolidación manual con rezago) & Mapa de cobertura/riesgo geoespacial actualizado de forma continua & A13 --- Analítica geoespacial (H3, MapLibre, Getis-Ord Gi*, LISA) \\
+\end{longtable}
+}
+
+\emph{* La existencia, numeración exacta y texto íntegro del DS 115-2025-PCM no han sido verificados por el equipo contra una fuente primaria (ver Nota metodológica y Anexo B); esta fila compara el nivel de trazabilidad y supervisión humana ya documentado internamente por el proyecto, independientemente de dicha verificación normativa pendiente.}
+
+De estas nueve dimensiones, cinco (trazabilidad, duplicidad de registro, consentimiento informado, cumplimiento del marco de IA y visibilidad geoespacial) se sustentan en una comparación directa entre ``lo que hoy no existe'' (0 \%, ausencia documentada en el Entregable 1) y ``lo que la arquitectura ya definida del proyecto genera por diseño'' (100 \%, mecanismo técnico concreto ya especificado), por lo que constituyen la evidencia más sólida de mejora de calidad de este análisis. Las cuatro dimensiones restantes (invasividad, precisión diagnóstica, consejería y detección de abandono) dependen, en mayor o menor medida, de la aceptación real por parte de cuidadores y personal de salud, y de la validación clínica del algoritmo de corrección por altitud, por lo que se presentan explícitamente como \textbf{hipótesis de mejora a confirmar} en la Fase 0, y no como resultados garantizados por el solo hecho de introducir la tecnología.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Anexos}\label{anexos}
+
+\subsection{Anexo A --- Glosario de términos específicos de este entregable}\label{anexo-a-glosario-de-tuxe9rminos-especuxedficos-de-este-entregable}
+
+Para las siglas y términos institucionales generales del proyecto (DIRESA/GERESA, ENDES, FHIR, HIS-MINSA, Padrón Nominal, SERUMS, SIGA, SIEN, entre otros), véase el Anexo A del Entregable N.° 1. A continuación se glosan únicamente los términos introducidos o utilizados de forma intensiva en este Entregable N.° 4:
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Sigla / término
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Definición
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+AS-IS & Representación del proceso ``tal como es'' actualmente, sin la intervención de la solución propuesta \\
+TO-BE & Representación del proceso ``tal como debería ser'' tras incorporar el rediseño propuesto \\
+BPMN & Business Process Model and Notation, estándar de notación gráfica para el modelado de procesos de negocio \\
+Pool & En notación BPMN, contenedor que representa a la organización o al proceso completo bajo análisis \\
+Lane / carril & Subdivisión de un pool que agrupa las actividades según el responsable (rol, área o sistema) que las ejecuta \\
+Gateway / compuerta & Elemento de BPMN que representa un punto de decisión (exclusiva, XOR) o de bifurcación/convergencia simultánea (paralela, AND) en el flujo del proceso \\
+I-1 a I-4 & Categorías de establecimientos de salud del primer nivel de atención, de complejidad creciente: I-1 (puesto de salud, típicamente sin médico permanente), I-2 (puesto de salud con personal de enfermería/técnico), I-3/I-4 (centro de salud con médico general y mayor capacidad resolutiva), conforme a la categorización de establecimientos del sector salud peruano \\
+KPI & Key Performance Indicator (indicador clave de desempeño); en este documento, los indicadores I1-I11 (AS-IS) y N1-N11 (TO-BE) \\
+Tiempo de ciclo (cycle time) & Tiempo total transcurrido entre el inicio y el fin de un proceso o de una de sus etapas \\
+Throughput & Volumen de casos procesados por unidad de tiempo en un proceso o etapa determinada \\
+PPG & Fotopletismografía (photoplethysmography), técnica óptica de medición de señales fisiológicas utilizada por el sensor MAX30102 \\
+CAPEX & Capital Expenditure (gasto de capital); en este documento, la inversión inicial en hardware del nodo HemoScan Andino \\
+Mermaid & Lenguaje de diagrama-como-código (diagram-as-code) utilizado en este entregable para los Diagramas 1 a 5; se escribe como texto plano (bloques \texttt{\textasciigrave{}\textasciigrave{}\textasciigrave{}mermaid}) y se renderiza como diagrama gráfico vectorial en visores compatibles (GitHub, GitLab, VS Code, Obsidian, Notion) o mediante herramientas de exportación (mermaid.live, mermaid-cli) \\
+Diagrama-como-código (diagram-as-code) & Práctica de especificar un diagrama mediante texto estructurado (en lugar de dibujarlo directamente en una herramienta gráfica), de forma que una herramienta externa lo renderice como imagen; en este documento se usa Mermaid como implementación de esta práctica \\
+\end{longtable}
+}
+
+\subsection{Anexo B --- Fuentes y referencias}\label{anexo-b-fuentes-y-referencias}
+
+\begin{itemize}
+\tightlist
+\item
+  Encuesta Demográfica y de Salud Familiar (ENDES) 2025. Instituto Nacional de Estadística e Informática (INEI). Indicador de prevalencia de anemia infantil en menores de 3 años, región Puno (56.1 \%). \textbf{{[}DATO PENDIENTE DE VALIDAR: edición exacta del informe ENDES, número de tabla y URL/DOI que permitan verificar esta cifra de forma independiente; se cita tal como fue provista en el enunciado del proyecto, sin acceso directo a la publicación primaria del INEI{]}}.
+\item
+  Gonzales, G. F. et al.~(2025). {[}DATO PENDIENTE DE VALIDAR: título completo del artículo, revista, volumen y DOI --- solo se cuenta con autor y año según el enunciado del proyecto{]}. Referencia sobre el riesgo de sobrediagnóstico de anemia por corrección inadecuada de hemoglobina en altitud.
+\item
+  Baquerizo-Sedano, L. et al.~(2025). {[}DATO PENDIENTE DE VALIDAR: título completo del artículo, revista, volumen y DOI --- solo se cuenta con autor y año según el enunciado del proyecto{]}. Referencia complementaria sobre el mismo riesgo de sobrediagnóstico por altitud.
+\item
+  Ministerio de Salud del Perú. Norma Técnica de Salud NTS 213-MINSA/DGIESP-2024 para el manejo terapéutico y preventivo de la anemia. \textbf{{[}DATO PENDIENTE DE VALIDAR: texto íntegro y vigente de la norma; este entregable describe la secuencia de etapas de la cascada tal como fue provista en el enunciado del proyecto, sin acceso directo al texto completo{]}}.
+\item
+  Presidencia del Consejo de Ministros del Perú. Decreto Supremo N.° 115-2025-PCM, reglamento de la Ley N.° 31814 (Ley que promueve el uso de la Inteligencia Artificial en favor del desarrollo del país). \textbf{{[}DATO PENDIENTE DE VALIDAR: existencia, numeración exacta y texto íntegro y vigente del decreto; el equipo no tuvo acceso directo a una fuente primaria oficial (p.~ej., publicación en el diario oficial El Peruano) al momento de elaborar este entregable, y cita la norma tal como fue provista en el enunciado del proyecto{]}}.
+\item
+  Congreso de la República del Perú. Ley N.° 29733, Ley de Protección de Datos Personales.
+\item
+  Entregable N.° 1 --- Diagnóstico Organizacional y Alineamiento Estratégico (HemoScan Andino), en particular las secciones 1.1.1 a 1.1.3 (contexto, estructura organizacional y cadena de valor), 1.3.1 a 1.3.4 (diagnóstico digital/TI) y 1.4.1 a 1.4.4 (identificación del problema), utilizadas como insumo directo para la descripción del proceso AS-IS y la justificación del rediseño TO-BE de este entregable.
+\end{itemize}
+
+\textbf{Nota:} al igual que en el Entregable 1, las referencias a Gonzales et al.~(2025) y Baquerizo-Sedano et al.~(2025) se citan tal como fueron provistas en el enunciado del proyecto (autor y año), sin acceso directo a la ficha bibliográfica completa. Por consistencia metodológica, se aplica el mismo nivel de verificación pendiente al Decreto Supremo N.° 115-2025-PCM (existencia, numeración exacta y texto íntegro no confirmados contra una fuente primaria oficial) y a la cifra de prevalencia de anemia infantil de la región Puno atribuida a ENDES 2025/INEI (sin edición, tabla ni URL específica citadas que permitan su verificación independiente); ninguna de estas cuatro referencias recibía previamente el mismo tratamiento de honestidad metodológica que la NTS 213-MINSA/DGIESP-2024, inconsistencia que se corrige en esta versión del documento. Se recomienda que el equipo valide y complete estas cuatro referencias ---Gonzales et al.~(2025), Baquerizo-Sedano et al.~(2025), el DS 115-2025-PCM y la cifra de ENDES 2025--- así como el texto íntegro de la NTS 213-MINSA/DGIESP-2024, antes de la sustentación final o de cualquier trabajo de campo.
+
+\subsection{Anexo C --- Nota metodológica sobre la estimación de indicadores de proceso}\label{anexo-c-nota-metodoluxf3gica-sobre-la-estimaciuxf3n-de-indicadores-de-proceso}
+
+Los veintidós indicadores presentados en este documento (I1-I11 para el proceso AS-IS, N1-N11 para el proceso TO-BE) se construyeron siguiendo una jerarquía explícita de tres niveles de sustento, para que el lector pueda distinguir el grado de solidez de cada cifra:
+
+\textbf{Nivel 1 --- Indicadores derivados directamente de hallazgos ya documentados en el Entregable 1} (I5, I6, I9, I10, I11 y sus equivalentes N5, N6, N9, N10, N11): estos indicadores se calculan a partir de datos ya declarados en el diagnóstico organizacional (por ejemplo, el inventario de cuatro sistemas de información no interoperables, o el presupuesto de Fase 0), por lo que su nivel de sustento es el más alto dentro de este entregable, aunque siguen dependiendo, en última instancia, de que la organización ilustrativa refleje razonablemente a una microred real.
+
+\textbf{Nivel 2 --- Indicadores estimados por rango a partir de la lógica operativa del sector} (I1 a I4, I7, I8 y sus equivalentes N1 a N4, N7, N8): estos indicadores son estimaciones del equipo, construidas a partir del conocimiento general y documentado públicamente sobre la operación de establecimientos de salud rurales de primer nivel en el Perú (dispersión geográfica, dependencia de brigadas itinerantes, rotación de personal por SERUMS), sin corresponder a una medición de campo específica de la Microred de Salud Altiplano-Puno, que ---se reitera--- es una organización ilustrativa.
+
+\textbf{Nivel 3 --- Proyecciones de mejora derivadas del mecanismo técnico de cada automatización} (todos los cálculos de la sección 4.3): estos valores se obtienen aplicando un razonamiento explícito sobre el efecto esperado de cada automatización (por ejemplo, ``si el registro pasa de manual a automático, el tiempo de verificación se reduce de 15-30 minutos a 0-5 minutos''), y constituyen el nivel de menor solidez empírica, aunque el más alto en trazabilidad metodológica, dado que cada cálculo se muestra de forma transparente y replicable.
+
+Para elevar estos indicadores a un nivel de evidencia validado, el equipo requiere, como mínimo: (a) un convenio institucional formal con una microred real; (b) un levantamiento de tiempos y movimientos (time-and-motion study) del proceso actual, observado directamente en campo; (c) el costo-hora real del personal de salud y el costo de transporte familiar en la zona de intervención; y (d) los resultados del piloto de Fase 0 (150-300 niños), que permitirán contrastar las proyecciones de este entregable contra datos medidos. Ninguno de estos insumos existe a la fecha de este documento.
+
+\subsection{Anexo D --- Índice de diagramas y figuras presentados en el cuerpo del documento}\label{anexo-d-uxedndice-de-diagramas-y-figuras-presentados-en-el-cuerpo-del-documento}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Figura
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Descripción
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Formato
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Ubicación
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Diagrama 1 & Vista de alto nivel del proceso AS-IS (siete etapas en secuencia) & Mermaid \texttt{flowchart} & Sección 4.1.3 \\
+Diagrama 2 & BPMN detallado del proceso AS-IS, con 5 carriles, compuertas y eventos de fin múltiples & Mermaid \texttt{flowchart} con \texttt{subgraph} por carril & Sección 4.1.3 \\
+Diagrama 3 & Vista de alto nivel del proceso TO-BE, con marcadores de automatización & Mermaid \texttt{flowchart} & Sección 4.2.1 \\
+Diagrama 4 & BPMN detallado del proceso TO-BE, con 6 carriles (2 nuevos respecto al AS-IS) & Mermaid \texttt{flowchart} con \texttt{subgraph} por carril & Sección 4.2.1 \\
+Diagrama 5 & Comparación del tiempo total de ciclo AS-IS vs.~TO-BE, en los dos escenarios de conectividad & Mermaid \texttt{xychart-beta} (gráfico de barras) & Sección 4.3.1 \\
+\end{longtable}
+}
+
+\textbf{Acción pendiente antes de la entrega final:} los cinco diagramas anteriores están especificados en código Mermaid, que debe renderizarse a imagen (PNG/SVG, vía mermaid.live o la extensión de Mermaid de VS Code) o recrearse en una herramienta de modelado BPMN dedicada (Bizagi Modeler, Camunda Modeler, draw.io/diagrams.net o Visio) antes de insertarse como figura en la versión Word/PDF del documento, conforme al formato sugerido por la rúbrica. Esta conversión a imagen no pudo ejecutarse dentro de este entregable en formato Markdown.
+
+\subsection{Anexo E --- Trazabilidad entre etapas de la cascada y recursos FHIR generados (proceso TO-BE)}\label{anexo-e-trazabilidad-entre-etapas-de-la-cascada-y-recursos-fhir-generados-proceso-to-be}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Etapa de la cascada
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Recurso(s) FHIR generado(s) en TO-BE
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Propósito
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Tamizaje & Observation (resultado de Hb + corrección por altitud aplicada), Device (nodo HemoScan Andino), Patient, Consent & Registro estructurado del resultado y su trazabilidad de origen \\
+Derivación & Provenance (registro de quién/cuándo/cómo se generó la alerta de derivación) & Trazabilidad de la decisión automática de priorizar la derivación \\
+Confirmación & Observation (resultado de la confirmación clínica), AuditEvent (registro de acceso y acción del personal médico) & Trazabilidad de la decisión clínica humana, en línea con el principio de supervisión humana atribuido al DS 115-2025-PCM (norma no verificada por el equipo; ver Anexo B) \\
+Inicio de hierro & Anotación estructurada asociada al recurso Observation correspondiente (dentro del alcance de los 6 recursos ya definidos) & Trazabilidad de la prescripción y dispensación; un recurso FHIR dedicado tipo MedicationRequest queda como sugerencia a evaluar por Ingeniería de Software \\
+Controles mensuales & Observation (cada control mensual), AuditEvent & Seguimiento longitudinal auditable de la adherencia \\
+Dosaje de control a 6 meses & Observation, Provenance & Verificación trazable de la respuesta al tratamiento \\
+Recuperación & Observation (cierre del caso) & Cierre trazable del episodio completo \\
+\end{longtable}
+}
+
+\subsection{Anexo F --- Nota sobre el formato final de entrega (Word/PDF)}\label{anexo-f-nota-sobre-el-formato-final-de-entrega-wordpdf}
+
+El formato sugerido por la rúbrica para este entregable es un \textbf{documento Word/PDF de aproximadamente 12 a 18 páginas, con diagramas BPMN}. Este entregable se redactó en Markdown para facilitar la edición colaborativa y el control de versiones del equipo durante su elaboración, pero antes de la entrega final o la sustentación, el equipo debe ejecutar los siguientes pasos de conversión, que exceden la capacidad de edición de texto plano de este documento:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Verificar la extensión final contra el rango sugerido.} Este documento en Markdown tiene una alta densidad de tablas y diagramas y ronda las 600 líneas de texto fuente; es razonablemente probable que, al convertirlo a un documento paginado con el formato institucional (portada, márgenes, interlineado, tipografía de cuerpo), la extensión resultante \textbf{supere las 18 páginas sugeridas} por la rúbrica, en particular por el contenido extenso de los Anexos C y E. Se recomienda medir la extensión real tras la conversión y, de exceder el rango sugerido, mover el contenido detallado de los Anexos C, D, E y F a un apéndice separado, dejando en el cuerpo principal solo una referencia de una o dos líneas a cada uno.
+\item
+  \textbf{Renderizar los cinco diagramas Mermaid a imagen.} Como se indicó en la sección 4.1.3 y en el Anexo D, los diagramas de este documento están especificados en código Mermaid (\texttt{flowchart} y \texttt{xychart-beta}) y deben renderizarse a imagen (PNG/SVG, vía mermaid.live o la extensión de Mermaid de VS Code) o recrearse en una herramienta de modelado BPMN dedicada (Bizagi Modeler, Camunda Modeler, draw.io/diagrams.net o Visio) antes de insertarse en la versión Word/PDF final.
+\item
+  \textbf{Si se conserva algún bloque de código como texto} (no recomendado frente al punto 2), verificar que el procesador de texto lo renderice con una fuente monoespaciada (por ejemplo, Consolas o Courier New) para no romper la alineación de los caracteres.
+\end{enumerate}
+
+Ninguno de estos tres pasos pudo verificarse dentro de este entregable en formato Markdown, por lo que quedan como \textbf{acciones pendientes de responsabilidad del equipo} antes de la entrega final.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Autoevaluación frente a la rúbrica}\label{autoevaluaciuxf3n-frente-a-la-ruxfabrica}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Criterio
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nivel alcanzado
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Justificación
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Modelado AS-IS & Excelente (metodológicamente), con validación empírica pendiente & El proceso actual se describe narrativamente en sus siete etapas, se documenta con once indicadores de línea base explícitamente jerarquizados por nivel de sustento (Anexo C), se representa en un \textbf{diagrama BPMN gráfico real} (notación Mermaid, con carriles, compuertas y eventos de fin como formas gráficas estándar --- rectángulos, rombos, óvalos --- en lugar del arte ASCII de una versión previa; ver sección 4.1.3 y Anexo D), y se identifican ocho problemas operativos trazables al diagnóstico del Entregable 1. La condición que impide el nivel ``Excelente'' en sentido estrictamente empírico ---y que se declara explícitamente, sin relajar el rigor--- es que el modelado se construye a partir de razonamiento documental y de la lógica operativa general del sector, y no de la observación directa de un proceso real (un levantamiento de tiempos y movimientos en campo); ese insumo solo será posible una vez formalizado un convenio institucional con una microred real y ejecutado el piloto de Fase 0. \\
+Propuesta TO-BE & Excelente & El rediseño incorpora catorce automatizaciones concretas, cada una mapeada explícitamente a la tecnología habilitante ya definida en el proyecto (fusión óptica multisensor, inferencia embebida, autocalibración por altitud auditable, trazabilidad FHIR, analítica geoespacial) y al problema AS-IS específico que resuelve, representado también en un diagrama BPMN gráfico (Mermaid, Diagrama 4), y preservando de forma explícita la intervención humana en las decisiones clínicas de mayor riesgo, en línea con el principio de supervisión humana que el proyecto atribuye al DS 115-2025-PCM (norma cuya verificación contra una fuente primaria queda pendiente; ver Anexo B). La propuesta cuantifica la mejora esperada en eficiencia (sección 4.2.4) con una metodología de cálculo transparente y replicable, y distingue con honestidad qué automatizaciones forman parte del alcance ya validado del proyecto y cuáles son extensiones complementarias propuestas por este entregable (telemedicina, recurso FHIR adicional), sin presentar estas últimas como decisiones ya tomadas. \\
+Análisis comparativo & Excelente (metodológicamente), con validación empírica pendiente & Se cuantifican reducciones de tiempo (por etapa y de ciclo total, en dos escenarios de conectividad, con el cálculo de puntos medios mostrado explícitamente y su propio diagrama Mermaid comparativo), de calidad (nueve dimensiones, cinco de ellas binarias y directamente respaldadas por hallazgos del Entregable 1) y, ahora, de \textbf{costo en los cinco componentes identificados} (insumos, registro administrativo, desplazamiento familiar, quiebre de stock y CAPEX), tras incorporar estimaciones ilustrativas explícitamente etiquetadas como tales para los cuatro componentes que antes carecían de cifra (sección 4.3.2), en lugar de dejarlos sin cuantificar. La condición que impide el nivel ``Excelente'' en sentido estrictamente empírico es que estas cifras ---incluidas las nuevas estimaciones de costo--- son, en su totalidad, proyecciones o supuestos razonados por el equipo (costo-hora, tarifa de transporte, tasa de incidencia de quiebre de stock) y no mediciones de un proceso real observado en campo ni resultados de un piloto ejecutado; esa validación empírica es, precisamente, uno de los objetivos declarados de la Fase 0. \\
+\end{longtable}
+}
+
+\textbf{Limitación transversal declarada:} el nivel ``Excelente'' en sentido estrictamente empírico, en los tres criterios, requiere, como condición necesaria, un proceso real observado en campo (levantamiento de tiempos y movimientos, entrevistas al personal de salud, datos históricos de adherencia y de quiebres de stock, costo-hora real del personal y costo real de transporte familiar) y los resultados medidos del piloto de Fase 0 tras aplicar el rediseño TO-BE. Ninguno de estos insumos existe a la fecha de este entregable, por lo que cada cifra cuantitativa del documento ---incluidas las nuevas estimaciones ilustrativas de costo de la sección 4.3.2--- se ha declarado explícitamente como una estimación o un supuesto de cálculo, jerarquizada por nivel de sustento en el Anexo C, y no como un hallazgo verificado, en coherencia con la disciplina de honestidad metodológica ya establecida en el Entregable 1.
+
+\textbf{Acciones pendientes de responsabilidad del equipo antes de la entrega final o la sustentación} (checklist consolidado de esta revisión):
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Diagramas BPMN a imagen:} renderizar los cinco diagramas Mermaid de este documento (sección 4.1.3, 4.2.1, 4.3.1; ver Anexo D) a imagen PNG/SVG, o recrearlos en Bizagi Modeler, Camunda Modeler, draw.io/diagrams.net o Visio, e insertar las imágenes en la versión Word/PDF final.
+\item
+  \textbf{Verificación normativa:} confirmar la existencia, numeración exacta y texto íntegro y vigente del Decreto Supremo N.° 115-2025-PCM contra una fuente primaria oficial (ver Nota metodológica y Anexo B), con el mismo estándar ya aplicado a la NTS 213-MINSA/DGIESP-2024.
+\item
+  \textbf{Verificación de la cifra ENDES 2025/INEI:} confirmar la edición, tabla y fuente exacta de la prevalencia de anemia infantil de la región Puno (56.1 \%) citada en el Anexo B.
+\item
+  \textbf{Referencias bibliográficas:} completar la ficha bibliográfica completa de Gonzales et al.~(2025) y Baquerizo-Sedano et al.~(2025) (Anexo B).
+\item
+  \textbf{Datos administrativos de portada:} completar los nombres de los tres integrantes, el docente asesor y el curso/sílabo (ver nota bajo la tabla de integrantes).
+\item
+  \textbf{Formato de entrega:} verificar la extensión final del documento Word/PDF contra el rango sugerido de 12 a 18 páginas y la correcta renderización monoespaciada de cualquier bloque de código conservado como texto (Anexo F).
+\item
+  \textbf{Validación empírica de fondo:} ejecutar el piloto de Fase 0 (150-300 niños) y el levantamiento de tiempos y movimientos en campo, único insumo capaz de elevar los tres criterios de esta rúbrica de ``Excelente metodológico'' a ``Excelente'' en sentido estrictamente empírico.
+\end{enumerate}
+
+
+\end{document}

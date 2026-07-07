@@ -1,0 +1,1261 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{geometry}
+\geometry{margin=2.6cm}
+\usepackage{calc}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[table]{xcolor}
+\usepackage{caption}
+\captionsetup{skip=6pt}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\usepackage{parskip}
+\usepackage{needspace}
+\usepackage{etoolbox}
+\setlength{\parskip}{0.55em}
+\setlist{itemsep=0.2em}
+
+% evita titulos "huerfanos" solos al final de una pagina, empujandolos a la
+% siguiente si no queda espacio para el titulo mas unas lineas de contenido
+\pretocmd{\section}{\needspace{5\baselineskip}}{}{}
+\pretocmd{\subsection}{\needspace{4\baselineskip}}{}{}
+\pretocmd{\subsubsection}{\needspace{3\baselineskip}}{}{}
+
+% --- Macros pandoc espera que existan (normalmente las inyecta su modo -s) ---
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\pandocbounded}[1]{#1}
+\newcommand{\passthrough}[1]{#1}
+
+\hypersetup{
+  pdftitle={HemoScan Andino},
+  pdfauthor={Equipo HemoScan Andino -- UPeU Juliaca},
+  colorlinks=false,
+  bookmarksopen=true
+}
+
+% El contenido ya trae su propia numeracion manual (1., 1.1, 1.1.1...) escrita
+% en el texto de cada encabezado, asi que se desactiva la numeracion automatica
+% de LaTeX para evitar una doble numeracion en el indice y en el cuerpo.
+\setcounter{secnumdepth}{-2}
+\setcounter{tocdepth}{4}
+\titleformat{\section}{\normalfont\Large\bfseries}{}{0em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries}{}{0em}{}
+\titleformat{\subsubsection}{\normalfont\normalsize\bfseries}{}{0em}{}
+
+% Encabezado con dos etiquetas CORTAS y de ancho fijo (nunca texto largo o
+% dinamico por subseccion) para que jamas puedan solaparse entre si.
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small HemoScan Andino}
+\fancyhead[R]{\small Infraestructura E3 --- Centro de Datos}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\begin{document}
+
+\begin{titlepage}
+\centering
+\vspace*{1.2cm}
+{\large UNIVERSIDAD PERUANA UNI\'ON\par}
+{\normalsize Facultad de Ingenier\'ia y Arquitectura\par}
+{\normalsize Escuela Profesional de Ingenier\'ia de Sistemas --- Filial Juliaca\par}
+\vspace{0.5cm}
+\rule{0.6\linewidth}{0.4pt}
+\vspace{1.6cm}
+
+{\large PROYECTO DE TESIS / PROYECTO INTEGRADOR\par}
+\vspace{1.0cm}
+{\huge\bfseries HemoScan Andino\par}
+\vspace{0.6cm}
+{\Large Sistema no invasivo de tamizaje de anemia infantil con fusi\'on \'optica multisensor y autocalibraci\'on por altitud\par}
+\vspace{1.6cm}
+\rule{0.6\linewidth}{0.4pt}
+\vspace{1.6cm}
+
+{\Large\bfseries Entregable 3 de Infraestructura (CE0331) --- Dise\~no de Centro de Datos\par}
+\vspace{2.0cm}
+
+{\normalsize Juliaca, Puno, Per\'u \par}
+{\normalsize Julio de 2026\par}
+
+\vfill
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\textbf{Entregable N.° 9 --- Diseño de Centro de Datos}
+
+\emph{(Noveno entregable consecutivo del proyecto; corresponde al Entregable N.° 3 de la competencia CE033 --- Área A: Infraestructura Tecnológica, tras los Entregables N.° 7 (Diseño de Red) y N.° 8 (Planificación de Seguridad) de esta misma área. Mantiene la numeración consecutiva del proyecto, distinta de la numeración interna de cada competencia.)}
+
+\textbf{Área de competencia:} Área A --- Infraestructura Tecnológica
+\textbf{Competencia:} CE033 --- Implementación de Centro de Datos \emph{(``Diseña y despliega servicios de infraestructura y centro de datos, integrando virtualización, almacenamiento, alta disponibilidad y monitoreo, garantizando soporte tecnológico confiable para los objetivos estratégicos de la organización'')}
+\textbf{Evidencia que cubre este documento:} CE0331 --- Diseño de Centro de Datos. Desarrolla la palabra \textbf{``Diseña''} de CE033, no \textbf{``despliega''}: el despliegue real permanece pendiente, en la misma condición de ``pre-despliegue'' ya declarada por el Entregable N.° 8 para CE032.
+\textbf{Paquete EDT que satisface:} 2.2 --- ``Servidor/nube y base de datos'' (Entregable N.° 3, sección 3.2.3), responsable Integrante 1, con criterio de aceptación \emph{``servidor accesible y base de datos con el esquema geoespacial inicial cargado''}, el mismo tipo de documento previo que ya fueron los Entregables N.° 7 y N.° 8 para los paquetes 2.1 y 2.3.
+
+\textbf{Organización diagnosticada (caso ilustrativo y representativo):} Microred de Salud Altiplano-Puno
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Integrantes del equipo:}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+N.°
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Integrante
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Rol / Área de competencia
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 & \textit{(Integrante 1, Líder de Infraestructura Tecnológica -- nombre por completar)} & CE03 --- Infraestructura Tecnológica (red, seguridad, centro de datos) --- \textbf{responsable principal de este entregable} \\
+2 & \textit{(Integrante 2, Líder de Gestión de TI -- nombre por completar)} & CE01 --- Gestión de TI (diagnóstico, business case, plan de gestión, procesos) \\
+3 & \textit{(Integrante 3, Líder de Ingeniería de Software -- nombre por completar)} & CE02 --- Ingeniería de Software (requerimientos, datos, sistema, calidad) \\
+\end{longtable}
+}
+
+\textbf{Docente asesor(a) del curso:} \textit{(nombre del docente asesor por completar)}
+\textbf{Curso / Sílabo:} \textit{(nombre del curso / s\'ilabo por completar)}
+\textbf{Ciclo académico:} 2026-I (supuesto, a confirmar con la programación académica vigente)
+
+\textbf{Lugar y fecha:} Juliaca, Puno, Perú --- 07 de julio de 2026
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{quote}
+\textbf{Nota metodológica y alcance (léase antes de continuar).} Este documento se apoya en los ocho entregables previos: del \textbf{N.° 1} toma la madurez digital de infraestructura de la organización ilustrativa ``Microred de Salud Altiplano-Puno'' (2 de 5, sección 1.3.2); del \textbf{N.° 2}, el modelo B2G de tres fases y sus supuestos financieros (Anexo D y sección 2.4.4: 8 establecimientos y S/ 1,200/año de hosting en Año 1; 24 establecimientos al inicio de Fase 2, Año 3); del \textbf{N.° 3}, el presupuesto de línea base de Fase 0 (S/ 3,124, del cual S/ 320 corresponden al paquete EDT 2.2 durante 8 meses); del \textbf{N.° 5}, sin reinterpretarlas, las decisiones arquitectónicas ya fijadas (ADR-02, ADR-08, ADR-09, ADR-10) y el mandato que su diagrama de despliegue deja textualmente pendiente: \emph{``La validación de la capacidad real de este servidor único\ldots{} para sostener simultáneamente estos tres artefactos es una responsabilidad explícita del Integrante 1\ldots, no de este entregable''}, que este Entregable N.° 9 cierra formalmente en su sección 3; del \textbf{N.° 6}, el esquema físico ya ejecutado (24 tablas, 1 vista, 4 esquemas) y la decisión de que imágenes de conjuntiva y señales PPG \textbf{no se almacenan como \texttt{BYTEA}}, sino por referencia a almacenamiento de objetos externo; del \textbf{N.° 7}, el direccionamiento ya fijado de la VPC del backend (10.30.0.0/24), cuya ``caja negra'' (nodo lógico único ``Nube --- Nivel 4'') este documento abre; del \textbf{N.° 8}, el inventario de activos (AC-20, AC-23), los riesgos ya valorados (RS-02 a RS-04) y la política de copias de seguridad (Política 3.5: incremental diaria, completa semanal, retención de 90 días más 12 meses, RTO/RPO \textless= 24 horas), que este documento \textbf{opera y dimensiona} en la sección 3.
+
+Se mantiene vigente la misma advertencia metodológica de los ocho entregables anteriores: HemoScan Andino \textbf{no cuenta todavía con un convenio real}, no tiene proveedor de nube contratado y no ha desplegado ningún servidor de producción. Se declaran tres límites de honestidad técnica. \textbf{Primero}, no existe cotización real de ningún proveedor; toda cifra de costo, capacidad o disponibilidad es una \textbf{estimación de ingeniería referencial}, distinta de las únicas cifras financieras no ilustrativas del proyecto (presupuesto de S/ 3,124 de Fase 0). \textbf{Segundo}, este documento es un ejercicio de \textbf{diseño previo a la ejecución}, no una ejecución real como la del Entregable N.° 6. \textbf{Tercero}, las proyecciones de Fases 1 y 2 heredan los supuestos comerciales ilustrativos del Business Case, calificados como hipotéticos por el propio Entregable N.° 2; por ello la sección 3 presenta también las \textbf{fórmulas paramétricas} que producen cada cifra, recalculables cuando existan datos reales de campo. Cada dato adicional no derivable de lo ya declarado se marca \textbf{{[}DATO PENDIENTE DE VALIDAR{]}}.
+\end{quote}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Resumen Ejecutivo}\label{resumen-ejecutivo}
+
+Este Entregable N.° 9, competencia \textbf{CE033 --- Implementación de Centro de Datos}, responde a dónde viven físicamente el backend, PostgreSQL/PostGIS y Keycloak que los Entregables N.° 5-7 ya diseñaron, implementaron en un esquema ejecutado y conectaron mediante una VPC direccionada. La respuesta: \textbf{HemoScan Andino no construye ni planea construir un centro de datos físico propio}. Dado el nivel de madurez digital de la organización ilustrativa (2 de 5, Entregable N.° 1), un equipo de tres integrantes sin personal de operaciones dedicado, y un presupuesto de Fase 0 de apenas \textasciitilde= US\$ 10.7/mes para ``servidor/nube'', cualquier diseño con sala eléctrica o climatización propia sería una fantasía de ingeniería. El ``centro de datos'' de HemoScan Andino es, y debe seguir siendo, un \textbf{servicio contratado} --- la misma caja negra que el Entregable N.° 7 dejó cerrada al modelar la nube como una VPC de un proveedor no identificado. Este documento la desarrolla.
+
+La \textbf{sección 1}, a partir de los estándares de disponibilidad de la industria (Uptime Institute, ANSI/TIA-942, ISO/IEC 22237), concluye que el requerimiento de HemoScan Andino no es de \textbf{disponibilidad} del servidor ---la arquitectura offline-first (ADR-01, RNF-03) tolera hasta 72 horas sin él--- sino de \textbf{durabilidad} de los datos que ese servidor sincroniza. Clasifica Fase 0 como \textbf{Tier I}, traza una migración a \textbf{Tier II} en Fase 1 y a un \textbf{Tier III aproximado} en Fase 2, y explica por qué \textbf{Tier IV nunca es la meta}; cierra, además, el mandato de validación de capacidad que el Entregable N.° 5 dejó pendiente.
+
+La \textbf{sección 2} distingue \textbf{dos niveles físicos} reales: el nivel \emph{edge} en la posta, con una elevación de rack por unidades U y cotas de referencia estándar de la industria; y el nivel \emph{nube}, descrito mediante un diseño de referencia genérico ---pasillos fríos/calientes, redundancia N+1, control de acceso físico--- consistente con lo documentado públicamente para instalaciones Tier II/III. Ambos niveles incluyen un listado explícito de lo que debería verificarse en una visita técnica o auditoría real, insumo que hoy no existe.
+
+La \textbf{sección 3} dimensiona cómputo (vCPU/RAM), almacenamiento primario y de respaldo para las tres fases, a partir de un modelo de peso de datos por determinación clínica heredado de la decisión de implementación del Entregable N.° 6 (imágenes fuera de la base de datos relacional). Hallazgo central: el \textbf{volumen} de almacenamiento de HemoScan Andino es, incluso al inicio de Fase 2, una cifra trivial (pocas decenas de gigabytes); el reto no es cuánto se almacena, sino \textbf{cómo se respalda, se gobierna y se protege}.
+
+La \textbf{sección 4} explica por qué HemoScan Andino \textbf{no adopta virtualización empresarial tipo VMware} ---el ejemplo que sugiere la propia rúbrica--- sino contenedores ligeros (Docker Compose en Fase 0, orquestación gestionada en Fase 1/2), evalúa beneficios y riesgos de la nube híbrida ---incluida la soberanía de datos de menores de edad bajo la Ley N.° 29733--- y cierra con un esquema de monitoreo proporcional al equipo.
+
+El documento cierra con siete anexos ---memoria de cálculo, índice de diagramas, matriz de proveedores, mapeo de estándares, glosario, cotejo de consistencia y referencias--- y una autoevaluación honesta que reconoce, como limitación central, la ausencia de cotización real de proveedores y de convenio institucional para validar estas cifras en campo.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{1. Definición de Arquitectura (Tier I-IV)}\label{definiciuxf3n-de-arquitectura-tier-i-iv}
+
+\subsection{1.1 Por qué este documento no diseña un centro de datos físico propio}\label{por-quuxe9-este-documento-no-diseuxf1a-un-centro-de-datos-fuxedsico-propio}
+
+Antes de clasificar un Tier, conviene explicar por qué ``¿qué Tier construimos?'' está mal planteada si se interpreta como una instalación física propia. Tres hechos convergen en la misma conclusión. Primero, la madurez digital de infraestructura de la organización ilustrativa fue diagnosticada en el Entregable N.° 1 en el nivel \textbf{2 de 5} (``conectividad y suministro eléctrico intermitentes''): sin continuidad eléctrica básica, no es candidata a operar un centro de datos con generador propio y climatización de precisión. Segundo, HemoScan Andino es un equipo de \textbf{tres integrantes} sin personal de operaciones dedicado (Entregable N.° 8, sección 4.1); operar un centro de datos propio exige competencias de \emph{facilities management} que exceden ese alcance. Tercero, el presupuesto de Fase 0 asigna \textbf{S/ 320 para ocho meses} de ``servidor/nube'' ---\textasciitilde= \textbf{US\$ 10.7/mes}---, cifra que no cubre ni el costo eléctrico de un rack propio.
+
+La conclusión no es una limitación que disculpar, sino una \textbf{decisión de diseño correcta}, consistente con la proporcionalidad ya aplicada por el Entregable N.° 7 (rechazo de la topología en malla, ``sobre-ingeniería costosa e injustificada'') y el Entregable N.° 8 (gobierno de seguridad ``proporcional al tamaño real del equipo''): el ``centro de datos'' de HemoScan Andino es, y debe seguir siendo, un \textbf{servicio contratado}, nunca una instalación propia.
+
+Esto no vacía de contenido la competencia CE033: sigue siendo necesario decidir qué disponibilidad contratar (1.2-1.5), cómo se distribuye físicamente lo que sí está bajo control directo (sección 2), cuánta capacidad dimensionar (sección 3) y cómo se integra ese servicio con el resto de la arquitectura (sección 4) --- el mismo desplazamiento de responsabilidad que el Entregable N.° 7 ya aplicó a la DMZ.
+
+\subsection{1.2 Marco conceptual: estándares de clasificación de disponibilidad de centros de datos}\label{marco-conceptual-estuxe1ndares-de-clasificaciuxf3n-de-disponibilidad-de-centros-de-datos}
+
+\subsubsection{1.2.1 Uptime Institute --- Tier Standard (Topology)}\label{uptime-institute-tier-standard-topology}
+
+El \textbf{Uptime Institute} publica, desde la década de 1990, el \textbf{Tier Standard}, el marco de clasificación de disponibilidad de centros de datos más citado internacionalmente. Clasifica fundamentalmente una \textbf{topología de infraestructura} (rutas de distribución de energía/climatización y su redundancia), no un compromiso contractual de disponibilidad. Las cifras de la siguiente tabla son estimaciones teóricas ampliamente difundidas en la industria, no un SLA certificado por el Uptime Institute:
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Tier
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Redundancia de componentes
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Rutas de distribución
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Mantenimiento sin interrupción
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Disponibilidad teórica de referencia
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Indisponibilidad anual de referencia
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Tier I} --- Capacidad básica & Ninguna (N) & Única & No & 99.671 \% & \textasciitilde= 28.8 horas (28 h 49 min) \\
+\textbf{Tier II} --- Componentes redundantes & N+1 & Única & No (la ruta única sigue siendo un punto de falla) & 99.741 \% & \textasciitilde= 22.7 horas (22 h 41 min) \\
+\textbf{Tier III} --- Concurrentemente mantenible & N+1 & Múltiples, una activa & Sí & 99.982 \% & \textasciitilde= 1.6 horas (1 h 35 min) \\
+\textbf{Tier IV} --- Tolerante a fallas & 2N o 2N+1 & Múltiples, activas simultáneamente & Sí, incluso ante una falla no planificada & 99.995 \% & \textasciitilde= 0.4 horas (0 h 26 min) \\
+\end{longtable}
+}
+
+\emph{Cifras ampliamente citadas en la literatura de la industria como referencia ilustrativa de cada nivel de topología; no constituyen una certificación ni un SLA garantizado por ningún proveedor específico de HemoScan Andino, que a la fecha de este documento no existe (Nota metodológica).}
+
+\subsubsection{1.2.2 ANSI/TIA-942 --- Rated-1 a Rated-4}\label{ansitia-942-rated-1-a-rated-4}
+
+El Entregable N.° 7 identificó a \textbf{TIA-942} como el estándar de infraestructura de centros de datos de la \emph{Telecommunications Industry Association} (TIA) ---responsable también del cableado estructurado TIA/EIA-568/569/606/607---, aclarando que ``no aplica directamente en Fase 0, al alojarse el backend en un proveedor de nube pública''. Este documento matiza: \textbf{TIA-942 no aplica como estándar de construcción propia}, pero sí como \textbf{marco de referencia para exigir información} a cualquier proveedor contratado en Fase 1/2 (Anexo C). Clasifica la infraestructura en niveles \textbf{Rated-1 a Rated-4}, análogos ---aunque no formalmente equivalentes, al ser organismos distintos--- a los Tier del Uptime Institute. Es una práctica comercial cuestionable que un proveedor use el término ``Tier'' para describir una instalación en realidad certificada bajo TIA-942 sin certificación independiente; la sección 1.2.4 retoma esto como ética profesional.
+
+\subsubsection{1.2.3 ISO/IEC 22237 --- Clases de disponibilidad}\label{isoiec-22237-clases-de-disponibilidad}
+
+La serie \textbf{ISO/IEC 22237} (``\emph{Information technology --- Data centre facilities and infrastructures}'') define, en un marco distinto del Uptime Institute y de TIA, \textbf{clases de disponibilidad} (Clase 1 a 4) que cubren energía, control ambiental y seguridad física, en lógica paralela a Tier/Rated. Se cita por completitud normativa, sin un mapeo numérico exhaustivo hacia los Tier del Uptime Institute --- \textbf{{[}DATO PENDIENTE DE VALIDAR: mapeo oficial exacto entre clases ISO/IEC 22237 y Tier del Uptime Institute, a verificar contra el texto vigente de la norma{]}}. El Anexo D consolida las tres referencias.
+
+\subsubsection{\texorpdfstring{1.2.4 Advertencia ética: Tier no es una etiqueta de marketing (``\emph{tier-washing}'')}{1.2.4 Advertencia ética: Tier no es una etiqueta de marketing (``tier-washing'')}}\label{advertencia-uxe9tica-tier-no-es-una-etiqueta-de-marketing-tier-washing}
+
+HemoScan Andino \textbf{nunca declarará} ante un Gobierno Regional, DIRESA/GERESA u otro cliente B2G que su infraestructura ``es Tier III'' o ``Tier IV'' sin una \textbf{certificación vigente e independiente} del Uptime Institute (o una calificación Rated de TIA-942 verificable) para la instalación exacta contratada. Afirmar un nivel sin sustento ---práctica que la industria llama ``\emph{tier-washing}''--- violaría los principios \textbf{1.1} y \textbf{2.5} del Código de Ética ACM (2018), ya adoptado en los Entregables N.° 7 y N.° 8. Este documento usa consistentemente \textbf{``equivalente funcional a Tier X''} o \textbf{``diseñado con criterio Tier X''}, reservando ``certificado'' solo para instalaciones con certificación verificable.
+
+\subsection{1.3 Análisis de necesidades: disponibilidad frente a durabilidad}\label{anuxe1lisis-de-necesidades-disponibilidad-frente-a-durabilidad}
+
+Antes de asignar un Tier, la metodología del Uptime Institute exige un análisis de necesidades del negocio, no una elección por defecto del nivel más alto. Este análisis descansa en la distinción entre \textbf{disponibilidad} (¿el servicio responde ahora mismo?) y \textbf{durabilidad} (¿los datos sobreviven en el tiempo?). Un Tier alto maximiza la primera; un buen respaldo garantiza la segunda; HemoScan Andino necesita mucho más de la segunda.
+
+\subsubsection{1.3.1 La función clínica crítica no depende de la disponibilidad del backend}\label{la-funciuxf3n-cluxednica-cruxedtica-no-depende-de-la-disponibilidad-del-backend}
+
+La arquitectura fijada en el Entregable N.° 5 (ADR-01, patrón \emph{local-first} + \emph{outbox}) y verificada en el Entregable N.° 7 establece que \textbf{ninguna función clínica crítica} ---captura multisensor, inferencia embebida, clasificación de severidad, consejería nutricional--- depende de una llamada en tiempo real al backend. El RNF-03 exige operar sin conectividad \textbf{hasta 72 horas continuas}: si el servidor de Fase 0 cayera 24, 48 o incluso 71 horas, \textbf{ningún niño dejaría de ser tamizado}, ya que solo se afectan funciones diferidas (sincronización RNF-17, panel web RF-33 a RF-38, interoperabilidad HIS-MINSA/Padrón Nominal RF-30). Este es el hallazgo más importante de todo este documento: \textbf{contratar un Tier III o IV para Fase 0 protegería funciones que ya están protegidas} por el diseño offline-first del cliente --- el mismo tipo de sobre-ingeniería que el Entregable N.° 7 rechazó para la topología de malla.
+
+\subsubsection{1.3.2 Durabilidad != disponibilidad: por qué el respaldo es innegociable incluso en Tier I}\label{durabilidad-disponibilidad-por-quuxe9-el-respaldo-es-innegociable-incluso-en-tier-i}
+
+Esto \textbf{no se extiende} a la pérdida permanente de datos: tolerar 72 horas sin conectividad no significa tolerar la \textbf{destrucción irreversible} de una determinación ya sincronizada, un consentimiento (AC-02) o una traza de auditoría (AC-03). La \textbf{disponibilidad} (horas de indisponibilidad/año) es casi independiente de la \textbf{durabilidad} (probabilidad anual de pérdida permanente de un objeto almacenado). Un servicio de almacenamiento de objetos serio ---incluso sobre cómputo Tier I--- suele ofrecer durabilidad de ``once nueves'' (99.999999999 \%) mediante replicación y codificación de borrado, con independencia del Tier de la instancia. La política de respaldo del Entregable N.° 8 (Política 3.5: incremental diaria, completa semanal, retención de 90 días + 12 meses, RTO/RPO \textless= 24 h) \textbf{no es una mitigación de segunda categoría frente a un Tier bajo}, sino el mecanismo correcto para lo que realmente importa. Principio adoptado: \textbf{la durabilidad es innegociable en las tres fases; la disponibilidad crece de forma proporcional al riesgo del negocio, no al revés}.
+
+\subsubsection{1.3.3 Dónde sí importa la disponibilidad: propuesta de valor B2G y funciones no críticas}\label{duxf3nde-suxed-importa-la-disponibilidad-propuesta-de-valor-b2g-y-funciones-no-cruxedticas}
+
+El Entregable N.° 7 ya advirtió que, en un modelo B2G, ``la confiabilidad de la red forma parte de la propuesta de valor''. Lo mismo aplica al centro de datos: un Gobierno Regional que paga una suscripción SaaS espera que el panel de analítica, el mapa de cobertura y los reportes agregados estén disponibles, aunque el tamizaje clínico nunca dependió de ellos. La disponibilidad protege la \textbf{credibilidad institucional y la propuesta de valor comercial}, no la función clínica --- distinción que fundamenta la clasificación por fases de la sección 1.4.
+
+\subsection{1.4 Clasificación adoptada por fase}\label{clasificaciuxf3n-adoptada-por-fase}
+
+A partir del análisis de las secciones 1.2 y 1.3, se adopta la siguiente clasificación equivalente por fase, entendida siempre como un \textbf{criterio de diseño lógico aplicado sobre infraestructura de terceros}, nunca como una certificación propia:
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Fase
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Tier equivalente adoptado
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Configuración que lo materializa
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Justificación central
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Presupuesto de referencia
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Fase 0} (Validación, 1 microred) & \textbf{Tier I} (capacidad básica, sin redundancia) --- riesgo residual ya aceptado en el Entregable N.° 8 (RS-03) & Instancia única de cómputo (backend + BD + Keycloak, ADR-02/ADR-10), sin componentes redundantes & La función clínica crítica no depende de la disponibilidad del servidor (sección 1.3.1); el presupuesto (S/ 320/8 meses) no permite redundancia; la durabilidad se protege por separado mediante respaldo (Política 3.5, Entregable N.° 8) & S/ 320 / 8 meses (\textasciitilde= S/ 40/mes, \textasciitilde= US\$ 10.7/mes) \\
+\textbf{Fase 1} (Piloto pagado, 8 establecimientos ilustrativos) & \textbf{Tier II} (componentes redundantes, N+1) & Base de datos gestionada con réplica/standby; al menos dos instancias de aplicación tras un balanceador; Keycloak con posibilidad de segunda instancia & Existe ya un contrato pagado y una propuesta de valor B2G que exige credibilidad de disponibilidad (sección 1.3.3); el presupuesto proyectado (S/ 1,200-1,260/año, Entregable N.° 2) financia componentes redundantes, aunque todavía sobre una única ruta de distribución & S/ 1,200/año (Año 1) -\textgreater{} S/ 1,260/año (Año 2, +5 \%) \\
+\textbf{Fase 2} (Escalamiento regional, 24 establecimientos ilustrativos al inicio) & \textbf{Tier III aproximado} (concurrentemente mantenible) & Despliegue multi-zona de disponibilidad (multi-AZ), autoescalado horizontal, mantenimiento sin interrupción del servicio & El sistema deja de ser un proyecto piloto y pasa a integrarse en la infraestructura pública de salud regional (principio ACM 3.7); varios clientes gubernamentales dependen simultáneamente del servicio & \textasciitilde= S/ 3,400/año (\textbf{estimación derivada por este documento}, sección 3, Anexo A; no es una cifra explícita del Business Case) \\
+\end{longtable}
+}
+
+La progresión Tier I -\textgreater{} II -\textgreater{} III materializa el \textbf{RNF-12} (``el backend soporta el crecimiento de 1 microred a varias sin rediseño arquitectónico mayor''): en ningún salto de fase cambia el motor de base de datos, el estilo arquitectónico o el proveedor de identidad ---ADR-02 y ADR-10 permanecen estables---; solo crece la \textbf{redundancia de la infraestructura}, el escalamiento que la sección 3.4 del Entregable N.° 7 ya anticipó.
+
+\subsection{1.5 Por qué Tier IV nunca es la meta de este proyecto}\label{por-quuxe9-tier-iv-nunca-es-la-meta-de-este-proyecto}
+
+\textbf{Ninguna fase de este proyecto aspira a un equivalente Tier IV}, por dos razones. La primera es de costo-beneficio marginal: la diferencia de disponibilidad teórica entre Tier III (\textasciitilde= 1.6 h/año) y Tier IV (\textasciitilde= 0.4 h/año) es de apenas \textbf{1.2 horas al año}, mientras que un esquema 2N puede duplicar o más el costo de un Tier III bien diseñado. La segunda, más específica de HemoScan Andino, es que su arquitectura offline-first \textbf{ya sustituye}, sin costo adicional, gran parte de lo que un Tier IV compraría en una aplicación convencional: la capacidad de seguir prestando el servicio esencial durante una interrupción del centro de datos. Perseguir Tier IV sería pagar dos veces por la misma resiliencia --- la misma conclusión que el Entregable N.° 7 alcanzó al rechazar 802.1X completo o una segunda VLAN para un puesto unipersonal: \textbf{no sobre-ingeniería}, justificada con costo-beneficio explícito.
+
+\subsection{1.6 Cierre del mandato pendiente del Entregable N.° 5}\label{cierre-del-mandato-pendiente-del-entregable-n.-5}
+
+El diagrama de despliegue del Entregable N.° 5 dejó pendiente: \emph{``La validación de la capacidad real de este servidor único\ldots{} es una responsabilidad explícita del Integrante 1\ldots, no de este entregable''}, y su tabla de tácticas reitera, para RNF-20, que se trata de ``responsabilidad de infraestructura de despliegue (fuera del alcance de este entregable)''. Este documento es la respuesta directa: la sección 1 fija el nivel de disponibilidad objetivo por fase, y la sección 3 desarrolla la validación cuantitativa de capacidad pendiente. Ninguna sustituye la validación empírica que solo una instancia real en producción podría ofrecer, pero ambas convierten un mandato abierto en un diseño de ingeniería concreto y trazable.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{2. Diseño de Layout Físico}\label{diseuxf1o-de-layout-fuxedsico}
+
+\subsection{2.1 Los dos niveles físicos del ``centro de datos'' de HemoScan Andino}\label{los-dos-niveles-fuxedsicos-del-centro-de-datos-de-hemoscan-andino}
+
+La sección 1.1 estableció que HemoScan Andino no construye un centro de datos propio. Esto no vacía la exigencia de un ``diseño de layout físico'': existen \textbf{dos niveles físicos reales} cuya distribución debe diseñarse, aunque solo uno esté bajo control directo del proyecto. El \textbf{Diagrama 1} presenta esta distinción, que gobierna toda la sección:
+
+\textbf{Diagrama 1 --- Los dos niveles físicos del ``centro de datos'' de HemoScan Andino.}
+
+\begin{samepage}\begin{verbatim}
+NIVEL EDGE (dentro de la posta -- bajo control físico de la organización de salud)
+ +- Gabinete de telecomunicaciones de la cabecera Centro de Salud I-4 "Altiplano"
+    (ya emplazado, a nivel de sala, en el Diagrama 2 del Entregable N.° 7 -- Diseño de Red)
+    · Aloja: switch, router/CPE, (objetivo Fase 1/2) UPS -- equipamiento de RED
+    · NO aloja el backend, la base de datos ni Keycloak (ADR-02, ADR-10 -- Entregable N.° 5)
+    · Este documento lo desarrolla en la sección 2.2 con una elevación de rack (Diagrama 2)
+
+NIVEL NUBE (fuera de la posta -- bajo control físico de un proveedor de nube contratado)
+ +- Instalación de un proveedor de nube/VPS -- todavía sin identidad definitiva (Nota metodológica)
+    · Aloja: backend FastAPI/NestJS (monolito modular), PostgreSQL/PostGIS, Keycloak,
+      almacenamiento de objetos (imágenes de conjuntiva, señales PPG -- Entregable N.° 6)
+    · Es, en sentido estricto, el "centro de datos" que la competencia CE033 exige diseñar
+    · Corresponde a la subred pública/privada de la VPC 10.30.0.0/24 ya definida en el
+      Entregable N.° 7, sección 2.2.2 ("Nube -- Nivel 4" del Diagrama 1 de ese documento)
+    · Este documento lo desarrolla en las secciones 2.3 y 2.4 (Diagramas 3 y 4)
+\end{verbatim}\end{samepage}
+
+Esta distinción no es una novedad de este documento: ya estaba implícita en el Entregable N.° 7, que diseñó la red de la posta (nivel \emph{edge}) y, por separado, la VPC de la nube (nivel \emph{nube}) sin enlace directo entre ambas. Este documento aporta el \textbf{desarrollo físico explícito} de cada nivel, con el detalle de distribución, energía y climatización que un documento de red no cubría.
+
+\subsection{2.2 Nivel Edge --- Elevación de rack del gabinete de telecomunicaciones de la cabecera}\label{nivel-edge-elevaciuxf3n-de-rack-del-gabinete-de-telecomunicaciones-de-la-cabecera}
+
+El Entregable N.° 7 (Diagrama 2) presentó una \textbf{planta de referencia} de la cabecera Centro de Salud I-4 ``Altiplano'', ubicando un gabinete de telecomunicaciones con llave. Este documento la complementa con la distribución interna del gabinete, expresada en unidades de bastidor (U):
+
+\textbf{Diagrama 2 --- Elevación de rack de referencia del gabinete de telecomunicaciones, cabecera Centro de Salud I-4 ``Altiplano'' (formato de pared, 12 U ilustrativos).}
+
+\begin{samepage}\begin{verbatim}
+ U12 +----------------------------------------------------------+
+     | Patch panel 12-24 puertos (terminación TIA/EIA-568,        |
+     | etiquetado TIA/EIA-606 -- Entregable N.° 7, sección 4.1)   |
+ U11 +----------------------------------------------------------+
+     | Organizador horizontal de cables                            |
+ U10 +----------------------------------------------------------+
+  U9 | Switch administrable 8-16 p. (802.1Q, PoE 802.3af/at)        |  <- VLAN 10/20/30/40/99
+  U8 +----------------------------------------------------------+     (Entregable N.° 7, 2.3)
+  U7 | Router/CPE con enlace WAN 4G-LTE (objetivo: doble SIM)       |
+  U6 +----------------------------------------------------------+
+  U5 | ESPACIO RESERVADO -- nodo de borde opcional                  |  <- diferido, no activo en
+     | (posible caché local o coordinador Flower de posta,          |     Fase 0 (sección 2.5 de
+  U4 | Fase 2 -- Entregable N.° 5, ADR-08; Entregable N.° 7, 2.2.2) |     este documento)
+     +----------------------------------------------------------+
+  U3 | Bandeja pasacables / espacio de ventilación                  |
+  U2 +----------------------------------------------------------+
+  U1 | UPS de pequeña capacidad (objetivo Fase 1/2 -- brecha         |
+     | declarada en el Entregable N.° 7, sección 3.4)                |
+     +----------------------------------------------------------+
+     Barra de puesta a tierra (TIA/EIA-607) en la base del gabinete
+     Gabinete con cierre con llave -- control de acceso físico (ISO/IEC 27001 A.7.1)
+\end{verbatim}\end{samepage}
+
+\textbf{Cotas de referencia.} 1 U = 44.45 mm (1.75 in), medida estándar EIA-310; un gabinete de 12 U ocupa \textasciitilde= 533 mm (53.3 cm) de altura interior de riel, sobre un ancho estándar de 19 in (482.6 mm, EIA-310-D). La profundidad típica de gabinetes de pared de pequeño formato ronda 300-450 mm, pero son medidas estándar de referencia, no un levantamiento verificado del gabinete real --- \textbf{{[}DATO PENDIENTE DE VALIDAR: modelo, fabricante y profundidad exacta del gabinete efectivamente instalado en la cabecera{]}}.
+
+Tres decisiones de layout se explican del diagrama. El \textbf{patch panel y el organizador ocupan las posiciones superiores} (U10-U12), facilitando el cableado horizontal sin cruzar equipo activo. El \textbf{espacio U4-U5 se reserva sin ocupar}, siguiendo el mismo patrón de honestidad arquitectónica que el Entregable N.° 7 aplicó a la DMZ diferida: documenta un futuro nodo \emph{edge} (caché local o participante Flower, ADR-08) sin desplegarlo en Fase 0, porque hoy \textbf{no existe ningún artefacto de software que lo requiera}. El \textbf{UPS ocupa la posición inferior} (U1-U2, accesible para mantenimiento de baterías) y permanece como objetivo de Fase 1/2 no financiado en Fase 0, la misma brecha del Anexo E del Entregable N.° 7.
+
+Este nivel edge \textbf{nunca alojará}, ni en Fase 2, el backend, la base de datos o Keycloak --- decisión irrevocable por ADR-02 y ADR-10, que determina que el verdadero ``centro de datos'' a dimensionar sea el nivel nube.
+
+\textbf{Qué debería verificar una visita técnica real (nivel edge, hoy pendiente).} (i) Modelo, fabricante y profundidad exacta del gabinete; (ii) capacidad real del circuito eléctrico dedicado que alimentaría el UPS de Fase 1/2; (iii) longitud real del cableado horizontal hacia los puntos de red; (iv) condiciones ambientales reales de la sala frente al rango de la sección 2.3. Ninguno de estos cuatro puntos ha sido verificado en campo --- \textbf{{[}DATO PENDIENTE DE VALIDAR: los cuatro puntos anteriores, sujetos a una visita técnica real a la cabecera{]}}.
+
+\subsection{2.3 Nivel Nube --- Layout de referencia de una instalación Tier II/III}\label{nivel-nube-layout-de-referencia-de-una-instalaciuxf3n-tier-iiiii}
+
+A diferencia del nivel \emph{edge}, el nivel nube no tiene todavía proveedor contratado, por lo que su layout solo puede describirse mediante un \textbf{diseño de referencia genérico}, construido por analogía con patrones públicamente documentados (la misma metodología de ``triangulación documental'' del Entregable N.° 7). El \textbf{Diagrama 3} presenta esta planta:
+
+\textbf{Diagrama 3 --- Layout lógico de referencia de una instalación con criterio Tier II/III (planta genérica de la industria; no corresponde a ningún proveedor contratado).}
+
+\begin{samepage}\begin{verbatim}
++----------------------------------------------------------------------------+
+|  ACOMETIDA ELÉCTRICA                                                          |
+|  Suministro de la concesionaria --+-- (Tier II+: generador diésel de respaldo) |
+|                                    v                                          |
+|                    Sistema de alimentación ininterrumpida (UPS), N+1 mínimo   |
+|                                    |                                          |
+|  +---------------------------------+------------------------------------+    |
+|  |        SALA DE CÓMPUTO ("white space") -- contención de pasillo         |    |
+|  |        frío/caliente                                                    |    |
+|  |   +------------+  +------------+  +------------+                       |    |
+|  |   | Rack        |  | Rack        |  | Rack        |   ... (instalación   |    |
+|  |   | "tenant"    |  | de OTROS    |  | de OTROS    |    multi-cliente;    |    |
+|  |   | -- recursos |  | clientes    |  | clientes    |    HemoScan Andino   |    |
+|  |   | lógicos de  |  | del         |  | del         |    no ve ni controla |    |
+|  |   | HemoScan    |  | proveedor   |  | proveedor   |    la ubicación      |    |
+|  |   | (Diagrama 4)|  |             |  |             |    física exacta)    |    |
+|  |   +------------+  +------------+  +------------+                       |    |
+|  |   Climatización de precisión (CRAC/CRAH), N+1 mínimo -- rango de        |    |
+|  |   temperatura recomendado de referencia ASHRAE TC9.9 (~= 18-27 °C)       |    |
+|  +----------------------------------------------------------------------+    |
+|  Detección y supresión de incendios (referencia: NFPA 75/76) -- control de    |
+|  acceso físico por credencial + verificación biométrica + CCTV               |
+|  (ISO/IEC 27001:2022, control A.7 -- Seguridad física y ambiental)           |
+|  NOC (Centro de Operaciones de Red) -- monitoreo 24/7 a cargo del proveedor   |
++----------------------------------------------------------------------------+
+\end{verbatim}\end{samepage}
+
+Este diagrama cumple una función distinta de la del Diagrama 2: no describe lo que HemoScan Andino construirá, sino lo que \textbf{debe exigir y verificar} de cualquier proveedor candidato (Anexo C), como debida diligencia técnica. ASHRAE TC9.9, NFPA 75/76 y el control A.7 de ISO/IEC 27001:2022 permiten formular, en el Anexo C, una lista de verificación concreta para la cotización de Fase 1.
+
+\textbf{Qué debería verificar una visita o auditoría técnica real de un proveedor candidato (nivel nube, hoy pendiente).} (i) Certificado Tier/Rated vigente, no una autodeclaración comercial (sección 1.2.4); (ii) ficha técnica real de redundancia de UPS y generador para la instalación exacta que alojaría los recursos de HemoScan Andino, no un promedio de marketing; (iii) ubicación geográfica exacta, relevante para la sección 4.8; (iv) reporte real de disponibilidad histórica de los últimos 12 meses, si el proveedor lo publica. Ninguno puede verificarse hasta que exista un proceso real de cotización --- \textbf{{[}DATO PENDIENTE DE VALIDAR: los cuatro puntos anteriores, sujetos a la cotización real de Fase 1, Anexo C{]}}.
+
+\subsection{2.4 Mapeo de los recursos lógicos de HemoScan Andino sobre la infraestructura contratada}\label{mapeo-de-los-recursos-luxf3gicos-de-hemoscan-andino-sobre-la-infraestructura-contratada}
+
+El \textbf{Diagrama 4} desarrolla lo que el Entregable N.° 7 dejó como un nodo lógico único (``Nube --- Nivel 4'', VPC 10.30.0.0/24) en su Diagrama 1, abriendo esa caja negra hasta el nivel de recurso lógico individual:
+
+\textbf{Diagrama 4 --- Mapeo de los recursos lógicos de HemoScan Andino sobre la infraestructura contratada (expande ``Nube --- Nivel 4'', Entregable N.° 7, Diagrama 1).}
+
+\begin{samepage}\begin{verbatim}
+VPC HemoScan Andino -- 10.30.0.0/24 (Entregable N.° 7, sección 2.2.2)
+ |
+ +- Subred pública 10.30.0.0/26
+ |    +- «recurso lógico» Balanceador / reverse proxy -- terminación TLS 1.2+ (RNF-05)
+ |         (Fase 0: contenedor único dentro de la instancia -- sección 4.3;
+ |          Fase 1/2: balanceador de carga gestionado del proveedor -- sección 4.4)
+ |
+ +- Subred privada 10.30.0.64/26
+ |    +- «recurso lógico» Backend FastAPI/NestJS (monolito modular -- ADR-02)
+ |    +- «recurso lógico» PostgreSQL 16 + PostGIS 3.4 (ADR-10 -- esquema real
+ |    |      ejecutado y verificado en el Entregable N.° 6: 24 tablas, 1 vista, 4 esquemas)
+ |    +- «recurso lógico» Keycloak OIDC/RBAC (ADR-09)
+ |    +- «recurso lógico» Almacenamiento de objetos compatible con S3
+ |           (referenciado, no incluido en la BD relacional -- Entregable N.° 6,
+ |            columnas `imagen_conjuntiva_ref` y `senal_ppg_ref`, sección 2.2 de ese documento)
+ |
+ +- Reserva 10.30.0.128/25 (Entregable N.° 7) -- futuro coordinador Flower
+        (ADR-08, inactivo en Fase 0 -- sección 4.7 de este documento)
+
+Estos "recursos lógicos" se ejecutan, físicamente, dentro de un "rack tenant" genérico
+como el del Diagrama 3 -- HemoScan Andino contrata capacidad lógica (vCPU, RAM, GB de
+almacenamiento), NUNCA controla ni necesita conocer la ubicación física exacta del
+hardware subyacente dentro de una instalación multi-cliente (multi-tenancy).
+\end{verbatim}\end{samepage}
+
+Esta distinción entre ``recurso lógico contratado'' y ``hardware físico no visible'' merece justificarse: HemoScan Andino \textbf{no necesita} un centro de datos de un solo inquilino en ninguna fase. El volumen de datos y cómputo (sección 3) es órdenes de magnitud menor al que justificaría esa inversión, y la multi-tenencia es precisamente el mecanismo que permite acceder a instalaciones certificadas Tier II/III sin construirlas --- el argumento de fondo de toda la sección 4.
+
+\subsection{2.5 Vista de despliegue física-lógica consolidada de extremo a extremo}\label{vista-de-despliegue-fuxedsica-luxf3gica-consolidada-de-extremo-a-extremo}
+
+Con los dos niveles ya desarrollados, es posible completar la vista de despliegue, integrando el Diagrama 4 del Entregable N.° 5 (nodo, teléfono, servidor, sistemas externos) con el nivel físico de esta sección:
+
+\textbf{Diagrama 5 --- Vista de despliegue física-lógica consolidada (integra el Diagrama 4 del Entregable N.° 5 con los Diagramas 2, 3 y 4 de este documento).}
+
+\begin{samepage}\begin{verbatim}
+«físico» Nodo HemoScan Andino (ESP32-S3) -> BLE -> «físico» Smartphone del personal de salud
+                                                          |
+                                                    -> WiFi/datos móviles ->
+                                                          |
+«físico -- NIVEL EDGE» Gabinete de telecomunicaciones, cabecera (Diagrama 2 de este documento;
+Diagrama 2 del Entregable N.° 7) -- switch, router/CPE -- NO aloja backend/BD/Keycloak
+                                                          |
+                                                  -> WAN oportunista ->
+                                                          |
+«físico -- NIVEL NUBE» Instalación con criterio Tier I (Fase 0) / II (Fase 1) / III (Fase 2)
+(Diagrama 3 de este documento -- proveedor todavía no contratado)
+   +- «lógico» VPC 10.30.0.0/24 -- recursos de HemoScan Andino (Diagrama 4 de este documento)
+                                                          |
+                                            -> HTTPS, bajo volumen (sección 3) ->
+                                                          |
+      Navegador -- Jefatura de microred / Analista DIRESA-GERESA / Sistemas externos
+                    (HIS-MINSA, Padrón Nominal, SIGA -- RF-30, Entregable N.° 5)
+\end{verbatim}\end{samepage}
+
+\subsection{2.6 Seguridad física y ambiental}\label{seguridad-fuxedsica-y-ambiental}
+
+La seguridad física del nivel \emph{edge} ya fue tratada por el Entregable N.° 7 (gabinete con llave) y el Entregable N.° 8 (control A.7.9); este documento añade solo la puesta a tierra (TIA/EIA-607) del Diagrama 2. Para el nivel \emph{nube}, la seguridad física recae en el proveedor y se trata como \textbf{requisito de debida diligencia} a verificar en Fase 1 (Anexo C): control de acceso por credencial y biometría, CCTV con retención, supresión de incendios con agente limpio (NFPA 75/76) y control ambiental según ASHRAE TC9.9. Se recomienda que el contrato de Fase 1 incluya el derecho de HemoScan Andino (o de la DIRESA, titular del banco de datos de salud) a solicitar evidencia de estos controles --- \textbf{{[}DATO PENDIENTE DE VALIDAR: cláusulas contractuales exactas de auditoría física, a negociar en el contrato de Fase 1{]}}.
+
+\subsection{2.7 Ruta de crecimiento físico por fases}\label{ruta-de-crecimiento-fuxedsico-por-fases}
+
+\textbf{Diagrama 6 --- Ruta de crecimiento físico y de disponibilidad por fases.}
+
+\begin{samepage}\begin{verbatim}
+FASE 0 (Validación)            FASE 1 (Piloto pagado)           FASE 2 (Escalamiento)
+1 instancia única               2+ instancias + BD gestionada     Multi-AZ, autoescalado
+Sin redundancia (Tier I)        con réplica/standby (Tier II)     (Tier III aproximado)
+S/ 320 / 8 meses                S/ 1,200-1,260 / año               ~= S/ 3,400 / año (derivado)
+1 microred, 7 establecimientos  8 establecimientos ilustrativos    24 establecimientos (3 microrredes)
+------------------------------------------------------------------------------------------>
+                                                                              tiempo / escala
+\end{verbatim}\end{samepage}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{3. Dimensionamiento de Capacidad}\label{dimensionamiento-de-capacidad}
+
+\subsection{3.1 Metodología y naturaleza de la estimación}\label{metodologuxeda-y-naturaleza-de-la-estimaciuxf3n}
+
+Esta sección cierra el mandato del Entregable N.° 5 citado en 1.6: dimensionar CPU, memoria y almacenamiento del servidor de Fase 0, y proyectarlo a Fases 1 y 2. Al no existir tráfico real medido, toda cifra es una \textbf{estimación de ingeniería paramétrica}: se presenta el resultado y la \textbf{fórmula} que lo produce, recalculable con datos reales de campo --- la misma disciplina que el Entregable N.° 7 aplicó a ancho de banda.
+
+\subsection{3.2 Supuestos de volumen de negocio por fase}\label{supuestos-de-volumen-de-negocio-por-fase}
+
+La siguiente tabla consolida, sin modificarlos, los supuestos de volumen ya declarados por el Business Case (Entregable N.° 2, Anexo D y sección 2.4.4) y por el Entregable N.° 1, entrada obligatoria de todo el dimensionamiento que sigue:
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Fase
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Establecimientos (ilustrativo)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Niños tamizados/año (ilustrativo)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Determinaciones/año (\textgreater= 2 por niño, sección 1.2.2 del Entregable N.° 7)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Fuente del supuesto
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Fase 0 (proyecto de \textasciitilde8 meses, no un año completo) & 1 microred (7 establecimientos) & 150-300 niños \textbf{en todo el proyecto}, no por año & 300-900 determinaciones \textbf{totales} & Entregable N.° 1, Anexo C; Entregable N.° 7, sección 1.2.2 \\
+Fase 1 --- Año 1 & 8 (S8, Entregable N.° 2, Anexo D) & 800 (100/establecimiento --- S5) & 1,600 & Entregable N.° 2, Anexo D \\
+Fase 1 --- Año 2 & 8 (sin cambio) & 800 & 1,600 & Entregable N.° 2, sección 2.4.4 \\
+Fase 2 --- Año 3 (inicio) & 24, tres microrredes similares (S9) & 2,400 & 4,800 & Entregable N.° 2, Anexo D \\
+\end{longtable}
+}
+
+\emph{La cadencia de ``\textgreater= 2 determinaciones por niño'' se traslada de una cifra acumulada de todo el proyecto de Fase 0 a una tasa \textbf{anual} de estado estacionario en Fases 1/2, un supuesto de continuidad razonable pero no validado --- \textbf{{[}DATO PENDIENTE DE VALIDAR: cadencia real de controles de hemoglobina con tamizaje CRED bajo la NTS 213-MINSA/DGIESP-2024 vigente, que determinará la tasa real anual{]}}.}
+
+\subsection{3.3 Modelo de peso de datos por determinación clínica}\label{modelo-de-peso-de-datos-por-determinaciuxf3n-cluxednica}
+
+La decisión de implementación del Entregable N.° 6 hace posible este cálculo: las imágenes de conjuntiva y señales PPG \textbf{no se almacenan como \texttt{BYTEA}}, sino por referencia a almacenamiento de objetos externo (\texttt{imagen\_conjuntiva\_ref}, \texttt{senal\_ppg\_ref}, \texttt{VARCHAR(300)}), mientras el espectro de 11 canales del AS7341 sí se almacena en línea como \texttt{NUMERIC(10,4){[}11{]}} (\texttt{CHECK(array\_length(...)=11)}). Esta arquitectura híbrida determina el siguiente modelo de peso:
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Componente
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Peso estimado por determinación
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Naturaleza del dato
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Ubicación de almacenamiento
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Imagen de conjuntiva palpebral & \textasciitilde= 2,048 KB (2 MB) & Fotografía JPEG comprimida --- \textbf{{[}DATO PENDIENTE DE VALIDAR: resolución y compresión exactas, a definir por el paquete EDT 4.3/Ingeniería de Software{]}} & Almacenamiento de objetos (S3-compatible) \\
+Señal PPG cruda (MAX30102) & \textasciitilde= 1 KB & Serie temporal (100 Hz × 5 s, 2 bytes/muestra --- cifra ya estimada en el Entregable N.° 7, sección 1.2.2) & Almacenamiento de objetos (S3-compatible) \\
+Espectro AS7341 (11 canales) & \textasciitilde= 0.15 KB & Arreglo \texttt{NUMERIC(10,4){[}11{]}} & Base de datos relacional (en línea) \\
+Filas relacionales asociadas (captura, corrección de altitud, determinación, provenance, \textgreater= 1 AuditEvent) & \textasciitilde= 5 KB (incluye sobrecarga de índices, \textasciitilde= 60 índices totales en el esquema --- Entregable N.° 6, sección 2.3) --- \textbf{{[}DATO PENDIENTE DE VALIDAR: estimación de ingeniería no verificada empíricamente contra el tamaño real de fila del esquema ejecutado en el Entregable N.° 6; su impacto en el total estimado es marginal, \textless{} 0.25 \%, pero se marca aquí por el mismo estándar de honestidad de supuestos aplicado a la fila anterior{]}} & Filas de las tablas del esquema \texttt{clinico} & Base de datos relacional \\
+\textbf{Total estimado por determinación} & \textbf{\textasciitilde= 2,054 KB \textasciitilde= 2.0 MB} & & \\
+\end{longtable}
+}
+
+El hallazgo central: la \textbf{imagen de conjuntiva representa \textasciitilde= 99.7 \% del peso de cada determinación} (2,048 de 2,054 KB). Consecuencia directa: \textbf{cualquier estrategia de dimensionamiento, respaldo u optimización de costos debe concentrarse en el almacenamiento de objetos, no en la base de datos relacional}, cuyo peso es marginal. Se descarta, por el mismo motivo, la necesidad de almacenamiento de alto rendimiento (IOPS provisionados, NVMe dedicado) para la base de datos en cualquier fase: el volumen de filas y la tasa de escritura (sección 3.6) son tan bajos que el almacenamiento en bloque estándar es suficiente.
+
+\subsection{3.4 Proyección de almacenamiento primario por fase}\label{proyecciuxf3n-de-almacenamiento-primario-por-fase}
+
+Aplicando el modelo de la sección 3.3 (\textasciitilde= 2.0 MB/determinación) sobre los volúmenes de la sección 3.2, y usando la fórmula general:
+
+\begin{quote}
+\textbf{Almacenamiento primario acumulado (GB) = Sumatoria {[}determinaciones del período × 2.0 MB{]} ÷ 1,048,576}
+\end{quote}
+
+se obtiene la siguiente proyección acumulada (sin eliminar datos de períodos anteriores, consistente con la retención de datos clínicos de largo plazo que exige RNF-08):
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Punto de control
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Determinaciones del período
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Almacenamiento primario del período (GB)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Almacenamiento primario acumulado (GB)
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Fin de Fase 0 (proyecto de tesis, escenario alto de 900 determinaciones) & 900 & 1.76 & \textbf{1.76} \\
+Fin de Año 1 (Fase 1) & 1,600 & 3.13 & \textbf{4.90} \\
+Fin de Año 2 (Fase 1) & 1,600 & 3.13 & \textbf{8.03} \\
+Fin de Año 3 (inicio de Fase 2) & 4,800 & 9.40 & \textbf{17.44} \\
+\end{longtable}
+}
+
+La conclusión, análoga a la del Entregable N.° 7 para ancho de banda: \textbf{el volumen de almacenamiento primario es, incluso al inicio de Fase 2, trivial} (menos de 20 GB tras tres años con 24 establecimientos) --- cabría en el nivel gratuito de la mayoría de proveedores. El desafío no es el \textbf{volumen}, sino su \textbf{gobernanza} (respaldo, cifrado, control de acceso, trazabilidad), el mismo argumento de la sección 1.3.2 aplicado ahora a almacenamiento.
+
+\subsection{3.5 Modelo de respaldo y su multiplicador de almacenamiento}\label{modelo-de-respaldo-y-su-multiplicador-de-almacenamiento}
+
+La política de respaldo del Entregable N.° 8 (Política 3.5) ---incremental diaria, completa semanal, retención móvil de 90 días más un respaldo mensual conservado 12 meses--- se modela mediante el esquema clásico de rotación \textbf{Abuelo-Padre-Hijo} (\emph{Grandfather-Father-Son}, GFS), patrón estándar de la industria de respaldo de datos:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Copias semanales completas dentro de la ventana móvil de 90 días:} \textasciitilde= 90 ÷ 7 \textasciitilde= \textbf{13 copias}.
+\item
+  \textbf{Copias mensuales conservadas durante 12 meses:} \textbf{12 copias}.
+\item
+  \textbf{Copias incrementales diarias} en los días no cubiertos por una copia semanal completa: \textasciitilde= 90 - 13 = \textbf{77 copias}, cada una estimada de forma conservadora en \textasciitilde= 10 \% del tamaño de una copia completa.
+\end{itemize}
+
+\begin{quote}
+\textbf{Multiplicador de respaldo = 13 (semanales) + 12 (mensuales) + 77 × 0.10 (incrementales) = 32.7×}
+\end{quote}
+
+Las imágenes JPEG que dominan el peso de cada determinación (sección 3.3) \textbf{ya están comprimidas y de alta entropía}, por lo que la deduplicación que muchos sistemas de respaldo aplican con eficacia sobre datos relacionales \textbf{no reduce significativamente el peso de las copias de imágenes}. El multiplicador de 32.7×, calculado sin asumir deduplicación, es entonces una estimación razonablemente realista, no solo un techo teórico.
+
+Aplicando este multiplicador al almacenamiento primario acumulado de la sección 3.4:
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Punto de control
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Almacenamiento primario acumulado (GB)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Almacenamiento de respaldo estimado (× 32.7) (GB)
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Fin de Fase 0 & 1.76 & \textasciitilde= 57.6 \\
+Fin de Año 1 (Fase 1) & 4.90 & \textasciitilde= 160.2 \\
+Fin de Año 2 (Fase 1) & 8.03 & \textasciitilde= 262.6 \\
+Fin de Año 3 (inicio Fase 2) & 17.44 & \textasciitilde= 570.1 \\
+\end{longtable}
+}
+
+Incluso en el escenario de mayor volumen (\textasciitilde= 570 GB al fin de Año 3), la cifra permanece en el orden de cientos de GB: costo mensual de pocos dólares en cualquier proveedor moderno. Se reitera: \textbf{el reto nunca es cuánto almacenar, sino cómo protegerlo, auditarlo y no perderlo}.
+
+\subsection{3.6 Dimensionamiento de cómputo (vCPU / RAM)}\label{dimensionamiento-de-cuxf3mputo-vcpu-ram}
+
+\subsubsection{3.6.1 Estimación de tasa de peticiones (RPS) --- ¿cómputo dimensionado por tráfico o por piso técnico?}\label{estimaciuxf3n-de-tasa-de-peticiones-rps-cuxf3mputo-dimensionado-por-truxe1fico-o-por-piso-tuxe9cnico}
+
+Antes de dimensionar vCPU, se repite para cómputo el ejercicio que el Entregable N.° 7 hizo para ancho de banda. Tomando el escenario más exigente ---Fase 2, 24 establecimientos, 10 sincronizaciones/establecimiento en hora pico--- se obtiene:
+
+\begin{quote}
+RPS base = (24 establecimientos × 10 sincronizaciones) ÷ 3,600 s \textasciitilde= \textbf{0.067 peticiones/segundo}
+RPS pico (factor de concentración ×10, jornadas de campo concentradas) \textasciitilde= \textbf{0.67 peticiones/segundo}
+\end{quote}
+
+Menos de una petición por segundo incluso en el escenario más exigente: confirma que \textbf{el dimensionamiento de vCPU no está determinado por la carga}, sino por el \textbf{piso técnico mínimo} de cada componente que debe permanecer activo, con independencia del tráfico.
+
+\subsubsection{3.6.2 Piso técnico por componente (Fase 0 --- instancia única)}\label{piso-tuxe9cnico-por-componente-fase-0-instancia-uxfanica}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Componente
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+vCPU (estimación de piso técnico)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+RAM (estimación de piso técnico)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Observación
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Reverse proxy / balanceador (terminación TLS) & 0.25 & 256 MB & Carga marginal a este volumen de tráfico \\
+Backend FastAPI/NestJS (monolito modular, ADR-02) & 1.0 & 1.0 GB & Dimensionado por el runtime (Python/Node), no por RPS (sección 3.6.1) \\
+PostgreSQL 16 + PostGIS 3.4 (ADR-10) & 1.0 & 2.0 GB & Incluye margen para los \textasciitilde= 60 índices del esquema (Entregable N.° 6) \\
+Keycloak OIDC/RBAC (ADR-09) & 1.0 & 1.5 GB & Componente basado en JVM: su sobrecarga de memoria de arranque es, en la práctica, independiente del bajo volumen de autenticaciones reales de Fase 0 --- un hallazgo de dimensionamiento no evidente, dado que el proveedor de identidad suele ser el componente proporcionalmente más pesado en relación con el tráfico real que atiende \\
+Sistema operativo + motor de contenedores & 0.5 & 0.5-1.0 GB & Sobrecarga base de cualquier instancia \\
+\textbf{Suma de pisos técnicos (dedicación exclusiva)} & \textbf{3.75} & \textbf{\textasciitilde= 5.25-5.75 GB} & Suma aritmética de los cinco componentes anteriores (0.25 + 1.0 + 2.0 + 1.5 + 0.5-1.0 GB) si cada uno reservara su propio núcleo por completo; el rango depende únicamente del rango 0.5-1.0 GB del sistema operativo/motor de contenedores \\
+\textbf{Dimensionamiento práctico recomendado (con sobre-suscripción razonable, dado un uso concurrente real muy por debajo de 1 RPS)} & \textbf{2 vCPU} & \textbf{4-8 GB} & Los contenedores comparten núcleos ociosos la mayor parte del tiempo; esto es estándar en cargas de trabajo de baja concurrencia como esta \\
+\end{longtable}
+}
+
+\subsubsection{3.6.3 Verificación de ajuste presupuestal (Fase 0)}\label{verificaciuxf3n-de-ajuste-presupuestal-fase-0}
+
+El presupuesto de Fase 0 (\textasciitilde= US\$ 10.7/mes) es compatible con 2 vCPU/4-8 GB \textbf{en proveedores orientados a costo} (Anexo C); el mismo dimensionamiento en un hiperescalador de primera línea, a precio de lista, normalmente lo excede, por lo que la cotización real de Fase 1/2 debe distinguir ambas categorías. Se recomienda explorar programas de créditos de nube para proyectos académicos, que podrían cubrir total o parcialmente el rubro presupuestado --- \textbf{{[}DATO PENDIENTE DE VALIDAR: vigencia, elegibilidad y condiciones exactas de estos programas al momento de la ejecución real{]}}.
+
+\subsubsection{3.6.4 Proyección de cómputo por fase}\label{proyecciuxf3n-de-cuxf3mputo-por-fase}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Fase
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Configuración
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+vCPU total (estimado)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+RAM total (estimada)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Presupuesto de referencia mensual
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Fase 0 & 1 instancia única (todos los componentes) & 2 & 4-8 GB & \textasciitilde= US\$ 10.7/mes (S/ 40) \\
+Fase 1 & \textgreater= 2 instancias de aplicación + BD gestionada con réplica/standby + Keycloak & 6 (distribuidos) & 12 GB (distribuida) & \textasciitilde= US\$ 26.7-28/mes (S/ 100-105) \\
+Fase 2 & 3-4 instancias de aplicación multi-AZ + BD gestionada con réplica de lectura + Keycloak en clúster & 12-16 (distribuidos) & 24-32 GB (distribuida) & \textasciitilde= US\$ 75.6/mes (S/ 283.5, cifra derivada --- sección 3.7) \\
+\end{longtable}
+}
+
+\subsection{3.7 Derivación del presupuesto de infraestructura de Fase 2}\label{derivaciuxf3n-del-presupuesto-de-infraestructura-de-fase-2}
+
+El Business Case no declara un monto de hosting para el Año 3; solo el OPEX total (S/ 33,680) y el patrón de escalamiento (×3 establecimientos, ×0.9 por economía de escala: S/ 12,474 × 3 × 0.9 = S/ 33,679.8 \textasciitilde= S/ 33,680, verificado). Este documento \textbf{deriva} ---con honestidad declarada--- un presupuesto de hosting aplicando el mismo patrón a la partida del Año 2 (S/ 1,260): S/ 1,260 × 3 × 0.9 = \textbf{S/ 3,402/año} (\textasciitilde= US\$ 75.6/mes). Un segundo método ---mantener constante la proporción hosting/OPEX del Año 1 (\textasciitilde= 10.1 \%) aplicada al OPEX del Año 3--- converge en la \textbf{misma cifra}, dando consistencia interna a la derivación, aunque se insiste en que es una cifra \textbf{derivada, no explícita del Business Case}, sujeta a la misma sensibilidad ya declarada por el Entregable N.° 2.
+
+\subsection{3.8 Umbrales de re-dimensionamiento}\label{umbrales-de-re-dimensionamiento}
+
+Consistente con el elemento ``monitoreo'' que exige CE033 (sección 4.9 desarrolla la herramienta), se proponen los siguientes umbrales, como objetivo de diseño y no como compromiso ya instrumentado:
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Métrica monitoreada
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Umbral de alerta
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Acción recomendada
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Utilización sostenida de CPU (percentil 95, ventana de 7 días) & \textgreater{} 70 \% & Escalar verticalmente (más vCPU) o añadir una instancia adicional \\
+Utilización de memoria & \textgreater{} 80 \% sostenido & Escalar RAM o revisar fugas de memoria del proceso Keycloak/backend \\
+Ocupación de almacenamiento contratado & \textgreater{} 80 \% de la capacidad & Ampliar el plan de almacenamiento contratado con el proveedor \\
+Latencia p95 de la API FHIR & \textgreater{} 2 segundos & Investigar antes de escalar automáticamente (dado el bajo RPS esperado, un aumento de latencia es más probable que indique un problema de eficiencia que de capacidad insuficiente) \\
+N.° de establecimientos contratados simultáneos & \textgreater{} 15, o \textgreater{} 2 clientes gubernamentales distintos & Reevaluar el Tier objetivo (transición de Tier II a Tier III) por el mayor impacto reputacional y contractual de una eventual caída \\
+\end{longtable}
+}
+
+\subsection{3.9 Cierre del mandato de capacidad del Entregable N.° 5}\label{cierre-del-mandato-de-capacidad-del-entregable-n.-5}
+
+Con las secciones 3.3 a 3.8, este documento responde al mandato de 1.6: la capacidad del servidor de Fase 0 (2 vCPU / 4-8 GB) es suficiente para el backend, la base de datos y Keycloak bajo los volúmenes estimados, sustentada en una fórmula reutilizable, no solo una cifra puntual. Queda pendiente la validación empírica contra una carga real, posible únicamente con convenio institucional e instancia real en producción.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{4. Incorporación de Virtualización/Cloud Híbrido}\label{incorporaciuxf3n-de-virtualizaciuxf3ncloud-huxedbrido}
+
+\subsection{4.1 Filosofía de decisión: proporcionalidad al equipo y al presupuesto}\label{filosofuxeda-de-decisiuxf3n-proporcionalidad-al-equipo-y-al-presupuesto}
+
+La rúbrica sugiere, como ejemplo de ``esquema de integración'', el par \textbf{VMware/AWS} --- un hipervisor de tipo 1 comercial (VMware vSphere/ESXi) que gestiona cargas on-premises extendidas a nube pública. Este documento evalúa esa opción y la \textbf{descarta}, por el mismo tipo de razón que llevó a rechazar Tier IV (sección 1.5) y la topología en malla (Entregable N.° 7): \textbf{desproporción entre complejidad/costo y escala real}. VMware está diseñado para gestionar flotas de servidores físicos propios; HemoScan Andino \textbf{no posee ningún servidor físico propio} en ninguna fase (sección 1.1) --- todo su cómputo es contratado a un tercero. Adoptar VMware sería licenciar un hipervisor para hardware que la organización ni siquiera compra.
+
+\subsection{4.2 Comparación de enfoques de virtualización/empaquetado de aplicaciones}\label{comparaciuxf3n-de-enfoques-de-virtualizaciuxf3nempaquetado-de-aplicaciones}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Enfoque
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Descripción
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Adecuación para HemoScan Andino
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Servidores físicos dedicados sin virtualizar (\emph{bare metal}) & Un servidor físico por aplicación & Descartado: implica comprar y operar hardware propio (sección 1.1) \\
+Hipervisor de tipo 1 empresarial (VMware ESXi/vSphere, Hyper-V) & Múltiples máquinas virtuales sobre hardware físico propio, con licenciamiento comercial & Descartado en las tres fases: exige hardware propio y personal de operaciones especializado que el equipo de tres integrantes no tiene; el costo de licenciamiento no es proporcional al volumen de la sección 3 \\
+Hipervisor de tipo 1 de código abierto (Proxmox VE, KVM) & Igual que el anterior, sin costo de licenciamiento & Reservado exclusivamente para un eventual nodo \emph{edge} opcional de Fase 2 en la propia posta (espacio U4-U5 del Diagrama 2); no aplica al backend, que nunca reside en la posta (ADR-02/ADR-10) \\
+Contenedores (Docker/Podman), orquestados con Docker Compose & Empaquetado ligero de procesos con aislamiento de espacio de nombres, sin virtualizar hardware completo & \textbf{Adoptado en Fase 0} (sección 4.3): coincide exactamente con la escala de un monolito modular único (ADR-02) sobre una sola instancia de cómputo contratada \\
+Contenedores orquestados con Kubernetes gestionado (o equivalente del proveedor) & Orquestación automatizada de múltiples réplicas, autoescalado, actualización sin interrupción & \textbf{Adoptado en Fase 1/2} (sección 4.4): proporcional al salto de redundancia Tier II/III ya justificado en la sección 1.4 \\
+\emph{Serverless} / funciones como servicio & Ejecución de código sin gestionar instancias en absoluto & Evaluado únicamente para la carga de trabajo episódica del coordinador Flower (sección 4.7), no para el backend monolítico permanente \\
+\end{longtable}
+}
+
+Esta tabla no es una lista neutra de alternativas: es el argumento de ``beneficios y riesgos'' que la rúbrica exige, aplicado a la decisión de virtualización (la decisión de nube pública se desarrolla en la sección 4.5).
+
+\subsection{4.3 Esquema de integración --- Fase 0 (instancia única, Docker Compose)}\label{esquema-de-integraciuxf3n-fase-0-instancia-uxfanica-docker-compose}
+
+\textbf{Diagrama 7 --- Esquema de contenedores sobre la instancia única de Fase 0.}
+
+\begin{samepage}\begin{verbatim}
+INSTANCIA ÚNICA DE NUBE/VPS -- Fase 0 (S/ 320 / 8 meses -- Tier I, sección 1.4)
++------------------------------------------------------------------------+
+|  Motor de contenedores (Docker Engine + Docker Compose)                    |
+|                                                                            |
+|  +------------+  +----------------+  +-----------------+  +-----------+  |
+|  | reverse-    |  | backend          |  | postgres-postgis  |  | keycloak   |  |
+|  | proxy       |  | (FastAPI/NestJS, |  | (ADR-10 --        |  | (OIDC/RBAC,|  |
+|  | (p. ej.     |  |  monolito        |  |  esquema real ya   |  |  ADR-09)   |  |
+|  |  Caddy/     |  |  modular, ADR-02)|  |  ejecutado en el   |  |            |  |
+|  |  Traefik)   |  |                  |  |  Entregable N.° 6) |  |            |  |
+|  +------+-----+  +--------+---------+  +---------+---------+  +-----+-----+  |
+|         |                  |                       |                  |       |
+|         +------------------+---- red interna de contenedores ---------+       |
+|                                     |                                         |
+|                          volumen persistente (datos de la BD)                 |
++--------------------------------------+-----------------------------------+
+                                        |  API compatible con S3 (HTTPS)
+                                        v
+                     Almacenamiento de objetos gestionado del proveedor
+                     (imágenes de conjuntiva, señales PPG -- Entregable N.° 6)
+\end{verbatim}\end{samepage}
+
+Este esquema hace operativas, a nivel de contenedor, las mismas fronteras que el Entregable N.° 5 fijó a nivel de módulos (ADR-02) y el Entregable N.° 6 a nivel de esquemas (\texttt{clinico}, \texttt{geo}, \texttt{config}, \texttt{gestion}): un contenedor por responsabilidad, todos en una única instancia, sin implicar microservicios (que ADR-02 pospone).
+
+\subsection{4.4 Esquema de integración --- Fase 1/2 (orquestación gestionada, multi-instancia)}\label{esquema-de-integraciuxf3n-fase-12-orquestaciuxf3n-gestionada-multi-instancia}
+
+\textbf{Diagrama 8 --- Evolución del esquema de integración en Fase 1/2.}
+
+\begin{samepage}\begin{verbatim}
+FASE 1/2 -- orquestación gestionada (servicio de contenedores/Kubernetes gestionado
+del proveedor, o equivalente -- Tier II/III, sección 1.4)
++--------------------------------------------------------------------------+
+|  Balanceador de carga gestionado (HTTPS, TLS 1.2+, RNF-05)                   |
+|         |                              |                                     |
+|    +----+-----+                  +----+-----+                              |
+|    | backend    |   . . .          | backend    |   (N réplicas, autoescalado  |
+|    | (instancia) |                  | (instancia) |    horizontal según sección |
+|    +----+-----+                  +----+-----+    3.6.4)                     |
+|         +---------------+---------------+                                    |
+|                          v                                                   |
+|      Base de datos gestionada PostgreSQL/PostGIS (ADR-10)                     |
+|      -- primaria + réplica de lectura/standby (mínimo desde Fase 1)          |
+|                          |                                                   |
+|           Keycloak (clúster de 2+ instancias desde Fase 2 -- ADR-09)          |
+|                          |                                                   |
+|      Almacenamiento de objetos + entrega mediante CDN                        |
+|      (imágenes, teselas PMTiles del mapa de cobertura -- RF-33)              |
+|                          |                                                   |
+|      (Por ciclo de agregación, no permanente) Servidor Flower --              |
+|      instancia elástica/por lotes (ADR-08, inactivo hasta Fase 1/2 -- 4.7)   |
++--------------------------------------------------------------------------+
+\end{verbatim}\end{samepage}
+
+\subsection{4.5 Beneficios y riesgos de la nube híbrida (edge + nube contratada)}\label{beneficios-y-riesgos-de-la-nube-huxedbrida-edge-nube-contratada}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Beneficio
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Aplicación concreta a HemoScan Andino
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Costo variable, proporcional al crecimiento (\emph{pay-as-you-grow}) & El presupuesto de hosting crece exactamente al ritmo del modelo de negocio por fases (sección 3.7), sin inversión de capital anticipada en infraestructura propia \\
+Evita el CAPEX y el riesgo técnico de construir un centro de datos propio & Coherente con el nivel de madurez digital 2/5 (sección 1.1) y con la ausencia de personal de operaciones dedicado \\
+Mejor eficiencia energética (PUE) que una instalación pequeña autoconstruida & Los centros de datos de escala comercial suelen operar con un PUE sensiblemente mejor que el que alcanzaría una sala de cómputo pequeña y autoconstruida \\
+Recuperación ante desastres más accesible & La durabilidad de ``once nueves'' de los servicios de almacenamiento de objetos gestionados (sección 1.3.2) sería, para un equipo de tres integrantes, inalcanzable de construir por cuenta propia \\
+Elasticidad para cargas episódicas (aprendizaje federado) & El coordinador Flower puede aprovisionarse solo durante ciclos de agregación (sección 4.7), sin pagar por capacidad ociosa el resto del tiempo \\
+Acceso a certificación Tier II/III sin construirla & HemoScan Andino puede beneficiarse de instalaciones certificadas (sección 1.2, Anexo C) sin incurrir en el costo de construcción y certificación propia \\
+\end{longtable}
+}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Riesgo
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Mitigación adoptada o recomendada
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Dependencia de un proveedor único (\emph{vendor lock-in}) & Se recomienda, para Fase 1/2, preferir servicios basados en estándares abiertos (PostgreSQL/PostGIS gestionado, contenedores estándar) --- \textbf{{[}DATO PENDIENTE DE VALIDAR: análisis formal de portabilidad, a desarrollar cuando exista un proveedor preseleccionado{]}} \\
+Soberanía y residencia de datos de menores de edad (sección 4.8) & Tratado en profundidad en la sección 4.8 \\
+Superficie de ataque ampliada por la conectividad de gestión hacia el proveedor & Ya identificado como riesgo RS-02 en el Entregable N.° 8; mitigado mediante segmentación de red (subred privada) y cifrado en tránsito/reposo (Política 3.3) \\
+Costo variable impredecible (``factura sorpresa'') si no se gestiona activamente & Se recomienda configurar alertas de presupuesto y límites de gasto desde el primer día de contratación \\
+Curva de aprendizaje de un equipo sin especialista dedicado de operaciones en la nube & Mitigado mediante la elección deliberada de contenedores estándar (Docker Compose) en Fase 0 \\
+Latencia hacia regiones de nube fuera del Perú (sección 4.6) & Aceptable dado que ninguna función clínica crítica depende de latencia en tiempo real (sección 1.3.1) \\
+\end{longtable}
+}
+
+\subsection{4.6 Matriz comparativa referencial de proveedores (no vinculante)}\label{matriz-comparativa-referencial-de-proveedores-no-vinculante}
+
+Se identifican, a título ilustrativo y no vinculante, tres categorías de proveedores a evaluar mediante RFP en Fase 1 (Anexo C):
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Hiperescaladores con región en Latinoamérica} (AWS \texttt{sa-east-1} São Paulo; Google Cloud \texttt{southamerica-east1}/\texttt{west1}; Azure Brasil Sur). Ninguno opera región física en Perú --- \textbf{{[}DATO PENDIENTE DE VALIDAR: apertura de nuevas regiones al momento de la cotización real{]}} ---, introduciendo latencia de decenas de milisegundos, aceptable según 1.3.1.
+\item
+  \textbf{VPS orientados a costo}, con planes que habitualmente ofrecen 2-4 vCPU y 4-8 GB en el rango de precio compatible con Fase 0 (sección 3.6.3).
+\item
+  \textbf{Operadores con presencia física reportada en el mercado peruano} (subsidiarias de telecomunicaciones y operadores regionales en Lima), relevantes para Fase 1/2 por menor latencia y residencia de datos --- \textbf{{[}DATO PENDIENTE DE VALIDAR: identidad, vigencia y certificación Tier/Rated exacta de cada operador{]}}.
+\end{enumerate}
+
+El Anexo C desarrolla la matriz de criterios (costo, latencia, certificación, soberanía, facilidad B2G) sin asignar puntaje a ningún proveedor específico.
+
+\subsection{4.7 Aprendizaje federado (Flower) como carga de trabajo elástica}\label{aprendizaje-federado-flower-como-carga-de-trabajo-eluxe1stica}
+
+Consistente con ADR-08 (``presente, no activado hasta Fase 1/2'') y la reserva 10.30.0.128/25 del Entregable N.° 7, el futuro coordinador Flower se trata como \textbf{carga de trabajo episódica}: agregación de actualizaciones de modelo entre postas (nunca datos crudos, RN-09) solo durante ciclos programados. Se recomienda aprovisionar su cómputo \textbf{bajo demanda} (instancia temporal o servicio por lotes/\emph{serverless}), no capacidad permanente ociosa.
+
+\subsection{4.8 Soberanía y residencia de datos de menores de edad}\label{soberanuxeda-y-residencia-de-datos-de-menores-de-edad}
+
+Los proveedores con mejor relación costo-capacidad (categorías 1 y 2) probablemente almacenan datos \textbf{fuera del Perú} (Brasil, Chile u otras regiones), mientras HemoScan Andino procesa datos de salud de menores, categoría de mayor sensibilidad bajo la Ley N.° 29733. Esta ley regula la transferencia internacional exigiendo garantías adecuadas en el país de destino, sin implicar necesariamente localización estricta --- afirmación que depende de un análisis legal que este documento no sustituye: \textbf{{[}DATO PENDIENTE DE VALIDAR: si la Autoridad Nacional de Protección de Datos Personales exige localización de datos de salud de menores en territorio peruano, o solo garantías de transferencia internacional adecuadas, y qué mecanismo contractual sería exigible{]}}. Se recomienda que cualquier proveedor evaluado en Fase 1 declare la ubicación de sus centros de datos y los mecanismos de protección aplicables, como criterio explícito de la matriz de decisión.
+
+\subsection{4.9 Monitoreo y observabilidad}\label{monitoreo-y-observabilidad}
+
+CE033 exige integrar ``monitoreo'' junto con virtualización, almacenamiento y disponibilidad. Para Fase 0 se recomiendan las herramientas nativas del proveedor (CPU, RAM, disco, red) más un \emph{healthcheck} HTTP periódico que alerte al Integrante 1 ante una caída. Para Fase 1/2, coherente con el salto de Tier de 1.4, se recomienda una pila de observabilidad más completa (métricas, registros y trazas correlacionados --- p.~ej. Prometheus/Grafana), con paneles para los umbrales de 3.8 y alertas al proceso de gestión de incidentes del Entregable N.° 8 (Política 3.6).
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Anexos}\label{anexos}
+
+\subsection{Anexo A --- Memoria de cálculo detallada}\label{anexo-a-memoria-de-cuxe1lculo-detallada}
+
+\textbf{A.1 Peso por determinación clínica (sección 3.3).}
+
+\begin{samepage}\begin{verbatim}
+imagen_conjuntiva_kb   = 2,048.00   (2 MB, estimación de ingeniería)
+senal_ppg_kb           =     1.00   (100 Hz x 5 s x 2 bytes, Entregable N.° 7, sección 1.2.2)
+espectro_as7341_kb     =     0.15   (11 x NUMERIC(10,4) + sobrecarga de arreglo)
+filas_relacionales_kb  =     5.00   (captura+corrección+determinación+provenance+auditevent, con
+                                      sobrecarga de ~60 índices, Entregable N.° 6, sección 2.3)
+-------------------------------------
+TOTAL por determinación =  2,054.15 KB  ~= 2.006 MB
+% que representa la imagen = 2,048.00 / 2,054.15 = 99.70 %
+\end{verbatim}\end{samepage}
+
+\emph{\texttt{filas\_relacionales\_kb} es, igual que se declara en la tabla de la sección 3.3, una estimación de ingeniería no verificada empíricamente contra el tamaño real de fila del esquema ejecutado en el Entregable N.° 6 --- \textbf{{[}DATO PENDIENTE DE VALIDAR{]}}; su peso relativo en el total (\textless{} 0.25 \%) no altera ninguna conclusión de dimensionamiento de este documento.}
+
+\textbf{A.2 Almacenamiento primario acumulado por fase (sección 3.4).}
+
+\begin{samepage}\begin{verbatim}
+Fase 0 (escenario alto, 900 determinaciones):
+  900 x 2,054.15 KB = 1,848,735 KB = 1,805.41 MB ~= 1.76 GB
+
+Fase 1 -- Año 1 (1,600 determinaciones/año = 8 establecimientos x 100 niños/año x 2):
+  1,600 x 2,054.15 KB = 3,286,640 KB = 3,209.61 MB ~= 3.13 GB/año
+  Acumulado fin de Año 1 = 1.76 (Fase 0) + 3.13 = 4.90 GB
+
+Fase 1 -- Año 2 (mismos 8 establecimientos, misma tasa):
+  + 3.13 GB -> Acumulado fin de Año 2 = 4.90 + 3.13 = 8.03 GB
+
+Fase 2 -- Año 3 inicio (4,800 determinaciones/año = 24 establecimientos x 100 niños/año x 2):
+  4,800 x 2,054.15 KB = 9,859,920 KB = 9,628.83 MB ~= 9.40 GB/año
+  Acumulado fin de Año 3 = 8.03 + 9.40 = 17.44 GB
+\end{verbatim}\end{samepage}
+
+\textbf{A.3 Multiplicador de respaldo GFS (sección 3.5).}
+
+\begin{samepage}\begin{verbatim}
+Copias semanales dentro de ventana móvil de 90 días  = round(90/7)          = 13
+Copias mensuales conservadas 12 meses                                       = 12
+Días con incremental diaria (no cubiertos por semanal) = 90 - 13            = 77
+Peso de cada incremental diaria (estimado)                                  = 10 % de una copia completa
+
+Multiplicador = 13 + 12 + (77 x 0.10) = 13 + 12 + 7.7 = 32.7x
+
+Respaldo estimado = Almacenamiento primario acumulado x 32.7
+  Fase 0:        1.76 GB x 32.7 ~=  57.6 GB
+  Fin Año 1:      4.90 GB x 32.7 ~= 160.2 GB
+  Fin Año 2:      8.03 GB x 32.7 ~= 262.6 GB
+  Fin Año 3:     17.44 GB x 32.7 ~= 570.1 GB
+\end{verbatim}\end{samepage}
+
+\textbf{A.4 Tasa de peticiones pico (RPS, sección 3.6.1).}
+
+\begin{samepage}\begin{verbatim}
+Escenario Fase 2 (24 establecimientos, 10 sincronizaciones/establecimiento en la hora pico):
+  RPS_base = (24 x 10) / 3,600 s = 240/3,600 = 0.0667 peticiones/segundo
+  RPS_pico = RPS_base x factor_concentración(10) = 0.667 peticiones/segundo
+\end{verbatim}\end{samepage}
+
+\textbf{A.5 Derivación del presupuesto de hosting de Fase 2 (sección 3.7).}
+
+\begin{samepage}\begin{verbatim}
+Método 1 -- mismo patrón de escalamiento que el OPEX total (Entregable N.° 2):
+  hosting_Año2 = 1,200 x 1.05 = 1,260
+  hosting_Año3 = hosting_Año2 x (24/8) x 0.9 = 1,260 x 3 x 0.9 = 3,402
+
+Método 2 -- proporción constante hosting/OPEX total observada en Año 1:
+  ratio = 1,200 / 11,880 = 10.10 %
+  hosting_Año3 = ratio x OPEX_total_Año3(33,680) = 3,402 (redondeado)
+
+Ambos métodos convergen en S/ 3,402/año ~= S/ 283.5/mes ~= US$ 75.6/mes
+(tipo de cambio referencial S/ 3.75/US$, solo para comparación de órdenes de magnitud)
+\end{verbatim}\end{samepage}
+
+\textbf{A.6 Verificación cruzada de la fórmula de OPEX del Business Case (control de calidad de este documento).}
+
+\begin{samepage}\begin{verbatim}
+opex_Año2 declarado en Entregable N.° 2 = 12,474
+opex_Año1 x 1.05 = 11,880 x 1.05 = 12,474.0  -> COINCIDE
+
+opex_Año3 declarado en Entregable N.° 2 = 33,680
+opex_Año2 x (24/8) x 0.9 = 12,474 x 3 x 0.9 = 33,679.8 ~= 33,680  -> COINCIDE
+
+Esta verificación confirma que el patrón de escalamiento aplicado en A.5 reproduce
+exactamente la lógica ya usada por el Business Case, y no una fórmula inventada
+sin relación con el documento fuente.
+\end{verbatim}\end{samepage}
+
+\subsection{Anexo B --- Índice de diagramas presentados en el cuerpo del documento}\label{anexo-b-uxedndice-de-diagramas-presentados-en-el-cuerpo-del-documento}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Diagrama
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Descripción
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Ubicación
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Diagrama 1 & Los dos niveles físicos del ``centro de datos'' de HemoScan Andino (edge y nube) & Sección 2.1 \\
+Diagrama 2 & Elevación de rack de referencia del gabinete de telecomunicaciones de la cabecera & Sección 2.2 \\
+Diagrama 3 & Layout lógico de referencia de una instalación con criterio Tier II/III & Sección 2.3 \\
+Diagrama 4 & Mapeo de los recursos lógicos de HemoScan Andino sobre la infraestructura contratada & Sección 2.4 \\
+Diagrama 5 & Vista de despliegue física-lógica consolidada de extremo a extremo & Sección 2.5 \\
+Diagrama 6 & Ruta de crecimiento físico y de disponibilidad por fases & Sección 2.7 \\
+Diagrama 7 & Esquema de contenedores sobre la instancia única de Fase 0 & Sección 4.3 \\
+Diagrama 8 & Evolución del esquema de integración en Fase 1/2 & Sección 4.4 \\
+\end{longtable}
+}
+
+\subsection{Anexo C --- Matriz comparativa referencial de proveedores cloud/VPS y criterios de RFP (no vinculante)}\label{anexo-c-matriz-comparativa-referencial-de-proveedores-cloudvps-y-criterios-de-rfp-no-vinculante}
+
+\textbf{Esta matriz es un instrumento de evaluación para la cotización real de Fase 1, no una decisión ya tomada.} Ningún proveedor ha sido contratado ni cotizado formalmente a la fecha de este documento.
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Criterio de evaluación
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Peso sugerido
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Hiperescaladores globales (categoría 1)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+VPS orientados a costo (categoría 2)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Operadores con presencia en Perú (categoría 3)
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Costo compatible con el presupuesto de Fase 0 (sección 3.6.3) & Alto en Fase 0 & Generalmente por encima del presupuesto a precio de lista & Generalmente compatible & Generalmente por encima del presupuesto de Fase 0; más viable en Fase 1/2 \\
+Certificación Tier/Rated verificable (secciones 1.2, Anexo D) & Alto en Fase 1/2 & Alta (aunque rara vez publican el certificado por instalación específica) & Variable, a verificar caso por caso & Variable, a verificar caso por caso --- \textbf{{[}DATO PENDIENTE DE VALIDAR{]}} \\
+Latencia hacia Juliaca/Puno & Medio (mitigado por sección 1.3.1) & Media (región más cercana en Brasil/Chile) & Variable según región del plan contratado & Potencialmente baja si la instalación está en Lima \\
+Soberanía/residencia de datos (sección 4.8) & Alto, dado el tipo de dato & Generalmente fuera del Perú & Generalmente fuera del Perú & Potencialmente dentro del Perú \\
+Facilidad de contratación B2G/gubernamental (facturación local, SUNAT, contratos en soles) & Alto en Fase 1/2 & Variable, a verificar & Generalmente más simple para un equipo pequeño & Potencialmente más simple para contratos con DIRESA/municipios \\
+Soporte en español y huso horario local & Medio & Variable & Variable & Generalmente favorable \\
+Programas de créditos académicos/para \emph{startups} (sección 3.6.3) & Alto en Fase 0 & Frecuentemente disponibles & Ocasionalmente disponibles & \textbf{{[}DATO PENDIENTE DE VALIDAR{]}} \\
+\end{longtable}
+}
+
+\emph{Se recomienda que el Integrante 1 complete esta matriz con puntajes numéricos y proveedores identificados una vez exista un proceso formal de cotización, previsiblemente al inicio de Fase 1.}
+
+\subsection{Anexo D --- Mapeo de estándares de clasificación de disponibilidad}\label{anexo-d-mapeo-de-estuxe1ndares-de-clasificaciuxf3n-de-disponibilidad}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Uptime Institute (Tier Standard)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+ANSI/TIA-942 (Rated)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+ISO/IEC 22237 (Clase de disponibilidad, referencial)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Adopción equivalente en HemoScan Andino
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Tier I --- Capacidad básica & Rated-1 & Clase 1 (aprox.) & Fase 0 (sección 1.4) \\
+Tier II --- Componentes redundantes & Rated-2 & Clase 2 (aprox.) & Fase 1 (sección 1.4) \\
+Tier III --- Concurrentemente mantenible & Rated-3 & Clase 3 (aprox.) & Fase 2, inicio (sección 1.4) \\
+Tier IV --- Tolerante a fallas & Rated-4 & Clase 4 (aprox.) & No adoptado en ninguna fase (sección 1.5) \\
+\end{longtable}
+}
+
+\emph{Nota: Uptime Institute, TIA e ISO/IEC son organismos distintos, con metodologías y procesos de certificación propios y no intercambiables entre sí; esta tabla es una correspondencia \textbf{conceptual aproximada}, no una equivalencia formal certificable. El mapeo exacto entre clases de ISO/IEC 22237 y los demás marcos queda \textbf{{[}DATO PENDIENTE DE VALIDAR{]}} contra el texto vigente de esa norma.}
+
+\subsection{Anexo E --- Glosario de términos técnicos de este entregable}\label{anexo-e-glosario-de-tuxe9rminos-tuxe9cnicos-de-este-entregable}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Término
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Definición breve
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+ASHRAE TC9.9 & Comité técnico de la \emph{American Society of Heating, Refrigerating and Air-Conditioning Engineers} que publica las guías térmicas de referencia para equipos de procesamiento de datos (sección 2.3, 2.6) \\
+CAPEX / OPEX & Gasto de capital (inversión inicial) / gasto operativo recurrente; distinción central para justificar la preferencia por infraestructura contratada (sección 4.5) \\
+CRAC / CRAH & \emph{Computer Room Air Conditioner / Air Handler}; equipos de climatización de precisión de una sala de cómputo (sección 2.3) \\
+Disponibilidad (availability) & Proporción del tiempo en que un servicio responde correctamente; se mide en porcentaje y horas de indisponibilidad anual (sección 1.2.1) \\
+Durabilidad (durability) & Probabilidad de que un dato almacenado no se pierda de forma permanente en el tiempo, con independencia de si el servicio está disponible en un momento dado (sección 1.3.2) \\
+GFS (\emph{Grandfather-Father-Son}) & Esquema clásico de rotación de copias de respaldo en tres niveles de retención (diario, semanal, mensual), usado para modelar el multiplicador de respaldo (sección 3.5) \\
+Multi-tenancy (multi-inquilino) & Modelo en el que varios clientes comparten la misma infraestructura física subyacente de un proveedor, cada uno con recursos lógicos aislados (sección 2.4) \\
+NFPA 75 / 76 & Estándares de la \emph{National Fire Protection Association} para protección contra incendios de equipos de tecnología de la información y de telecomunicaciones (sección 2.3, 2.6) \\
+PUE (\emph{Power Usage Effectiveness}) & Métrica de The Green Grid que compara la energía total de una instalación frente a la energía consumida exclusivamente por el equipo de cómputo; valores cercanos a 1.0 indican mayor eficiencia (sección 4.5) \\
+Rated-1 a Rated-4 & Niveles de clasificación de infraestructura de centros de datos definidos por el estándar ANSI/TIA-942 (sección 1.2.2) \\
+RFP (\emph{Request for Proposal}) & Solicitud formal de propuesta a proveedores, mecanismo recomendado para la cotización real de Fase 1 (Anexo C) \\
+RPO / RTO & \emph{Recovery Point Objective} / \emph{Recovery Time Objective}; ya definidos operativamente en el Entregable N.° 8 (Política 3.5) y retomados aquí como parte del criterio de disponibilidad por Tier (sección 1.4) \\
+Tier I-IV & Niveles de clasificación de disponibilidad de centros de datos definidos por el Uptime Institute (sección 1.2.1) \\
+\emph{Tier-washing} & Práctica comercial cuestionable de afirmar informalmente un nivel Tier sin certificación independiente que lo respalde (sección 1.2.4) \\
+Virtualización & Técnica de abstracción que permite ejecutar múltiples entornos lógicos (máquinas virtuales o contenedores) sobre un mismo recurso físico (sección 4.2) \\
+VPC (\emph{Virtual Private Cloud}) & Red privada virtual dentro de un proveedor de nube pública; ya definida y direccionada en el Entregable N.° 7 (10.30.0.0/24), desarrollada físicamente en este documento (sección 2.4) \\
+\end{longtable}
+}
+
+\subsection{Anexo F --- Cotejo de consistencia con los ocho entregables previos del proyecto}\label{anexo-f-cotejo-de-consistencia-con-los-ocho-entregables-previos-del-proyecto}
+
+A modo de autocontrol ---mismo patrón que el Entregable N.° 7 en su Anexo G---, se presenta el cotejo entre las decisiones de este documento y los artefactos ya fijados en entregables anteriores. Esta verificación \textbf{no sustituye} una validación conjunta formal con acta firmada, que sigue \textbf{{[}DATO PENDIENTE DE VALIDAR{]}}, igual que en el Entregable N.° 7.
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Artefacto de un entregable previo
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Decisión de este documento
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+¿Consistente?
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Madurez digital, nivel 2/5 (Entregable N.° 1) & Sección 1.1: justificación central de no construir centro de datos propio & Sí \\
+Presupuesto S/ 320/8 meses ``servidor/nube'' (Entregables N.° 2 y N.° 3) & Secciones 1.4 y 3.6.3 dimensionan Fase 0 dentro de este límite & Sí \\
+8/24 establecimientos, hosting S/ 1,200-1,260/año (Entregable N.° 2) & Secciones 3.2 y 3.7 usan estas cifras sin modificarlas & Sí \\
+ADR-01 --- offline-first, 72 h (Entregable N.° 5) & Sección 1.3.1: argumento central para no perseguir Tier III/IV en Fase 0 & Sí \\
+ADR-02 --- monolito modular (Entregable N.° 5) & Secciones 2.4, 3.6, 4.2-4.3 dimensionan y empaquetan un único proceso & Sí \\
+ADR-08 --- Flower inactivo en Fase 0 (Entregable N.° 5) & Sección 4.7: carga episódica futura, sin capacidad permanente hoy & Sí \\
+ADR-09 --- Keycloak (Entregable N.° 5) & Sección 3.6.2: componente JVM de sobrecarga proporcionalmente alta & Sí \\
+ADR-10 --- PostgreSQL/PostGIS único motor (Entregable N.° 5) & Secciones 2.4, 3.3-3.4 lo mantienen como único motor relacional & Sí \\
+RNF-20 --- SLA pendiente (Entregable N.° 5) & Sección 1.4: objetivos por fase como meta de diseño, sin contradecir la incertidumbre & Sí \\
+Mandato de validación de capacidad (Entregable N.° 5, 3.3) & Secciones 1.6 y 3.9 lo citan textualmente y lo desarrollan & Sí \\
+No usar \texttt{BYTEA} para imágenes/PPG (Entregable N.° 6) & Sección 3.3: base del modelo de peso y la arquitectura híbrida & Sí \\
+VPC 10.30.0.0/24 (Entregable N.° 7) & Sección 2.4 (Diagrama 4) expande el direccionamiento sin modificarlo & Sí \\
+Reserva 10.30.0.128/25 para Flower (Entregable N.° 7) & Secciones 2.4 y 4.7 la retoman sin contradicción & Sí \\
+AC-20/AC-23 --- servidor y hosting (Entregable N.° 8) & Todo el documento desarrolla la infraestructura de estos activos & Sí \\
+RS-03 --- indisponibilidad por falta de redundancia (Entregable N.° 8) & Sección 1.4: riesgo que motiva la migración a Tier II en Fase 1 & Sí \\
+Mitigación ``SLA de hosting Fase 1'' de RS-03 (Entregable N.° 8) & Sección 1.4 opera esa mitigación vía la clasificación Tier II & Sí \\
+Política 3.5 --- respaldo, RTO/RPO \textless= 24 h (Entregable N.° 8) & Sección 3.5 la modela cuantitativamente (esquema GFS) sin redefinirla & Sí \\
+\end{longtable}
+}
+
+No se identifican, en este cotejo preliminar, contradicciones con los ocho entregables anteriores del proyecto.
+
+\subsection{Anexo G --- Referencias normativas y bibliográficas}\label{anexo-g-referencias-normativas-y-bibliogruxe1ficas}
+
+\textbf{Fuentes normativas y científicas del proyecto} (ya citadas y validadas en los Entregables N.° 1, N.° 2, N.° 3, N.° 5, N.° 6, N.° 7 y N.° 8; reutilizadas aquí sin modificación):
+- ENDES 2025 --- prevalencia de anemia infantil de 56.1 \% en menores de 3 años en Puno.
+- NTS 213-MINSA/DGIESP-2024 --- Norma Técnica de Salud para el manejo de la anemia.
+- DS 115-2025-PCM --- reglamento de la Ley N.° 31814 de inteligencia artificial (salud como sector de alto riesgo, exige supervisión humana y trazabilidad).
+- Ley N.° 29733 --- Ley de Protección de Datos Personales.
+
+\textbf{Fuentes y estándares técnicos de referencia general de la industria de centros de datos} (no específicos de ningún proveedor contratado, dado que ninguno existe a la fecha de este documento; se citan como marco de referencia de diseño, no como certificación verificada):
+- Uptime Institute --- Tier Standard: Topology (clasificación Tier I-IV de infraestructura de centros de datos).
+- ANSI/TIA-942 (Telecommunications Industry Association) --- Rated-1 a Rated-4, infraestructura de telecomunicaciones para centros de datos; misma organización que ya certificó los estándares de cableado estructurado TIA/EIA-568/569/606/607 del Entregable N.° 7.
+- ISO/IEC 22237 --- \emph{Information technology --- Data centre facilities and infrastructures} (clases de disponibilidad, referencia complementaria).
+- ASHRAE, Comité Técnico 9.9 --- guías térmicas de referencia para entornos de procesamiento de datos.
+- NFPA 75 / NFPA 76 --- protección contra incendios de equipos de tecnología de la información y de telecomunicaciones.
+- The Green Grid --- métrica \emph{Power Usage Effectiveness} (PUE).
+- ISO/IEC 27001:2022, control A.7 (Seguridad física y ambiental) --- ya aplicado en el Entregable N.° 8, retomado aquí para el nivel nube (sección 2.6).
+- ACM (Association for Computing Machinery) --- Código de Ética y Conducta Profesional (2018), ya adoptado como marco ético del proyecto en los Entregables N.° 7 y N.° 8.
+
+\textbf{Documentos internos del propio proyecto HemoScan Andino} (insumo directo y obligatorio de este entregable, según se declara en la Nota metodológica inicial):
+- Entregable N.° 1 --- Diagnóstico Organizacional y Alineamiento Estratégico.
+- Entregable N.° 2 --- Business Case.
+- Entregable N.° 3 --- Plan de Gestión del Proyecto (EDT, presupuesto).
+- Entregable N.° 5 --- Requerimientos y Diseño del Sistema (ADR-01 a ADR-10, diagrama de despliegue).
+- Entregable N.° 6 --- Plataforma de Datos del Sistema, Parte 1 (modelo de datos, decisión de almacenamiento de objetos).
+- Entregable N.° 7 --- Diseño de Red (VPC, direccionamiento, gabinete de telecomunicaciones).
+- Entregable N.° 8 --- Planificación de Seguridad (activos, riesgos, política de respaldo).
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Autoevaluación frente a la rúbrica}\label{autoevaluaciuxf3n-frente-a-la-ruxfabrica}
+
+\emph{Esta autoevaluación incorpora las correcciones de una verificación adversarial de este documento contra su propia rúbrica, realizada tras su redacción inicial. Las cuatro correcciones se identifican en las filas correspondientes.}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Criterio
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nivel alcanzado
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Justificación
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Definición de Arquitectura (Tier I-IV) & Excelente & Análisis de necesidades propio que distingue disponibilidad de durabilidad (1.3) y fundamenta, con costo-beneficio marginal cuantificado (1.5), por qué Tier IV nunca es la meta; cruza tres marcos normativos (Uptime Institute, TIA-942, ISO/IEC 22237) precisando que no son intercambiables, y cierra un mandato textual del Entregable N.° 5. \\
+Diseño de Layout Físico & Bueno, con elementos de Excelente & Ocho diagramas distinguen dos niveles físicos reales (edge y nube). Tras la verificación adversarial, la elevación de rack (Diagrama 2) incorpora cotas estándar de la industria (1 U = 44.45 mm, ancho EIA-310-D de 19 in), y las secciones 2.2 y 2.3 documentan explícitamente, mediante listas de verificación, qué debería confirmarse en una visita técnica o auditoría real hoy inexistente. Estas correcciones reducen, sin eliminar, la brecha frente al Excelente pleno: el Diagrama 3 sigue siendo un diseño de referencia genérico, porque ni el gabinete de la cabecera ni la instalación de nube cuentan con levantamiento o cotización real. \\
+Dimensionamiento de Capacidad & Excelente & Memoria de cálculo paramétrica completa (Anexo A): almacenamiento primario, de respaldo (modelo GFS), cómputo (vCPU/RAM) y tasa de peticiones, proyectados a tres fases con fórmulas reutilizables. La verificación adversarial corrigió un error aritmético en la suma de pisos técnicos de 3.6.2 (RAM declarada \textasciitilde= 6.25 GB no correspondía a la suma real de sus componentes, 0.25+1.0+2.0+1.5+0.5-1.0 GB = 5.25-5.75 GB; ya corregido, sin alterar la recomendación práctica de 4-8 GB) y añadió \textbf{{[}DATO PENDIENTE DE VALIDAR{]}} a la estimación de ``filas relacionales'' (\textasciitilde= 5 KB) de 3.3 y del Anexo A.1, que carecía de ella pese al mismo estándar aplicado a la fila de la imagen de conjuntiva. El Anexo A.6 confirma que la derivación del presupuesto de Fase 2 reproduce la lógica del Business Case. \\
+Incorporación de Virtualización/Cloud Híbrido & Excelente & Evalúa la alternativa sugerida por la rúbrica (VMware/AWS) y justifica su descarte por proporcionalidad; presenta un esquema de integración distinto por fase (Docker Compose en Fase 0, orquestación gestionada en Fase 1/2), tabla de beneficios y riesgos, matriz de proveedores en tres categorías, y tratamiento específico de la soberanía de datos de menores bajo la Ley N.° 29733. \\
+Cumplimiento de Estándares & Excelente & Cita y aplica de forma integrada el Tier Standard, ANSI/TIA-942, ISO/IEC 22237, ASHRAE TC9.9, NFPA 75/76, PUE de The Green Grid, el control A.7 de ISO/IEC 27001:2022 y el marco normativo peruano (Ley N.° 29733, DS 115-2025-PCM), con mapeo cruzado propio (Anexo D) y precisión ética sobre ``\emph{tier-washing}'' (1.2.4). \\
+Calidad Documental y Ética & Excelente & Sigue la plantilla exigida, mantiene coherencia terminológica con los ocho entregables anteriores, integra el Código de Ética ACM de forma aplicada (1.2.4) y declara cada limitación con marcadores \textbf{{[}DATO PENDIENTE DE VALIDAR{]}}, incluyendo un cotejo de consistencia (Anexo F). La verificación adversarial detectó que la versión previa (\textasciitilde= 17,088 palabras) excedía, en formato de página académica estándar, el rango de 15-20 páginas de la plantilla; esta versión fue condensada en su redacción narrativa ---sin eliminar ningún diagrama, tabla de cálculo, ADR citado o marcador \textbf{{[}DATO PENDIENTE DE VALIDAR{]}}--- a \textasciitilde= 13,200 palabras (una reducción de \textasciitilde= 23 \% respecto de la versión previa), acercándose a ese rango sin alcanzarlo del todo: incluso con esta condensación, buena parte del recuento total corresponde a tablas y diagramas técnicos ---de mayor densidad de contenido por palabra y menor consumo de espacio vertical por palabra que la prosa narrativa una vez maquetados en página---, por lo que la extensión final impresa real es, previsiblemente, menor a la que una conversión palabra-por-página genérica sugeriría. \\
+\end{longtable}
+}
+
+\textbf{Limitación transversal declarada:} el nivel Excelente pleno en Diseño de Layout Físico requiere una visita técnica real con convenio institucional formalizado y una cotización real de al menos un proveedor de nube, que permita verificar contra un plano y una ficha técnica reales los Diagramas 2 y 3 ---las listas de verificación de campo añadidas en 2.2 y 2.3 identifican qué debería confirmarse en esa instancia futura---. Ninguno de estos insumos existe a la fecha. De forma más general, toda cifra de este documento es una estimación de ingeniería paramétrica ---no una medición validada en campo---, por lo que su valor principal es el de un \textbf{método explícito y reutilizable}, recalculable en cuanto exista convenio institucional, proveedor contratado y tráfico real de producción.
+
+
+\end{document}

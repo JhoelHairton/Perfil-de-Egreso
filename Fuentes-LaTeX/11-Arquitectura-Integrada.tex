@@ -1,0 +1,302 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{geometry}
+\geometry{margin=2.6cm}
+\usepackage{calc}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[table]{xcolor}
+\usepackage{caption}
+\captionsetup{skip=6pt}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\usepackage{parskip}
+\usepackage{needspace}
+\usepackage{etoolbox}
+\setlength{\parskip}{0.55em}
+\setlist{itemsep=0.2em}
+
+\pretocmd{\section}{\needspace{5\baselineskip}}{}{}
+\pretocmd{\subsection}{\needspace{4\baselineskip}}{}{}
+\pretocmd{\subsubsection}{\needspace{3\baselineskip}}{}{}
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\pandocbounded}[1]{#1}
+\newcommand{\passthrough}[1]{#1}
+
+\hypersetup{
+  pdftitle={HemoScan Andino --- Arquitectura Integrada},
+  pdfauthor={Equipo HemoScan Andino -- UPeU Juliaca},
+  colorlinks=false,
+  bookmarksopen=true
+}
+
+\setcounter{secnumdepth}{-2}
+\setcounter{tocdepth}{3}
+\titleformat{\section}{\normalfont\Large\bfseries}{}{0em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries}{}{0em}{}
+\titleformat{\subsubsection}{\normalfont\normalsize\bfseries}{}{0em}{}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small HemoScan Andino}
+\fancyhead[R]{\small Arquitectura Integrada --- CE01 \textperiodcentered{} CE02 \textperiodcentered{} CE03}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% figura de diagrama (imagen vectorial renderizada con mermaid-cli)
+\newcommand{\diag}[3]{%
+  \begin{figure}[H]\centering
+  \includegraphics[width=#2\linewidth,height=0.86\textheight,keepaspectratio]{assets/11-arquitectura/#1}%
+  \caption*{#3}\end{figure}}
+
+\begin{document}
+
+\begin{titlepage}
+\centering
+\vspace*{1.2cm}
+{\large UNIVERSIDAD PERUANA UNI\'ON\par}
+{\normalsize Facultad de Ingenier\'ia y Arquitectura\par}
+{\normalsize Escuela Profesional de Ingenier\'ia de Sistemas --- Filial Juliaca\par}
+\vspace{0.5cm}
+\rule{0.6\linewidth}{0.4pt}
+\vspace{1.6cm}
+
+{\large PROYECTO DE TESIS / PROYECTO INTEGRADOR\par}
+\vspace{1.0cm}
+{\huge\bfseries HemoScan Andino\par}
+\vspace{0.6cm}
+{\Large Sistema no invasivo de tamizaje de anemia infantil con fusi\'on \'optica multisensor y autocalibraci\'on por altitud\par}
+\vspace{1.6cm}
+\rule{0.6\linewidth}{0.4pt}
+\vspace{1.6cm}
+
+{\Large\bfseries Arquitectura Integrada del Sistema\par}
+\vspace{0.5cm}
+{\normalsize Documento transversal que unifica las tres \'areas de competencia:\par}
+{\normalsize CE01 (Gesti\'on de TI) + CE02 (Ingenier\'ia de Software) + CE03 (Infraestructura Tecnol\'ogica)\par}
+\vspace{2.0cm}
+
+{\normalsize Juliaca, Puno, Per\'u \par}
+{\normalsize Julio de 2026\par}
+\vfill
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\textbf{Documento:} Arquitectura Integrada de HemoScan Andino (vista transversal del proyecto)
+
+\textbf{Prop\'osito:} consolidar en un \'unico modelo arquitect\'onico coherente y trazable las decisiones de las tres \'areas de competencia del proyecto, con \'enfasis en la arquitectura del sistema (vistas, componentes, decisiones y su justificaci\'on).
+
+\textbf{Sistema:} HemoScan Andino --- dispositivo \'optico multisensor (ESP32-S3), aplicaci\'on m\'ovil Flutter/PWA \emph{offline-first} con inferencia embebida y autocalibraci\'on por altitud, backend de interoperabilidad FHIR (FastAPI, monolito modular), base de datos PostgreSQL 16 + PostGIS 3.4 y plataforma web de anal\'itica geoespacial (React/TypeScript).
+
+\textbf{Organizaci\'on (caso ilustrativo):} Microred de Salud Altiplano-Puno.
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.08}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.52}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.40}}@{}}
+\toprule\noalign{}
+N.° & Integrante & Rol / \'Area de competencia \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 & \textbf{{[}DATO PENDIENTE DE VALIDAR: Integrante 1{]}} & CE03 --- Infraestructura Tecnol\'ogica (red, seguridad, centro de datos) \\
+2 & \textbf{{[}DATO PENDIENTE DE VALIDAR: Integrante 2{]}} & CE01 --- Gesti\'on de TI (diagn\'ostico, business case, plan, procesos) \\
+3 & \textbf{{[}DATO PENDIENTE DE VALIDAR: Integrante 3{]}} & CE02 --- Ingenier\'ia de Software (requerimientos, datos, sistema, calidad) \\
+\end{longtable}
+}
+
+\textbf{Lugar y fecha:} Juliaca, Puno, Per\'u --- 07 de julio de 2026.
+
+\begin{quote}
+\textbf{Nota metodol\'ogica.} Este documento es una vista transversal que \emph{integra} y no reemplaza a los nueve entregables oficiales del proyecto. Todos los diagramas se especifican como \emph{diagrama-como-c\'odigo} (notaci\'on Mermaid) y se renderizan a imagen vectorial con un renderizador libre de licencia (\texttt{mermaid-cli}); las im\'agenes incluidas son la salida directa de ese renderizado. Todo valor o supuesto que no se derive de los entregables previos se marca expl\'icitamente como \textbf{{[}DATO PENDIENTE DE VALIDAR{]}}. La arquitectura respeta, sin contradecirlas, las decisiones (ADR) y restricciones ya establecidas en los Entregables N.° 1 a 9.
+\end{quote}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{1. Resumen ejecutivo de la arquitectura}\label{resumen}
+
+HemoScan Andino se concibe como un sistema socio-t\'ecnico de tamizaje ---no de diagn\'ostico aut\'onomo--- desplegado en el primer nivel de atenci\'on de salud en un contexto altoandino con conectividad y energ\'ia intermitentes. Su arquitectura est\'a gobernada por cuatro \emph{drivers} que condicionan casi todas las decisiones: \textbf{(i) operaci\'on offline-first} (la funci\'on cl\'inica cr\'itica no puede depender de conectividad permanente); \textbf{(ii) auditabilidad y supervisi\'on humana} exigidas por el DS 115-2025-PCM y la Ley N.° 29733; \textbf{(iii) interoperabilidad est\'andar} con el ecosistema del MINSA mediante HL7 FHIR; y \textbf{(iv) bajo costo}, coherente con el presupuesto de Fase 0 (~S/ 320 por 8 meses).
+
+De estos drivers se derivan las decisiones estructurales centrales, ya formalizadas como ADR en entregables previos y reafirmadas aqu\'i: una arquitectura \textbf{offline-first con patr\'on \emph{outbox}} (ADR-01); un \textbf{monolito modular} de siete paquetes de dominio en el backend (ADR-02, ADR-03), evitando la complejidad operativa de microservicios en Fase 0 sin renunciar a l\'imites de dominio claros; el \textbf{desacoplamiento} entre el motor de inferencia y el m\'odulo de autocalibraci\'on por altitud (ADR-05), de modo que la f\'ormula de correcci\'on pueda evolucionar sin reentrenar el modelo; una \textbf{base de datos \'unica} PostgreSQL + PostGIS (ADR-10) con cuatro esquemas de dominio; \textbf{Keycloak} como proveedor de identidad OIDC/RBAC (ADR-09); y el \textbf{aprendizaje federado empaquetado pero inactivo} en Fase 0 (ADR-08), evitando deuda t\'ecnica futura sin sobredimensionar el piloto.
+
+La principal contribuci\'on de esta vista es demostrar que las tres \'areas de competencia del proyecto convergen en un \'unico modelo: la Gesti\'on de TI (CE01) aporta los \emph{drivers}, procesos y el alcance por fases; la Ingenier\'ia de Software (CE02) aporta los componentes, el modelo de datos y las interfaces; y la Infraestructura Tecnol\'ogica (CE03) aporta el despliegue, la red, la seguridad y el dimensionamiento de capacidad. La secci\'on 12 formaliza esa convergencia con una matriz de trazabilidad.
+
+\section{2. Atributos de calidad y escenarios}\label{qas}
+
+La arquitectura se justifica frente a atributos de calidad expresados como escenarios verificables (est\'imulo → respuesta → m\'etrica), siguiendo la disciplina de \emph{Quality Attribute Scenarios}. Las m\'etricas marcadas como supuestas requieren validaci\'on en banco de pruebas.
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.16}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.50}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.34}}@{}}
+\toprule\noalign{}
+Atributo & Escenario (est\'imulo → respuesta) & M\'etrica objetivo \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Disponibilidad (offline) & Un puesto de salud unipersonal pierde conectividad durante una jornada; el personal sigue tamizando y registrando. & Funci\'on cl\'inica cr\'itica operativa \textbf{72 h} sin conectividad; $\geq$ 50 capturas en buffer local. \\
+Rendimiento & Tras capturar las tres se\~nales \'opticas, la app ejecuta la inferencia embebida. & Resultado de tamizaje en \textbf{$<$ 3 s} en gama baja-media. \\
+Interoperabilidad & Al recuperar conectividad, la app sincroniza recursos FHIR con el HIS-MINSA. & 100\% de recursos como \textbf{FHIR v\'alido}; sincronizaci\'on idempotente por UUID. \\
+Auditabilidad & Un auditor consulta el origen de una determinaci\'on cl\'inica. & Traza completa \textbf{Provenance + AuditEvent} por cada Observation, sin excepci\'on (RN-11). \\
+Privacidad & Un actor sin autorizaci\'on intenta leer datos a nivel individual desde la web. & Bloqueo por RBAC + RLS; la capa geoespacial \textbf{no} tiene FK a paciente (RN-08). \\
+Seguridad & Se compromete una credencial de aplicaci\'on de rol auditor. & Acceso limitado a solo lectura por RLS; cifrado por columna protege PII; evento en \texttt{pgAudit}. \\
+Mantenibilidad & Cambia la f\'ormula de correcci\'on por altitud (NTS 213). & Se versiona en \texttt{config} sin reentrenar el modelo ni tocar el motor de inferencia (ADR-05). \\
+Portabilidad / costo & El piloto debe correr en un \'unico servidor de bajo costo. & Backend + BD + Keycloak en \textbf{1 instancia}; presupuesto Fase 0 ~S/ 320 / 8 meses. \\
+\end{longtable}
+}
+
+\section{3. Vista de contexto (C4 --- nivel 1)}\label{contexto}
+
+La vista de contexto delimita el sistema frente a sus actores humanos (cuidadores, personal CRED, personal m\'edico, jefatura de microred, analista DIRESA/GERESA, administrador y auditor) y a los sistemas externos del ecosistema de salud p\'ublico (HIS-MINSA, Padr\'on Nominal, SIGA y NETLAB-INS). El principio rector ---tamizaje y nunca diagn\'ostico aut\'onomo--- se materializa ya en este nivel: el personal m\'edico es un actor de decisi\'on obligatorio, no un consumidor pasivo de resultados.
+
+\diag{d01-contexto.pdf}{0.95}{Diagrama 1 --- Contexto del sistema (C4 nivel 1): actores y sistemas externos.}
+
+\section{4. Vista de contenedores (C4 --- nivel 2)}\label{contenedores}
+
+Los \emph{contenedores} (unidades desplegables independientes) son cinco: el nodo/dispositivo con su firmware, la aplicaci\'on m\'ovil, el backend de interoperabilidad, la plataforma web y la base de datos, m\'as Keycloak como servicio de identidad. La comunicaci\'on dispositivo-app es local (BLE GATT); toda comunicaci\'on con el backend es REST sobre HTTPS con carga \'util FHIR y, desde la app, \textbf{diferida} (mediada por la cola de \emph{outbox}). Ning\'un contenedor mantiene su propio directorio de usuarios: la identidad se delega \'integramente a Keycloak (ADR-09).
+
+\diag{d02-contenedores.pdf}{0.95}{Diagrama 2 --- Contenedores del sistema (C4 nivel 2) y protocolos entre ellos.}
+
+\section{5. Vista de componentes (C4 --- nivel 3)}\label{componentes}
+
+\subsection{5.1 Backend de interoperabilidad}\label{comp-backend}
+
+El backend es un \textbf{monolito modular} (ADR-02): un \'unico proceso desplegable organizado en siete paquetes de dominio con l\'imites expl\'icitos. Todos dependen del paquete \texttt{identidad} para autorizaci\'on; el paquete \texttt{clinico\_fhir} es el n\'ucleo del que penden notificaciones, consejer\'ia y anal\'itica geoespacial. El paquete \texttt{aprendizaje\_federado} existe como componente desde Fase 0 pero permanece inactivo (ADR-08), evitando la deuda de una reintroducci\'on futura.
+
+\diag{d03-componentes-backend.pdf}{0.9}{Diagrama 3 --- Componentes del backend modular (siete paquetes de dominio).}
+
+\subsection{5.2 Aplicaci\'on m\'ovil offline-first}\label{comp-app}
+
+La app concentra la l\'ogica cl\'inica cr\'itica en el dispositivo del personal de salud. El adaptador BLE captura de forma sincronizada las tres se\~nales \'opticas; el motor de inferencia embebido (ONNX Runtime Mobile, ruta alterna TFLite) estima la hemoglobina; el m\'odulo de autocalibraci\'on la corrige consultando un Modelo Digital de Elevaci\'on \textbf{offline} a partir del GPS (nunca altitud cruda del GPS); y la cola de \emph{outbox} garantiza persistencia local at\'omica y sincronizaci\'on diferida e idempotente.
+
+\diag{d04-componentes-app.pdf}{0.85}{Diagrama 4 --- Componentes de la aplicaci\'on m\'ovil offline-first.}
+
+\section{6. Vista de ejecuci\'on (runtime)}\label{runtime}
+
+\subsection{6.1 Flujo cr\'itico de tamizaje}\label{flujo-critico}
+
+El escenario de ejecuci\'on m\'as representativo recorre el sistema de extremo a extremo: captura multisensor, inferencia embebida, correcci\'on por altitud auditable, clasificaci\'on de severidad, persistencia at\'omica de los recursos FHIR y sincronizaci\'on diferida. En ninguna trayectoria el sistema confirma o descarta anemia de forma aut\'onoma: la severidad bajo umbral genera una alerta de derivaci\'on que exige confirmaci\'on humana (RN-01, DS 115-2025-PCM).
+
+\diag{d06-secuencia-critica.pdf}{1.0}{Diagrama 5 --- Secuencia del flujo cr\'itico de tamizaje (captura → inferencia → autocalibraci\'on → outbox → sincronizaci\'on).}
+
+\subsection{6.2 Ciclo de vida de la sincronizaci\'on offline}\label{outbox}
+
+La contraparte de estados del flujo anterior es el ciclo de vida de cada registro en la cola de \emph{outbox} (ADR-01): generado localmente, encolado, transmitido, y sincronizado o marcado como conflicto pendiente de revisi\'on manual. El backoff exponencial y la idempotencia por UUID hacen segura la reintenci\'on ante conectividad intermitente.
+
+\diag{d07-estados-outbox.pdf}{0.9}{Diagrama 6 --- M\'aquina de estados de la sincronizaci\'on offline (patr\'on outbox).}
+
+\section{7. Vista de datos}\label{datos}
+
+La arquitectura de datos reside en una base \'unica PostgreSQL 16 + PostGIS 3.4 (ADR-10) con cuatro esquemas de dominio (\texttt{clinico}, \texttt{geo}, \texttt{config}, \texttt{gestion}) que reproducen a nivel de base de datos la misma modularidad del backend. Los seis recursos HL7 FHIR del proyecto (Patient, Consent, Device, Observation, Provenance, AuditEvent) se serializan a partir de esas tablas; la referencia polim\'orfica de \texttt{AuditEvent} se resuelve con una tabla t\'ecnica compartida (\texttt{recurso\_fhir}) que preserva integridad referencial real, y la capa geoespacial agregada (hex\'agonos H3) se dise\~na \textbf{sin} clave for\'anea a paciente para materializar la privacidad por dise\~no (RN-08).
+
+\diag{d05-datos-fhir.pdf}{0.95}{Diagrama 7 --- Arquitectura de datos: esquemas de dominio y mapeo a los seis recursos FHIR.}
+
+\section{8. Vista de despliegue e infraestructura (CE03)}\label{despliegue}
+
+\subsection{8.1 Despliegue por fases}\label{deploy-fases}
+
+En Fase 0, un \textbf{\'unico servidor} de bajo costo aloja el backend, la base de datos y Keycloak, consistente con el presupuesto comprometido; el nodo dedicado de aprendizaje federado se documenta como extensi\'on de Fase 1/2 pero no se despliega. La validaci\'on de la capacidad real de ese servidor \'unico es responsabilidad del paquete EDT 2.2 de Infraestructura (CE03).
+
+\diag{d08-despliegue-fases.pdf}{0.95}{Diagrama 8 --- Despliegue por fases (Fase 0 piloto y Fase 1/2 escalamiento).}
+
+\subsection{8.2 Topolog\'ia de red}\label{red}
+
+La red se organiza con cabecera en el Centro de Salud I-4 ``Altiplano'', que concentra el gabinete de telecomunicaciones (rack con servidor local, switch administrado y UPS), doble enlace WAN con \emph{failover} y firewall con segmentaci\'on por VLAN. Los puestos de salud sat\'elite I-1/I-2 operan con enlaces 4G intermitentes y, por dise\~no, en modalidad offline-first: sincronizan cuando hay enlace disponible, sin que su operaci\'on cl\'inica dependa de \'el.
+
+\diag{d09-topologia-red.pdf}{0.92}{Diagrama 9 --- Topolog\'ia de red (cabecera I-4 y puestos sat\'elite con redundancia).}
+
+\subsection{8.3 Centro de datos y capacidad}\label{cpd}
+
+El dise\~no de centro de datos (Entregable N.° 9) fija el nivel de disponibilidad objetivo (clasificaci\'on Tier), el \emph{layout} f\'isico, el dimensionamiento de capacidad (c\'omputo, almacenamiento y energ\'ia) y la estrategia de virtualizaci\'on/cloud h\'ibrido para el escalamiento de Fase 1/2. En Fase 0, el ``centro de datos'' se reduce deliberadamente a un servidor \'unico contenerizado; la ruta de crecimiento hacia alta disponibilidad (r\'eplicas, balanceo, respaldo geogr\'afico) queda trazada pero no ejecutada, en coherencia con el modelo por fases. \textbf{{[}DATO PENDIENTE DE VALIDAR: nivel Tier objetivo y cifras exactas de capacidad, definidos en el Entregable N.° 9{]}}.
+
+\section{9. Vista de seguridad}\label{seguridad}
+
+La seguridad se estructura en capas defensivas complementarias (defensa en profundidad), desde el dispositivo hasta los datos, con una capa transversal de auditor\'ia y trazabilidad. El modelo se alinea a ISO 27005 / NIST (Entregable N.° 8) y a la Ley N.° 29733: cifrado en tr\'ansito (TLS/VPN), en reposo (AES-256) y por columna para PII; RBAC en Keycloak reforzado por \emph{Row-Level Security} en el motor; y doble auditor\'ia (FHIR \texttt{AuditEvent}/\texttt{Provenance} a nivel de aplicaci\'on m\'as \texttt{pgAudit} a nivel de motor). Un an\'alisis STRIDE resumido identifica como amenazas prioritarias la suplantaci\'on de identidad (mitigada por OIDC/MFA), la fuga de PII (mitigada por minimizaci\'on y cifrado por columna) y el repudio (mitigado por la traza inmutable).
+
+\diag{d10-seguridad-capas.pdf}{0.9}{Diagrama 10 --- Arquitectura de seguridad por capas y flujo de identidad (OIDC/RBAC).}
+
+\section{10. Vista de integraci\'on / interoperabilidad}\label{integracion}
+
+La integraci\'on con el ecosistema del MINSA se concentra en el paquete \texttt{interoperabilidad\_externa}, que act\'ua como \'unico punto de contacto con los sistemas externos y a\'isla al n\'ucleo cl\'inico de sus particularidades. El backend genera \emph{bundles} FHIR idempotentes hacia el HIS-MINSA, consulta el Padr\'on Nominal para la identificaci\'on de beneficiarios y coordina con SIGA la disponibilidad de insumos; los conflictos de esquema o rechazos se marcan para revisi\'on en lugar de perderse.
+
+\diag{d11-integracion-fhir.pdf}{0.9}{Diagrama 11 --- Arquitectura de integraci\'on FHIR con los sistemas externos.}
+
+\section{11. Arquitectura por fases}\label{fases}
+
+La arquitectura es deliberadamente \textbf{evolutiva}. En \textbf{Fase 0} (piloto de validaci\'on) todo el sistema corre en un servidor \'unico y el aprendizaje federado permanece inactivo aunque empaquetado. En \textbf{Fase 1/2} (escalamiento) el backend migra a un despliegue de mayor disponibilidad (r\'eplicas, balanceo, respaldo), y se activa el servidor Flower dedicado, que intercambia \'unicamente par\'ametros de modelo entre postas ---nunca datos crudos--- materializando la regla RN-09. Esta separaci\'on por fases evita sobredimensionar el piloto sin cerrar la puerta al crecimiento, y es coherente con el business case por fases del Entregable N.° 2. El Diagrama 8 (secci\'on 8.1) ilustra ambas fases.
+
+\section{12. Integraci\'on de las tres ramas}\label{convergencia}
+
+El valor central de este documento es evidenciar que las tres \'areas de competencia no son entregables aislados sino aportes complementarios a una \emph{misma} arquitectura. El Diagrama 12 muestra esa convergencia y la matriz siguiente la formaliza componente por componente.
+
+\diag{d12-convergencia-ramas.pdf}{0.98}{Diagrama 12 --- Convergencia de las tres ramas (CE01, CE02, CE03) en la arquitectura integrada.}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.22}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.26}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.26}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.26}}@{}}
+\toprule\noalign{}
+Elemento de arquitectura & CE01 --- Gesti\'on de TI aporta & CE02 --- Ing. de Software aporta & CE03 --- Infraestructura aporta \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Drivers y alcance & Diagn\'ostico, business case, alcance por fases & Requerimientos funcionales y no funcionales & Restricciones de red, energ\'ia y capacidad \\
+App m\'ovil y nodo & Proceso TO-BE y automatizaciones A1-A14 & Dise\~no de la app, inferencia y outbox & Gama de dispositivo, conectividad BLE/4G \\
+Backend modular & Modelo de operaci\'on y roles & Componentes, API FHIR, l\'ogica de dominio & Dimensionamiento del servidor, contenerizaci\'on \\
+Datos & Gobierno de datos y cumplimiento & Modelo relacional, PostGIS, recursos FHIR & Almacenamiento, respaldo, cifrado en reposo \\
+Integraci\'on externa & Convenios y flujos institucionales & Conectores FHIR e idempotencia & Enlaces, VPN y disponibilidad de red \\
+Seguridad & Pol\'iticas y cumplimiento (Ley 29733) & Authz por recurso, RLS, auditor\'ia de app & ISO 27005/NIST, cifrado, segmentaci\'on, pgAudit \\
+Despliegue & Presupuesto y roadmap por fases & Artefactos desplegables y su configuraci\'on & Topolog\'ia, centro de datos, Tier y virtualizaci\'on \\
+\end{longtable}
+}
+
+La lectura por filas confirma que ning\'un elemento de arquitectura queda hu\'erfano de alguna de las tres ramas, y la lectura por columnas confirma que cada \'area tiene un aporte definido y no redundante: es la evidencia de una arquitectura verdaderamente integrada.
+
+\section{13. Riesgos arquitect\'onicos y deuda t\'ecnica}\label{riesgos}
+
+{\small
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.34}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.22}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.44}}@{}}
+\toprule\noalign{}
+Riesgo arquitect\'onico & Impacto & Mitigaci\'on \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Servidor \'unico en Fase 0 (punto \'unico de fallo) & Alto & Respaldo diario/semanal; ruta de HA trazada para Fase 1/2; operaci\'on offline-first reduce el impacto en campo. \\
+Precisi\'on cl\'inica del algoritmo sin validaci\'on de campo & Muy alto & Estrategia de tamizaje (no diagn\'ostico) + confirmaci\'on humana obligatoria; validaci\'on cl\'inica previa a escalar. \\
+Par\'ametros cl\'inicos NTS 213 no disponibles a\'un & Medio & Valores parametrizados y versionados en \texttt{config} (ADR-05), no fijados en c\'odigo. \\
+Deriva de conflictos de sincronizaci\'on offline & Medio & Idempotencia por UUID + estado \emph{conflicto pendiente de revisi\'on} con resoluci\'on manual auditada. \\
+Barrera de entrada tecnol\'ogica baja (hardware comod\'itizado) & Medio & Ventaja sostenible en validaci\'on cl\'inica, interoperabilidad real y confianza institucional, no en el hardware. \\
+Extracci\'on futura a microservicios & Bajo & Los siete paquetes ya son l\'imites de dominio; cada uno es candidato a servicio sin reescritura (ADR-02). \\
+\end{longtable}
+}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{quote}
+\textbf{Cierre.} Esta arquitectura integrada es consistente con los nueve entregables del proyecto y con sus decisiones ya tomadas; no introduce tecnolog\'ias nuevas, sino que unifica y hace expl\'icitas las relaciones entre las piezas ya dise\~nadas por las tres \'areas de competencia. Los puntos marcados \textbf{{[}DATO PENDIENTE DE VALIDAR{]}} deben cerrarse con los datos institucionales reales antes de considerar la arquitectura como definitiva para construcci\'on.
+\end{quote}
+
+\end{document}

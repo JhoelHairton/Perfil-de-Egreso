@@ -1,0 +1,133 @@
+<svg viewBox="0 0 1200 840" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <rect x="0" y="0" width="1200" height="840" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="600" y="32" text-anchor="middle" font-size="22" font-weight="700" fill="#111827">Diagrama 2 — Topología física de referencia, Centro de Salud I-4 "Altiplano" (cabecera)</text>
+  <text x="600" y="54" text-anchor="middle" font-size="13" fill="#6b7280">Planta de referencia por analogía con el Entregable N.° 1 (sección 1.1.2) — no es un levantamiento arquitectónico real</text>
+
+  <!-- Legend -->
+  <g transform="translate(970,70)">
+    <rect x="0" y="0" width="212" height="150" rx="8" fill="#f9fafb" stroke="#d1d5db"/>
+    <text x="10" y="20" font-size="13" font-weight="700" fill="#111827">Leyenda VLAN</text>
+    <rect x="10" y="30" width="16" height="16" fill="#dbeafe" stroke="#2563eb"/>
+    <text x="32" y="43" font-size="12" fill="#1f2937">VLAN 10 · Clínico</text>
+    <rect x="10" y="52" width="16" height="16" fill="#ffedd5" stroke="#ea580c"/>
+    <text x="32" y="65" font-size="12" fill="#1f2937">VLAN 20 · Administrativo</text>
+    <rect x="10" y="74" width="16" height="16" fill="#e5e7eb" stroke="#4b5563"/>
+    <text x="32" y="87" font-size="12" fill="#1f2937">VLAN 30 · Gestión de Red</text>
+    <rect x="10" y="96" width="16" height="16" fill="#dcfce7" stroke="#16a34a"/>
+    <text x="32" y="109" font-size="12" fill="#1f2937">VLAN 40 · Invitados</text>
+    <line x1="10" y1="128" x2="26" y2="128" stroke="#374151" stroke-width="2" stroke-dasharray="4,3"/>
+    <text x="32" y="132" font-size="12" fill="#1f2937">Cableado Cat6/6A (568)</text>
+  </g>
+
+  <!-- Row A: Administrativo VLAN 20 -->
+  <g>
+    <rect x="30" y="80" width="900" height="150" rx="10" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/>
+    <text x="45" y="100" font-size="13" font-weight="700" fill="#9a3412">VLAN 20 — ADMINISTRATIVO (10.20.0.32/27)</text>
+
+    <rect x="45" y="112" width="270" height="105" rx="6" fill="#ffffff" stroke="#ea580c"/>
+    <text x="180" y="132" text-anchor="middle" font-size="13" font-weight="600" fill="#1f2937">Jefatura / Dirección</text>
+    <rect x="150" y="150" width="60" height="42" rx="4" fill="#fde68a" stroke="#92400e"/>
+    <rect x="158" y="156" width="44" height="26" fill="#fff7ed"/>
+    <rect x="172" y="192" width="16" height="8" fill="#92400e"/>
+    <text x="180" y="212" text-anchor="middle" font-size="11" fill="#6b7280">1 PC</text>
+
+    <rect x="335" y="112" width="270" height="105" rx="6" fill="#ffffff" stroke="#ea580c"/>
+    <text x="470" y="132" text-anchor="middle" font-size="13" font-weight="600" fill="#1f2937">Estadística / Informática (HIS)</text>
+    <rect x="440" y="150" width="60" height="42" rx="4" fill="#fde68a" stroke="#92400e"/>
+    <rect x="448" y="156" width="44" height="26" fill="#fff7ed"/>
+    <rect x="462" y="192" width="16" height="8" fill="#92400e"/>
+    <text x="470" y="212" text-anchor="middle" font-size="11" fill="#6b7280">1 PC</text>
+
+    <rect x="625" y="112" width="285" height="105" rx="6" fill="#ffffff" stroke="#ea580c"/>
+    <text x="767" y="132" text-anchor="middle" font-size="13" font-weight="600" fill="#1f2937">Farmacia / Almacén (SIGA)</text>
+    <rect x="737" y="150" width="60" height="42" rx="4" fill="#fde68a" stroke="#92400e"/>
+    <rect x="745" y="156" width="44" height="26" fill="#fff7ed"/>
+    <rect x="759" y="192" width="16" height="8" fill="#92400e"/>
+    <text x="767" y="212" text-anchor="middle" font-size="11" fill="#6b7280">1 PC</text>
+  </g>
+
+  <!-- Rack / Gestion de Red VLAN 30 -->
+  <g>
+    <rect x="450" y="270" width="300" height="180" rx="10" fill="#e5e7eb" stroke="#4b5563" stroke-width="2"/>
+    <text x="600" y="290" text-anchor="middle" font-size="13" font-weight="700" fill="#1f2937">VLAN 30 — GESTIÓN DE RED (10.20.0.64/28)</text>
+    <text x="600" y="304" text-anchor="middle" font-size="11" fill="#374151">Gabinete de telecomunicaciones (con llave)</text>
+
+    <!-- rack icon -->
+    <rect x="520" y="312" width="160" height="115" rx="4" fill="#374151" stroke="#111827" stroke-width="2"/>
+    <rect x="530" y="320" width="140" height="18" rx="2" fill="#9ca3af"/>
+    <circle cx="662" cy="329" r="3" fill="#22c55e"/>
+    <text x="536" y="333" font-size="9" fill="#111827">Switch 802.1Q PoE 8-16p</text>
+    <rect x="530" y="342" width="140" height="18" rx="2" fill="#9ca3af"/>
+    <circle cx="662" cy="351" r="3" fill="#22c55e"/>
+    <text x="536" y="355" font-size="9" fill="#111827">Router/CPE WAN (2.6)</text>
+    <rect x="530" y="364" width="140" height="18" rx="2" fill="#9ca3af"/>
+    <text x="536" y="377" font-size="9" fill="#111827">Patch panel Cat6/6A</text>
+    <rect x="530" y="386" width="140" height="16" rx="2" fill="#d1d5db" stroke="#6b7280" stroke-dasharray="3,2"/>
+    <text x="536" y="398" font-size="9" fill="#6b7280">UPS — objetivo Fase 1/2 (brecha 3.4)</text>
+
+    <text x="600" y="440" text-anchor="middle" font-size="10" fill="#374151">Puesta a tierra y protección de sobretensión (TIA/EIA-607)</text>
+  </g>
+
+  <!-- Row C: Clinico VLAN 10 -->
+  <g>
+    <rect x="30" y="480" width="900" height="150" rx="10" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+    <text x="45" y="500" font-size="13" font-weight="700" fill="#1e3a8a">VLAN 10 — CLÍNICO (10.20.0.0/27)</text>
+
+    <rect x="45" y="512" width="270" height="105" rx="6" fill="#ffffff" stroke="#2563eb"/>
+    <text x="180" y="530" text-anchor="middle" font-size="13" font-weight="600" fill="#1f2937">CRED / Nutrición</text>
+    <rect x="152" y="548" width="56" height="36" rx="6" fill="#1d4ed8"/>
+    <circle cx="180" cy="576" r="3" fill="#ffffff"/>
+    <text x="180" y="600" text-anchor="middle" font-size="10" fill="#6b7280">Tablet ⇢BLE⇢ Nodo</text>
+
+    <rect x="335" y="512" width="270" height="105" rx="6" fill="#ffffff" stroke="#2563eb"/>
+    <text x="470" y="530" text-anchor="middle" font-size="13" font-weight="600" fill="#1f2937">Laboratorio clínico</text>
+    <rect x="442" y="548" width="56" height="36" rx="6" fill="#1d4ed8"/>
+    <circle cx="470" cy="576" r="3" fill="#ffffff"/>
+    <text x="470" y="600" text-anchor="middle" font-size="10" fill="#6b7280">Tel. ⇢BLE⇢ Nodo/HemoCue</text>
+
+    <rect x="625" y="512" width="285" height="105" rx="6" fill="#ffffff" stroke="#2563eb"/>
+    <text x="767" y="530" text-anchor="middle" font-size="13" font-weight="600" fill="#1f2937">Obstetricia / Enfermería / Medicina</text>
+    <rect x="739" y="548" width="56" height="36" rx="6" fill="#1d4ed8"/>
+    <circle cx="767" cy="576" r="3" fill="#ffffff"/>
+    <text x="767" y="600" text-anchor="middle" font-size="10" fill="#6b7280">Tel. ⇢BLE⇢ Nodo</text>
+  </g>
+
+  <!-- AP interno -->
+  <g transform="translate(755,352)">
+    <circle cx="0" cy="20" r="8" fill="#1f2937"/>
+    <path d="M -14 6 A 20 20 0 0 1 14 6" fill="none" stroke="#1f2937" stroke-width="2"/>
+    <path d="M -8 12 A 11 11 0 0 1 8 12" fill="none" stroke="#1f2937" stroke-width="2"/>
+    <text x="0" y="46" text-anchor="middle" font-size="9" fill="#374151">AP doble banda</text>
+    <text x="0" y="58" text-anchor="middle" font-size="9" fill="#374151">5GHz→VLAN10 (2.7.1)</text>
+  </g>
+
+  <!-- Row D: Invitados VLAN 40 -->
+  <g>
+    <rect x="30" y="660" width="900" height="90" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="480" y="695" text-anchor="middle" font-size="13" font-weight="700" fill="#14532d">VLAN 40 — INVITADOS (10.20.0.80/28)</text>
+    <text x="480" y="715" text-anchor="middle" font-size="12" fill="#166534">Sala de espera / recepción — Punto de acceso, SSID "invitados"</text>
+    <g transform="translate(870,690)">
+      <circle cx="0" cy="10" r="7" fill="#166534"/>
+      <path d="M -11 -2 A 16 16 0 0 1 11 -2" fill="none" stroke="#166534" stroke-width="2"/>
+    </g>
+  </g>
+
+  <!-- Cabling lines (dashed) -->
+  <line x1="180" y1="217" x2="520" y2="330" stroke="#374151" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <line x1="470" y1="217" x2="560" y2="315" stroke="#374151" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <line x1="767" y1="217" x2="660" y2="330" stroke="#374151" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <line x1="180" y1="480" x2="540" y2="430" stroke="#374151" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <line x1="470" y1="480" x2="580" y2="430" stroke="#374151" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <line x1="767" y1="480" x2="640" y2="430" stroke="#374151" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <line x1="480" y1="660" x2="560" y2="427" stroke="#374151" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+  <!-- WAN arrow -->
+  <line x1="750" y1="360" x2="1000" y2="360" stroke="#111827" stroke-width="2"/>
+  <polygon points="1000,360 990,354 990,366" fill="#111827"/>
+  <text x="875" y="350" text-anchor="middle" font-size="11" fill="#111827">WAN oportunista (2.6)</text>
+  <text x="875" y="378" text-anchor="middle" font-size="10" fill="#6b7280">→ Internet → VPC (Diagrama 1)</text>
+
+  <text x="600" y="800" text-anchor="middle" font-size="11" fill="#6b7280">Referencia cruzada textual complementaria (versión ASCII) disponible en el Anexo D.</text>
+</svg>

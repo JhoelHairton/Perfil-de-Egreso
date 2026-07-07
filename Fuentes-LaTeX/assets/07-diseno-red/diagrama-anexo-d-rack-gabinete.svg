@@ -1,0 +1,90 @@
+<svg viewBox="0 0 980 640" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <rect x="0" y="0" width="980" height="640" fill="#ffffff"/>
+
+  <text x="490" y="30" text-anchor="middle" font-size="20" font-weight="700" fill="#111827">Diagrama de detalle (Anexo D) — Elevación del rack del gabinete de telecomunicaciones</text>
+  <text x="490" y="50" text-anchor="middle" font-size="12" fill="#6b7280">Centro de Salud I-4 "Altiplano" (cabecera) — no mostrado en el cuerpo del documento (sección 2.4); complementa el Diagrama 2</text>
+
+  <!-- Rack frame -->
+  <rect x="90" y="80" width="360" height="480" rx="6" fill="#1f2937" stroke="#111827" stroke-width="3"/>
+  <rect x="105" y="95" width="330" height="450" fill="#374151"/>
+
+  <!-- Rack units -->
+  <!-- 1U patch panel -->
+  <rect x="115" y="105" width="310" height="34" rx="3" fill="#9ca3af" stroke="#4b5563"/>
+  <text x="270" y="125" text-anchor="middle" font-size="11" fill="#111827">Patch panel 24p Cat6/6A — Rack Unit 1 (RU1)</text>
+  <g id="jacks1">
+    <rect x="122" y="112" width="10" height="10" fill="#e5e7eb" stroke="#374151"/>
+    <rect x="136" y="112" width="10" height="10" fill="#e5e7eb" stroke="#374151"/>
+    <rect x="150" y="112" width="10" height="10" fill="#e5e7eb" stroke="#374151"/>
+    <rect x="164" y="112" width="10" height="10" fill="#e5e7eb" stroke="#374151"/>
+  </g>
+  <text x="150" y="135" font-size="8" fill="#111827">CS-A-01…04 (VLAN10)</text>
+
+  <!-- 1U cable organizer -->
+  <rect x="115" y="143" width="310" height="16" rx="2" fill="#6b7280"/>
+  <text x="270" y="155" text-anchor="middle" font-size="9" fill="#f3f4f6">Organizador de cables (RU2)</text>
+
+  <!-- 1U switch -->
+  <rect x="115" y="163" width="310" height="40" rx="3" fill="#0e7490" stroke="#083344"/>
+  <text x="270" y="180" text-anchor="middle" font-size="11" fill="#ffffff">Switch administrable 8-16p, 802.1Q, PoE 802.3af/at — RU3</text>
+  <circle cx="130" cy="195" r="3" fill="#22c55e"/><circle cx="140" cy="195" r="3" fill="#22c55e"/>
+  <circle cx="150" cy="195" r="3" fill="#22c55e"/><circle cx="160" cy="195" r="3" fill="#6b7280"/>
+  <text x="330" y="197" font-size="8" fill="#e5e7eb">VLAN 10/20/30/40 troncal (802.1Q) — puerto trunk hacia router</text>
+
+  <!-- 1U router/CPE -->
+  <rect x="115" y="211" width="310" height="34" rx="3" fill="#111827" stroke="#000000"/>
+  <text x="270" y="231" text-anchor="middle" font-size="11" fill="#ffffff">Router/CPE WAN 4G-LTE (doble SIM) — RU4</text>
+
+  <!-- 2U UPS (gap declared) -->
+  <rect x="115" y="253" width="310" height="55" rx="3" fill="#ffffff" stroke="#9ca3af" stroke-dasharray="5,4"/>
+  <text x="270" y="275" text-anchor="middle" font-size="11" fill="#6b7280">UPS 30-60 min — RU5/RU6</text>
+  <text x="270" y="292" text-anchor="middle" font-size="10" fill="#b91c1c">Brecha Fase 0 — objetivo Fase 1/2 (sección 3.4)</text>
+
+  <!-- ventilation gaps -->
+  <rect x="115" y="316" width="310" height="210" rx="3" fill="#1f2937" stroke="#0f172a"/>
+  <line x1="130" y1="330" x2="410" y2="330" stroke="#4b5563"/>
+  <line x1="130" y1="350" x2="410" y2="350" stroke="#4b5563"/>
+  <line x1="130" y1="370" x2="410" y2="370" stroke="#4b5563"/>
+  <text x="270" y="420" text-anchor="middle" font-size="10" fill="#9ca3af">Espacio libre (crecimiento — RQ-RED-06)</text>
+  <text x="270" y="440" text-anchor="middle" font-size="10" fill="#9ca3af">Ventilación pasiva superior/inferior</text>
+
+  <!-- grounding bar -->
+  <rect x="115" y="535" width="310" height="20" rx="2" fill="#a16207"/>
+  <text x="270" y="549" text-anchor="middle" font-size="10" fill="#ffffff">Barra de puesta a tierra (TIA/EIA-607) — RU útil final</text>
+
+  <!-- Labeling scheme box -->
+  <g transform="translate(500,90)">
+    <rect x="0" y="0" width="420" height="470" rx="8" fill="#f9fafb" stroke="#d1d5db"/>
+    <text x="210" y="26" text-anchor="middle" font-size="14" font-weight="700" fill="#111827">Esquema de etiquetado TIA/EIA-606-B</text>
+    <text x="210" y="44" text-anchor="middle" font-size="11" fill="#6b7280">Convención: [Sitio]-[Ambiente]-[Consecutivo]</text>
+
+    <rect x="15" y="58" width="390" height="70" rx="4" fill="#ffffff" stroke="#9ca3af"/>
+    <text x="25" y="76" font-size="11" font-weight="700" fill="#111827">Identificador de sitio (2 letras)</text>
+    <text x="25" y="94" font-size="10" fill="#374151">CS = Centro de Salud I-4 "Altiplano" (cabecera)</text>
+    <text x="25" y="110" font-size="10" fill="#374151">PA…PF = Puestos de Salud "Comunidad A" a "F"</text>
+
+    <rect x="15" y="136" width="390" height="90" rx="4" fill="#ffffff" stroke="#9ca3af"/>
+    <text x="25" y="154" font-size="11" font-weight="700" fill="#111827">Identificador de ambiente (1 letra)</text>
+    <text x="25" y="172" font-size="10" fill="#374151">A = Administrativo (VLAN 20) · C = Clínico (VLAN 10)</text>
+    <text x="25" y="188" font-size="10" fill="#374151">R = Gestión de Red (VLAN 30) · I = Invitados (VLAN 40)</text>
+    <text x="25" y="204" font-size="10" fill="#374151">Ej.: CS-C-07 = cabecera, punto clínico, toma 07</text>
+    <text x="25" y="220" font-size="10" fill="#374151">Ej.: PA-C-01 = Puesto "Comunidad A", punto clínico 01</text>
+
+    <rect x="15" y="234" width="390" height="66" rx="4" fill="#ffffff" stroke="#9ca3af"/>
+    <text x="25" y="252" font-size="11" font-weight="700" fill="#111827">Consecutivo (2 dígitos)</text>
+    <text x="25" y="270" font-size="10" fill="#374151">01-30 según capacidad de la subred VLAN (sección 2.2.1)</text>
+    <text x="25" y="286" font-size="10" fill="#374151">Impreso en ambos extremos del cable y en el patch panel</text>
+
+    <rect x="15" y="308" width="390" height="150" rx="4" fill="#ffffff" stroke="#9ca3af"/>
+    <text x="25" y="326" font-size="11" font-weight="700" fill="#111827">Aplicación en el patch panel (RU1)</text>
+    <text x="25" y="344" font-size="10" fill="#374151">Puerto 01 → CS-C-01 (CRED/Nutrición, tablet)</text>
+    <text x="25" y="360" font-size="10" fill="#374151">Puerto 02 → CS-C-02 (Laboratorio, PC/tel.)</text>
+    <text x="25" y="376" font-size="10" fill="#374151">Puerto 03 → CS-A-01 (Jefatura, PC)</text>
+    <text x="25" y="392" font-size="10" fill="#374151">Puerto 04 → CS-A-02 (Estadística/HIS, PC)</text>
+    <text x="25" y="408" font-size="10" fill="#374151">Puerto 05 → CS-R-01 (AP interno, VLAN 10/20)</text>
+    <text x="25" y="424" font-size="10" fill="#374151">Puerto 06 → CS-I-01 (AP invitados, sala de espera)</text>
+    <text x="25" y="444" font-size="9" fill="#6b7280">Etiquetas físicas: cinta autolaminada resistente a humedad</text>
+
+    <text x="210" y="480" text-anchor="middle" font-size="9" fill="#6b7280">Documentado por primera vez en este Anexo — no duplica el cuerpo (sección 4.1)</text>
+  </g>
+</svg>

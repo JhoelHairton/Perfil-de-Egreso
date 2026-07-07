@@ -1,0 +1,466 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{geometry}
+\geometry{margin=2.6cm}
+\usepackage{calc}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[table]{xcolor}
+\usepackage{caption}
+\captionsetup{skip=6pt}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\usepackage{parskip}
+\usepackage{needspace}
+\usepackage{etoolbox}
+\setlength{\parskip}{0.55em}
+\setlist{itemsep=0.2em}
+
+% evita titulos "huerfanos" solos al final de una pagina, empujandolos a la
+% siguiente si no queda espacio para el titulo mas unas lineas de contenido
+\pretocmd{\section}{\needspace{5\baselineskip}}{}{}
+\pretocmd{\subsection}{\needspace{4\baselineskip}}{}{}
+\pretocmd{\subsubsection}{\needspace{3\baselineskip}}{}{}
+
+% --- Macros pandoc espera que existan (normalmente las inyecta su modo -s) ---
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\pandocbounded}[1]{#1}
+\newcommand{\passthrough}[1]{#1}
+
+\hypersetup{
+  pdftitle={HemoScan Andino},
+  pdfauthor={Equipo HemoScan Andino -- UPeU Juliaca},
+  colorlinks=false,
+  bookmarksopen=true
+}
+
+% El contenido ya trae su propia numeracion manual (1., 1.1, 1.1.1...) escrita
+% en el texto de cada encabezado, asi que se desactiva la numeracion automatica
+% de LaTeX para evitar una doble numeracion en el indice y en el cuerpo.
+\setcounter{secnumdepth}{-2}
+\setcounter{tocdepth}{4}
+\titleformat{\section}{\normalfont\Large\bfseries}{}{0em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries}{}{0em}{}
+\titleformat{\subsubsection}{\normalfont\normalsize\bfseries}{}{0em}{}
+
+% Encabezado con dos etiquetas CORTAS y de ancho fijo (nunca texto largo o
+% dinamico por subseccion) para que jamas puedan solaparse entre si.
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small HemoScan Andino}
+\fancyhead[R]{\small Sustentaci\'on}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\begin{document}
+
+\begin{titlepage}
+\centering
+\vspace*{1.2cm}
+{\large UNIVERSIDAD PERUANA UNI\'ON\par}
+{\normalsize Facultad de Ingenier\'ia y Arquitectura\par}
+{\normalsize Escuela Profesional de Ingenier\'ia de Sistemas --- Filial Juliaca\par}
+\vspace{0.5cm}
+\rule{0.6\linewidth}{0.4pt}
+\vspace{1.6cm}
+
+{\large PROYECTO DE TESIS / PROYECTO INTEGRADOR\par}
+\vspace{1.0cm}
+{\huge\bfseries HemoScan Andino\par}
+\vspace{0.6cm}
+{\Large Sistema no invasivo de tamizaje de anemia infantil con fusi\'on \'optica multisensor y autocalibraci\'on por altitud\par}
+\vspace{1.6cm}
+\rule{0.6\linewidth}{0.4pt}
+\vspace{1.6cm}
+
+{\Large\bfseries Presentaci\'on Ejecutiva y Contenido de Sustentaci\'on\par}
+\vspace{2.0cm}
+
+{\normalsize Juliaca, Puno, Per\'u \par}
+{\normalsize Julio de 2026\par}
+
+\vfill
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\textbf{Proyecto de fin de carrera --- Escuela Profesional de Ingeniería de Sistemas, UPeU, sede Juliaca}
+\textbf{Equipo:} \textit{(Integrante 1 --- Líder de Infraestructura Tecnológica, CE03 -- nombre por completar)} · \textit{(Integrante 2 --- Líder de Gestión de TI, CE01 -- nombre por completar)} · \textit{(Integrante 3 --- Líder de Ingeniería de Software, CE02 -- nombre por completar)}
+
+Este documento acompaña al archivo \texttt{11-HemoScan-Andino-Presentacion.pptx}. Contiene el contenido íntegro de las 17 diapositivas (para copiar/ajustar si se edita el PPTX) y el material de apoyo para responder preguntas del jurado.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{PARTE 0: Contenido de las 17 diapositivas (título + bullets + notas del orador)}\label{parte-0-contenido-de-las-17-diapositivas-tuxedtulo-bullets-notas-del-orador}
+
+\subsection{Diapositiva 1 --- Portada}\label{diapositiva-1-portada}
+
+\begin{itemize}
+\tightlist
+\item
+  HemoScan Andino: Tamizaje no invasivo de anemia infantil en zonas de altura
+\item
+  Fusión óptica multimodal (imagen de conjuntiva + espectrometría AS7341 + fotopletismografía MAX30102) con autocalibración por altitud
+\item
+  Universidad Peruana Unión (UPeU) --- Facultad de Ingeniería y Arquitectura, EP Ingeniería de Sistemas, Sede Juliaca
+\item
+  Equipo: \textit{(Integrante 1 --- Líder de Infraestructura Tecnológica, CE03 -- nombre por completar)}, \textit{(Integrante 2 --- Líder de Gestión de TI, CE01 -- nombre por completar)}, \textit{(Integrante 3 --- Líder de Ingeniería de Software, CE02 -- nombre por completar)}
+\item
+  Sustentación de proyecto de tesis --- Fase 0 (Validación) --- Julio 2026
+\end{itemize}
+
+\emph{Notas del orador:} Buenos días/tardes, miembros del jurado. Somos el equipo detrás de HemoScan Andino, un sistema de tamizaje no invasivo de anemia infantil pensado específicamente para las condiciones de altura de Puno. Somos tres integrantes de Ingeniería de Sistemas de la sede Juliaca, cada uno liderando una de las tres áreas de competencia que van a ver reflejadas en esta sustentación: Infraestructura Tecnológica, Gestión de TI e Ingeniería de Software. En los próximos minutos les presentaremos el problema que atacamos, la solución técnica que diseñamos, su viabilidad de negocio, y seremos honestos sobre lo que ya validamos y lo que aún falta por validar en campo.
+
+\subsection{Diapositiva 2 --- El problema: la anemia infantil en Puno}\label{diapositiva-2-el-problema-la-anemia-infantil-en-puno}
+
+\begin{itemize}
+\tightlist
+\item
+  Puno tiene la prevalencia de anemia infantil más alta del Perú: 56.1\% en menores de 3 años (ENDES 2025)
+\item
+  Población regional aproximada 1.2--1.4 millones de habitantes; niños menores de 3 años del orden de 60,000--80,000 (estimación referencial a validar con Padrón Nominal MINSA-MEF-RENIEC, INEI o ENDES)
+\item
+  El método de referencia (HemoCue, punción capilar) es invasivo, doloroso en lactantes y de acceso limitado en zonas rurales dispersas del altiplano
+\item
+  La corrección de hemoglobina por altitud (3,800 msnm) puede generar sobrediagnóstico si se aplica de forma rígida y no auditable (Gonzales et al.~2025; Baquerizo-Sedano et al.~2025)
+\item
+  Resultado: subregistro, sobrediagnóstico y baja cobertura de tamizaje sistemático en la primera infancia
+\end{itemize}
+
+\emph{Notas del orador:} El punto de partida de este proyecto es una cifra alarmante: 56.1\% de los niños menores de 3 años en Puno tienen anemia, según ENDES 2025, la prevalencia más alta del país. Pero el problema no es solo la enfermedad, es también cómo la medimos. El método estándar, el HemoCue, requiere punción capilar, es invasivo, genera resistencia de los padres y no llega bien a comunidades dispersas de altiplano. Y hay un segundo problema, más sutil: a esta altitud, 3,800 metros sobre el nivel del mar, la hemoglobina se corrige por altura, pero la evidencia reciente de Gonzales et al.~y Baquerizo-Sedano et al., ambos de 2025, muestra que una corrección rígida puede sobrediagnosticar anemia donde no la hay. Este doble problema, invasividad y corrección de altitud poco transparente, es el que decidimos atacar.
+
+\subsection{Diapositiva 3 --- Por qué las alternativas actuales no bastan}\label{diapositiva-3-por-quuxe9-las-alternativas-actuales-no-bastan}
+
+\begin{itemize}
+\tightlist
+\item
+  Matriz comparativa de 3 alternativas (Business Case, Entregable N.° 2), 7 criterios ponderados: costo operativo 25\%, precisión en altura 15\%, escalabilidad 15\%, interoperabilidad 15\%, aceptación comunitaria 15\%, invasividad 10\%, tiempo de implementación 5\%
+\item
+  Alternativa A --- HemoCue exclusivo: 2.55/5.00 (51\%). Preciso pero invasivo, insumos S/1.3--2.7 por determinación, sin trazabilidad digital
+\item
+  Alternativa B --- App de imagen de conjuntiva sola: 3.10/5.00 (62\%). No invasiva pero sensible a iluminación/tono de piel, sin corrección de altitud
+\item
+  Alternativa C --- HemoScan multimodal: 4.45/5.00 (89\%), la más alta en las 3 alternativas evaluadas
+\item
+  Conclusión: solo la fusión multimodal con autocalibración por altitud resuelve simultáneamente invasividad, precisión y escalabilidad
+\end{itemize}
+
+\emph{Notas del orador:} Antes de proponer nuestra solución, evaluamos formalmente si ya existían alternativas suficientes. Construimos una matriz de decisión con siete criterios ponderados, cubiertos en nuestro Business Case. El HemoCue exclusivo obtuvo 51\%, preciso pero invasivo y sin trazabilidad. Una app que solo analiza la imagen de la conjuntiva ocular obtuvo 62\%, mejor en aceptación pero vulnerable a la iluminación y sin ajuste por altitud. Nuestra propuesta, la fusión multimodal, obtuvo 89\%, casi el doble que el HemoCue. Esta no es una preferencia subjetiva: es el resultado de una evaluación ponderada y verificada aritméticamente, que sustenta por qué vale la pena invertir en un sistema más complejo.
+
+\subsection{Diapositiva 4 --- La solución: HemoScan Andino}\label{diapositiva-4-la-soluciuxf3n-hemoscan-andino}
+
+\begin{itemize}
+\tightlist
+\item
+  Sistema de TAMIZAJE no invasivo que deriva a confirmación clínica --- nunca un diagnóstico autónomo
+\item
+  Fusiona 3 señales ópticas de bajo costo: imagen de conjuntiva palpebral, espectrometría AS7341 (11 canales), fotopletismografía MAX30102
+\item
+  Inferencia en el dispositivo, offline-first (ONNX/TFLite): funciona sin conectividad en el punto de atención
+\item
+  Autocalibración por altitud: GPS + Modelo Digital de Elevación (MDE) --- nunca altitud cruda de GPS --- ajusta de forma transparente y auditable el umbral de hemoglobina
+\item
+  Incluye consejería nutricional basada en reglas (NTS 213-MINSA), mapa de cobertura/riesgo geoespacial y trazabilidad FHIR completa
+\end{itemize}
+
+\emph{Notas del orador:} HemoScan Andino combina tres señales ópticas de bajo costo en un solo dispositivo: una imagen de la conjuntiva palpebral, un espectrómetro de once canales AS7341, y un sensor de fotopletismografía MAX30102. El algoritmo de inferencia corre directamente en el dispositivo, en formato ONNX o TFLite, por lo que funciona incluso sin señal de internet, algo crítico en el altiplano. La pieza que consideramos más innovadora es la capa de autocalibración por altitud: en vez de usar la altitud cruda del GPS, que es imprecisa, cruzamos la posición con un Modelo Digital de Elevación, y ese ajuste queda registrado de forma transparente y auditable. Y quiero subrayar algo clave: esto es un tamizaje, no un diagnóstico. Siempre deriva a confirmación clínica.
+
+\subsection{Diapositiva 5 --- Arquitectura I: Hardware y Firmware (Área A)}\label{diapositiva-5-arquitectura-i-hardware-y-firmware-uxe1rea-a}
+
+\begin{itemize}
+\tightlist
+\item
+  Nodo de hardware: ESP32-S3 + AS7341 (espectrómetro 11 canales) + MAX30102 (PPG) + LED blanco de alto CRI
+\item
+  Comunicación BLE nodo-teléfono; sincronización oportunista teléfono-servidor bajo principio offline-first (ADR-01)
+\item
+  Costo real presupuestado de 3 nodos de validación: S/900 (parte del presupuesto de Fase 0 de S/3,124)
+\item
+  Diseño de red (Entregable N.° 7, 673 líneas): topología VLAN segmentada, DMZ, subnetting VLSM verificado matemáticamente, LAN/WiFi de la posta, enlace posta-DIRESA
+\item
+  Consistencia verificada con la arquitectura de software mediante 10 decisiones de arquitectura (ADR-01 a ADR-10, Anexo G del Entregable de Red)
+\end{itemize}
+
+\emph{Notas del orador:} Esta es el área que lidera nuestro compañero de Infraestructura Tecnológica. El corazón del hardware es un microcontrolador ESP32-S3 que integra el espectrómetro AS7341, el sensor de fotopletismografía MAX30102 y un LED blanco de alto índice de reproducción cromática, necesario para que las lecturas de color sean fiables. Este nodo se comunica por Bluetooth Low Energy con el teléfono del personal de salud, y el teléfono sincroniza con el servidor de forma oportunista cuando hay señal, nunca dependiendo de ella. Ya presupuestamos S/900 para construir tres nodos de validación. Y diseñamos, en un entregable de 673 líneas, la red completa de la posta, desde el enlace Bluetooth hasta el enlace con la DIRESA, verificando que sea consistente con las decisiones de arquitectura de software.
+
+\subsection{Diapositiva 6 --- Arquitectura II: Software, Datos e Interoperabilidad (Área C)}\label{diapositiva-6-arquitectura-ii-software-datos-e-interoperabilidad-uxe1rea-c}
+
+\begin{itemize}
+\tightlist
+\item
+  Especificación de requerimientos: 40 requerimientos funcionales, 12 reglas de negocio, arquitectura y diseño detallado con 15 diagramas
+\item
+  Modelo de datos: 24 tablas + 1 vista en 4 esquemas PostgreSQL, 40 CHECK, 39 FK, 14 UNIQUE, 60 índices --- desplegado y probado en contenedor Docker efímero (PostgreSQL 16.4 + PostGIS 3.4.3)
+\item
+  Validación real ejecutada: 8 pacientes ilustrativos cargados, 10 consultas de verificación (2 geoespaciales PostGIS), 7 pruebas de violación de restricciones, las 7 correctamente rechazadas por el motor
+\item
+  Trazabilidad FHIR con 6 recursos: Observation, Provenance, AuditEvent, Consent, Device, Patient --- interoperable con HIS-MINSA y Padrón Nominal
+\item
+  Analítica espacial PySAL/esda (Getis-Ord Gi*, LISA), SaTScan, GWR/MGWR; autenticación Keycloak (OIDC, RBAC); aprendizaje federado opcional (Flower)
+\end{itemize}
+
+\emph{Notas del orador:} Esta área la lidera nuestro compañero de Ingeniería de Software. Definimos formalmente 40 requerimientos funcionales y 12 reglas de negocio, y a partir de ahí diseñamos un modelo de datos de 24 tablas repartidas en cuatro esquemas de PostgreSQL. Y aquí es importante remarcar algo: esto no se quedó en el papel. Levantamos un contenedor Docker temporal con PostgreSQL y PostGIS reales, ejecutamos el script completo de creación de base de datos sin ningún error, cargamos pacientes ilustrativos y deliberadamente intentamos romper siete restricciones de integridad; las siete fueron rechazadas correctamente por el motor, con los mensajes de error reales documentados. Todo el sistema está diseñado para ser interoperable con el estándar internacional FHIR, usando seis recursos clínicos, lo que nos permite conectarnos en el futuro con el HIS del MINSA.
+
+\subsection{Diapositiva 7 --- Arquitectura III: Seguridad y Centro de Datos (Área A)}\label{diapositiva-7-arquitectura-iii-seguridad-y-centro-de-datos-uxe1rea-a}
+
+\begin{itemize}
+\tightlist
+\item
+  Inventario de 28 activos críticos en 7 categorías; matriz de 19 riesgos de seguridad (RS-01 a RS-19, ISO/IEC 27005:2022 + NIST SP 800-30/CSF 2.0)
+\item
+  Reducción de riesgo residual verificada aritméticamente: de 220 a 103 puntos (\textasciitilde53\%) tras aplicar 11 políticas de seguridad
+\item
+  Sin infraestructura física propia: arquitectura de dos niveles --- edge (gabinete de telecomunicaciones de la posta) + nube contratada
+\item
+  Progresión de disponibilidad: Tier I informal (Fase 0) -\textgreater{} Tier II (Fase 1) -\textgreater{} Tier III aproximado (Fase 2); Tier IV descartado por costo-beneficio
+\item
+  Dimensionamiento verificado: \textasciitilde2.0 MB por determinación (99.7\% correspondiente a la imagen de conjuntiva), respaldo GFS 32.7x, hosting Fase 2 \textasciitilde= S/3,402/año
+\end{itemize}
+
+\emph{Notas del orador:} Dado que trabajamos con datos de salud de menores de edad, la seguridad no es un anexo, es un pilar central. Inventariamos 28 activos críticos y evaluamos 19 riesgos de seguridad con metodologías internacionales reconocidas, ISO 27005 y el marco NIST. Diseñamos 11 políticas que, según nuestro cálculo verificado, reducen el riesgo total en aproximadamente 53\%. Y en cuanto al centro de datos, tomamos una decisión deliberada: no vamos a construir uno propio, porque nuestra madurez digital y presupuesto no lo justifican. En vez de eso, distinguimos un nivel edge en la propia posta y contratamos infraestructura en la nube, escalando de un Tier uno informal en la fase de validación hasta un Tier tres aproximado en la fase de escalamiento.
+
+\subsection{Diapositiva 8 --- Diagnóstico organizacional (AS-IS)}\label{diapositiva-8-diagnuxf3stico-organizacional-as-is}
+
+\begin{itemize}
+\tightlist
+\item
+  Organización diagnosticada: ``Microred de Salud Altiplano-Puno'', caso ilustrativo y representativo de la Red de Salud San Román/Puno --- a validar con una microred real antes de trabajo de campo
+\item
+  FODA de 20 factores, PESTEL de 6 dimensiones, mapa de 14 stakeholders, inventario de 10 sistemas de información
+\item
+  Madurez digital diagnosticada en nivel 2 de 5 (escala aplicada a 6 dimensiones)
+\item
+  Cascada de atención de la anemia modelada en 7 etapas (BPMN): tamizaje -\textgreater{} derivación -\textgreater{} confirmación -\textgreater{} inicio de hierro -\textgreater{} controles mensuales -\textgreater{} dosaje de control a 6 meses -\textgreater{} recuperación
+\item
+  8 problemas concretos detectados en el proceso actual (p.~ej. ausencia de trazabilidad, doble registro manual, alta pérdida de seguimiento entre etapas)
+\end{itemize}
+
+\emph{Notas del orador:} Antes de diseñar la solución, diagnosticamos a fondo el contexto organizacional. Como todavía no existe un convenio real con una microred de salud, trabajamos con un caso ilustrativo y representativo que llamamos Microred de Salud Altiplano-Puno, típico de lo que se observa en la Red de Salud San Román. Ahí hicimos un análisis FODA de veinte factores (nota: corregido de una versión anterior a 24 factores en el documento fuente; usar 24 en caso de pregunta detallada), un PESTEL de seis dimensiones y mapeamos catorce actores clave. Encontramos que la madurez digital está en el nivel dos de cinco, y modelamos en BPMN las siete etapas reales de la cascada de atención de la anemia, desde el tamizaje hasta la recuperación del niño, identificando ocho problemas concretos, como la falta de trazabilidad y el doble registro manual.
+
+\subsection{Diapositiva 9 --- Rediseño de procesos TO-BE y ganancias cuantificadas}\label{diapositiva-9-rediseuxf1o-de-procesos-to-be-y-ganancias-cuantificadas}
+
+\begin{itemize}
+\tightlist
+\item
+  14 automatizaciones diseñadas, mapeadas 1:1 a cada uno de los 8 problemas detectados en el AS-IS
+\item
+  Reducción del ciclo tamizaje-\textgreater inicio de tratamiento: \textasciitilde65\% con conectividad disponible (\textasciitilde39\% incluso sin conectividad)
+\item
+  Costo unitario de insumos por determinación: de S/1.3--2.7 (HemoCue) a S/0.15--0.60 (HemoScan Andino)
+\item
+  Mejora en 9 dimensiones de calidad de proceso (varias de 0\% a 100\% en trazabilidad y eliminación de duplicidad de registro)
+\item
+  11 indicadores objetivo definidos con metodología de cálculo explícita y trazable
+\end{itemize}
+
+\emph{Notas del orador:} A partir de los ocho problemas del proceso actual, diseñamos catorce automatizaciones concretas en el proceso rediseñado, cada una atacando un problema específico, no mejoras genéricas. El impacto cuantificado es contundente: con conectividad disponible, el ciclo completo desde el tamizaje hasta el inicio del tratamiento se reduce en aproximadamente 65\%, y aun sin conectividad, gracias al diseño offline-first, la reducción sigue siendo de 39\%. En términos de costo, pasamos de un insumo de entre 1.3 y 2.7 soles por determinación con HemoCue, a entre 0.15 y 0.60 soles con nuestro sistema. Y en trazabilidad, varias dimensiones de calidad pasan literalmente de 0\% a 100\%, porque eliminamos el registro manual duplicado.
+
+\subsection{Diapositiva 10 --- Modelo de negocio B2G}\label{diapositiva-10-modelo-de-negocio-b2g}
+
+\begin{itemize}
+\tightlist
+\item
+  Cliente: Gobiernos Regionales de Salud (DIRESA/GERESA) y municipios --- modelo B2G de venta/alquiler de hardware + suscripción SaaS
+\item
+  Fase 0 --- Validación: proyecto de tesis, 1 microred, 150--300 niños, presupuesto S/3,124
+\item
+  Fase 1 --- Piloto pagado: 1--2 contratos con DIRESA/municipio o cooperación internacional, 8 establecimientos, año 1--2
+\item
+  Fase 2 --- Escalamiento: 24 establecimientos, expansión regional, año 3+
+\item
+  Ingresos: venta/alquiler de nodos + suscripción anual de plataforma y soporte + servicios analíticos agregados anonimizados para planificación de salud pública
+\item
+  Entidad legal propuesta: HemoScan Andino S.A.C. (por constituir)
+\end{itemize}
+
+\emph{Notas del orador:} Nuestro modelo de negocio es B2G: vendemos o alquilamos el hardware, y cobramos una suscripción anual de plataforma, a Gobiernos Regionales de Salud y municipios. Planificamos tres fases. La Fase 0 es este proyecto de tesis: una sola microred, entre 150 y 300 niños, con un presupuesto ya definido de S/3,124. La Fase 1 sería un piloto pagado, con uno o dos contratos reales, ampliando a ocho establecimientos de salud. Y la Fase 2 es el escalamiento regional, a veinticuatro establecimientos. La entidad legal, HemoScan Andino S.A.C., todavía está por constituirse, y eso lo decimos con total transparencia.
+
+\subsection{Diapositiva 11 --- Viabilidad económica}\label{diapositiva-11-viabilidad-econuxf3mica}
+
+\begin{itemize}
+\tightlist
+\item
+  Modelo financiero ilustrativo a 3 años: Año 0 = Fase 0 (S/3,124); Año 1--2 = Fase 1 (8 establecimientos); Año 3 = inicio Fase 2 (24 establecimientos)
+\item
+  VAN \textasciitilde= S/952 con tasa de descuento del 12\%
+\item
+  TIR \textasciitilde= 23.4\%
+\item
+  Payback \textasciitilde= 2 años y 4--5 meses; relación Beneficio/Costo \textasciitilde= 1.02
+\item
+  Punto de equilibrio \textasciitilde= 6 establecimientos de salud (cifra corregida; ver nota de coherencia)
+\item
+  {[}DATO PENDIENTE DE VALIDAR: cotizaciones reales de proveedores de componentes AS7341/MAX30102/ESP32-S3 y tarifas de hosting; contrato o carta de intención firmada con una DIRESA/municipio{]}
+\end{itemize}
+
+\emph{Notas del orador:} Construimos un modelo financiero ilustrativo a tres años, que arranca con el presupuesto de S/3,124 ya comprometido en la Fase 0, y proyecta la Fase 1 con ocho establecimientos y el inicio de la Fase 2 con veinticuatro. Con una tasa de descuento del 12\%, obtenemos un Valor Actual Neto positivo de aproximadamente S/952, una Tasa Interna de Retorno de 23.4\%, y un periodo de recuperación de poco más de dos años. El punto de equilibrio se alcanza alrededor de seis establecimientos de salud atendidos. Ahora, seremos honestos: estas cifras son estimaciones sobre supuestos razonables, no cotizaciones confirmadas de proveedores ni un contrato firmado, y eso es exactamente lo que buscamos validar en la siguiente fase.
+
+\subsection{Diapositiva 12 --- Plan de gestión del proyecto}\label{diapositiva-12-plan-de-gestiuxf3n-del-proyecto}
+
+\begin{itemize}
+\tightlist
+\item
+  Acta de constitución del proyecto de tesis (8 meses, Fase 0), delimitada explícitamente del emprendimiento comercial de 3 fases del Business Case
+\item
+  EDT de 6 ramas y 28 paquetes de trabajo, reflejando las 3 áreas de competencia del equipo (CE01, CE02, CE03) más dirección/validación/cierre
+\item
+  Cronograma de 28 actividades secuenciadas en 8 meses, con 6 hitos y análisis de ruta crítica (incluida una ``ruta casi crítica'' del convenio institucional)
+\item
+  Línea base de costos mensual verificada aritméticamente contra el presupuesto comprometido de S/3,124
+\item
+  Registro de 12 riesgos de ejecución (RP1--RP12) cruzados con los riesgos estratégicos del Business Case
+\end{itemize}
+
+\emph{Notas del orador:} Este es el trabajo de nuestra compañera o compañero líder de Gestión de TI. Definimos formalmente el proyecto de tesis como un proyecto de ocho meses, distinto del emprendimiento comercial de tres fases. Descompusimos el trabajo en una Estructura de Descomposición del Trabajo de seis ramas y veintiocho paquetes, alineados exactamente con nuestras tres áreas de competencia. A partir de ahí generamos un cronograma de veintiocho actividades con seis hitos, e identificamos la ruta crítica, incluyendo un riesgo que llamamos la ruta casi crítica: la gestión del convenio institucional con una microred real, que es el mayor riesgo de todo el proyecto.
+
+\subsection{Diapositiva 13 --- Marco ágil de ejecución}\label{diapositiva-13-marco-uxe1gil-de-ejecuciuxf3n}
+
+\begin{itemize}
+\tightlist
+\item
+  8 sprints quincenales de construcción iterativa
+\item
+  Backlog de 25 historias de usuario organizadas en 8 épicas
+\item
+  Plan de contingencia de 4 pasos definido específicamente para el riesgo crítico (convenio institucional con la microred)
+\item
+  Cada sprint entrega incrementos verificables: firmware, modelo de datos, prototipo de app, integración FHIR, validación de seguridad
+\item
+  Evidencia concreta ya ejecutada: despliegue y prueba real del modelo de datos en PostgreSQL/PostGIS, no solo diseño teórico
+\end{itemize}
+
+\emph{Notas del orador:} Complementamos la gestión predictiva con un marco ágil de ocho sprints quincenales, organizando el trabajo en veinticinco historias de usuario agrupadas en ocho épicas. Esto nos permite entregar valor de forma incremental: firmware funcional, modelo de datos, prototipo de aplicación, integración FHIR y validaciones de seguridad, sprint a sprint. Y no es solo teoría de gestión de proyectos: como vieron en la arquitectura de software, ya ejecutamos y probamos realmente el modelo de datos en una base PostgreSQL con PostGIS, con pruebas de restricción que fallaron exactamente como esperábamos. Eso es evidencia tangible de que el marco ágil se está cumpliendo, no solo planificando.
+
+\subsection{Diapositiva 14 --- Riesgos y mitigaciones}\label{diapositiva-14-riesgos-y-mitigaciones}
+
+\begin{itemize}
+\tightlist
+\item
+  Registro consolidado: 12 riesgos estratégicos (Business Case) + 12 riesgos de ejecución (Plan de Gestión) + 19 riesgos de seguridad (RS-01 a RS-19)
+\item
+  Riesgo crítico transversal: ausencia de convenio institucional formal con una microred real --- mitigación: plan de contingencia de 4 pasos y acercamiento temprano a la Red de Salud San Román/Puno
+\item
+  Riesgo técnico: precisión del algoritmo de fusión multimodal en condiciones reales de campo --- mitigación: validación con submuestra de ferritina+PCR (S/600 presupuestados) comparada contra HemoCue
+\item
+  Riesgo regulatorio: salud es sector de ``alto riesgo'' bajo DS 115-2025-PCM --- mitigación: supervisión humana obligatoria y trazabilidad FHIR completa por diseño
+\item
+  Riesgo de datos de menores: mitigado con 11 políticas de seguridad, logrando una reducción de riesgo residual del \textasciitilde53\% ya calculada
+\end{itemize}
+
+\emph{Notas del orador:} A lo largo de los nueve entregables identificamos y cruzamos tres registros de riesgo: doce riesgos estratégicos de negocio, doce riesgos de ejecución del proyecto, y diecinueve riesgos de seguridad de la información. El riesgo que atraviesa absolutamente todo el proyecto es la ausencia, hoy, de un convenio institucional real con una microred de salud; por eso diseñamos un plan de contingencia de cuatro pasos específico para ese riesgo. También identificamos el riesgo técnico de que el algoritmo de fusión multimodal no logre la precisión esperada en campo, por lo que presupuestamos S/600 para una submuestra confirmatoria con ferritina y proteína C reactiva. Y dado que manejamos datos de salud de menores de edad, ya diseñamos once políticas de seguridad que reducen el riesgo calculado en 53\%.
+
+\subsection{Diapositiva 15 --- Cumplimiento normativo y ético}\label{diapositiva-15-cumplimiento-normativo-y-uxe9tico}
+
+\begin{itemize}
+\tightlist
+\item
+  NTS 213-MINSA/DGIESP-2024: consejería nutricional y protocolo clínico de manejo de anemia --- HemoScan Andino nunca reemplaza la confirmación clínica, siempre deriva
+\item
+  DS 115-2025-PCM (reglamento de IA de la Ley 31814): salud es sector de alto riesgo, exige supervisión humana y trazabilidad --- implementado vía autocalibración transparente/auditable y registros AuditEvent/Provenance en FHIR
+\item
+  Ley N.° 29733 (Protección de Datos Personales): máxima sensibilidad por tratarse de datos de salud de menores de edad --- Consent FHIR explícito, cifrado, control de acceso basado en roles (Keycloak)
+\item
+  Postura del equipo: transparencia total sobre lo que falta (convenio real, comité de ética constituido) antes de iniciar cualquier trabajo de campo con menores de edad
+\end{itemize}
+
+\emph{Notas del orador:} Trabajar con niños y datos de salud nos obliga a un estándar ético y normativo alto, y lo asumimos desde el diseño, no como un trámite posterior. Seguimos la Norma Técnica de Salud 213 del MINSA para el manejo clínico de la anemia, y por eso nuestro sistema siempre deriva a confirmación clínica, nunca diagnostica de forma autónoma. Cumplimos el nuevo reglamento de inteligencia artificial, el Decreto Supremo 115-2025-PCM, que clasifica a la salud como sector de alto riesgo y exige supervisión humana y trazabilidad, algo que logramos con nuestra capa de autocalibración auditable y los registros FHIR de procedencia y auditoría. Y por tratarse de datos de menores, aplicamos la Ley de Protección de Datos Personales con consentimiento explícito y control de acceso robusto. Y somos claros: todavía no tenemos un comité de ética constituido ni convenio real, y no vamos a hacer trabajo de campo hasta tenerlos.
+
+\subsection{Diapositiva 16 --- Estado actual y próximos pasos}\label{diapositiva-16-estado-actual-y-pruxf3ximos-pasos}
+
+\begin{itemize}
+\tightlist
+\item
+  9 entregables académicos completados y verificados: Diagnóstico Organizacional, Business Case, Plan de Gestión, Modelado de Procesos AS-IS/TO-BE, Requerimientos y Diseño, Plataforma de Datos, Diseño de Red, Planificación de Seguridad, Diseño de Centro de Datos
+\item
+  Limitación honesta: NO existe todavía convenio real con ninguna microred/posta de salud ni comité de ética constituido --- la ``Microred de Salud Altiplano-Puno'' es un caso ilustrativo a validar
+\item
+  Próximo paso inmediato: gestionar convenio con una microred real de la Red de Salud San Román/Puno y constituir comité de ética para iniciar el trabajo de campo de la Fase 0
+\item
+  Siguiente hito técnico: ensamblaje y prueba física de los 3 nodos de hardware (S/900 ya presupuestados) e integración firmware-app-backend
+\end{itemize}
+
+\emph{Notas del orador:} Llegamos a esta sustentación con nueve entregables completos y verificados, que cubren desde el diagnóstico organizacional hasta el diseño detallado del centro de datos, pasando por la arquitectura de software, la base de datos ya probada en un entorno real, el diseño de red y el plan de seguridad. Pero queremos ser honestos sobre lo que falta: no tenemos todavía un convenio firmado con una microred de salud real, ni un comité de ética constituido, y por eso trabajamos con un caso ilustrativo y representativo. El siguiente paso inmediato, fuera del alcance de esta tesis pero ya identificado, es exactamente eso: gestionar ese convenio y ese comité de ética para poder salir a campo, y en paralelo, ensamblar físicamente los tres nodos de hardware que ya presupuestamos.
+
+\subsection{Diapositiva 17 --- Cierre y llamado a la acción}\label{diapositiva-17-cierre-y-llamado-a-la-acciuxf3n}
+
+\begin{itemize}
+\tightlist
+\item
+  HemoScan Andino no es solo un proyecto de tesis: es una propuesta de infraestructura de salud pública digital para la región con mayor prevalencia de anemia infantil del país
+\item
+  Al jurado: solicitamos validar el rigor técnico y metodológico de los 9 entregables como base sólida para iniciar la validación de campo (Fase 0)
+\item
+  A DIRESA Puno y municipios: invitación a sumarse como aliado piloto para transformar este caso ilustrativo en una intervención real
+\item
+  Siguiente paso institucional: constitución de HemoScan Andino S.A.C. y búsqueda activa de la primera microred aliada
+\item
+  Gracias --- quedamos abiertos a sus preguntas
+\end{itemize}
+
+\emph{Notas del orador:} Para cerrar: HemoScan Andino nació como un proyecto de tesis, pero está diseñado desde el primer día para convertirse en infraestructura real de salud pública en la región con la tasa más alta de anemia infantil del Perú. Le pedimos al jurado que evalúe el rigor técnico y metodológico que hemos construido en estos nueve entregables como una base sólida y seria para dar el siguiente paso: salir a validar en campo. Y extendemos una invitación abierta a la DIRESA de Puno y a los municipios: este caso ilustrativo, la Microred Altiplano-Puno, puede convertirse en una microred real si encontramos el aliado institucional correcto. Muchas gracias, quedamos atentos a sus preguntas.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{PARTE 1: Preguntas probables del jurado y respuestas preparadas}\label{parte-1-preguntas-probables-del-jurado-y-respuestas-preparadas}
+
+\textbf{P1. Si no tienen convenio con ninguna posta ni microred real, ¿cómo pueden afirmar que esto funciona?}
+R: No lo afirmamos todavía como un hecho validado en campo, y eso queda explícito en cada uno de los 9 entregables. Trabajamos con una organización ilustrativa y representativa, la ``Microred de Salud Altiplano-Puno'', modelada a partir de características típicas y públicamente conocidas de la Red de Salud San Román/Puno, precisamente para poder avanzar en el diseño técnico, financiero y de gestión sin necesitar aún datos primarios de campo. Lo que sí podemos afirmar con evidencia es que: (a) el modelo de datos y sus restricciones de integridad fueron ejecutados y probados en un motor PostgreSQL/PostGIS real, no solo diseñados en papel; (b) el análisis de alternativas tecnológicas y el modelo financiero están construidos con metodología verificable y aritmética consistente; y (c) el análisis de riesgos, seguridad y cumplimiento normativo sigue estándares internacionales reconocidos. Lo que falta ---y lo decimos con toda transparencia--- es el convenio institucional y el comité de ética, que son exactamente el primer paso de la Fase 0 de campo, posterior a esta sustentación.
+
+\textbf{P2. ¿Por qué la corrección de hemoglobina por altitud con GPS puro no es suficiente, y cómo saben que su método (GPS + Modelo Digital de Elevación) es mejor?}
+R: El GPS de un teléfono típico tiene error vertical de varias decenas de metros y es especialmente impreciso en altitud (el eje Z es el menos confiable en GPS civil estándar). En una región donde la diferencia entre 3,800 y 4,200 msnm puede cambiar la clasificación diagnóstica de un niño, ese error es inaceptable. Por eso cruzamos la posición horizontal (más precisa) con un Modelo Digital de Elevación (MDE) de fuente geográfica confiable, obteniendo una altitud mucho más estable. Además, el ajuste resultante no es una ``caja negra'': queda registrado como un evento auditable (trazado en FHIR Provenance/AuditEvent), de modo que un profesional de salud puede ver exactamente qué corrección se aplicó y por qué, cumpliendo con la exigencia de supervisión humana del DS 115-2025-PCM. Esto responde directamente a la preocupación de sobrediagnóstico señalada por Gonzales et al.~(2025) y Baquerizo-Sedano et al.~(2025).
+
+\textbf{P3. El modelo financiero muestra un VAN positivo pero pequeño (\textasciitilde S/952) y un B/C de apenas 1.02. ¿No es un negocio marginal?}
+R: Es un margen ajustado en el escenario base, y lo mostramos así deliberadamente en vez de inflar supuestos para parecer más atractivos. El B/C de 1.02 y el VAN positivo de S/952 con TIR de 23.4\% indican que el proyecto es viable pero sensible a los supuestos de costos de hardware y tarifas de hosting, que hoy son estimaciones, no cotizaciones confirmadas. La verdadera ganancia estratégica del modelo B2G no está solo en el margen unitario de la Fase 1, sino en la posibilidad de escalar a Fase 2 con 24 establecimientos y en los ingresos adicionales por servicios analíticos agregados anonimizados para planificación de salud pública, que en el modelo actual están tratados de forma conservadora. El punto de equilibrio en 6 establecimientos es alcanzable dentro del propio piloto de Fase 1 (8 establecimientos), lo cual valida que el negocio no depende de un escalamiento masivo para ser sostenible.
+
+\textbf{P4. ¿Por qué no construyen su propio centro de datos si van a manejar información tan sensible?}
+R: Evaluamos exactamente esa opción en el Entregable de Diseño de Centro de Datos y la descartamos con un argumento de costo-beneficio: nuestra madurez digital de infraestructura está diagnosticada en nivel 2 de 5, el equipo tiene 3 personas y el presupuesto de servidor/nube de Fase 0 es de solo S/320 para 8 meses. Construir y operar un centro de datos propio con niveles Tier III o IV requeriría personal especializado de operaciones 24/7 que no tenemos ni tendremos en el corto plazo. En cambio, distinguimos entre disponibilidad (no crítica gracias al diseño offline-first, ya que el dispositivo sigue funcionando sin conexión) y durabilidad de los datos (que sí es innegociable, protegida con una política de respaldo con multiplicador GFS de 32.7x). Contratar infraestructura de nube nos permite tener Tier II/III efectivo sin la inversión de capital ni el riesgo operativo de un centro de datos propio.
+
+\textbf{P5. ¿Cómo garantizan la protección de datos de menores de edad conforme a la Ley 29733?}
+R: Con un enfoque de ``privacidad por diseño'' en tres capas: (1) a nivel de consentimiento, usamos el recurso FHIR Consent, explícito y registrado antes de cualquier captura de datos; (2) a nivel de acceso, usamos Keycloak con autenticación OIDC y control de acceso basado en roles (RBAC), de modo que solo el personal autorizado ve datos identificables; (3) a nivel de auditoría, cada acceso y modificación queda registrado en FHIR AuditEvent. Además, en la Planificación de Seguridad clasificamos los datos de salud de menores como el activo de mayor sensibilidad (Confidencialidad/Integridad/Disponibilidad máximas) y diseñamos 11 políticas específicas, incluyendo una dedicada exclusivamente a protección de datos de menores, que en conjunto reducen el riesgo residual calculado en 53\%.
+
+\textbf{P6. ¿Qué pasa si el algoritmo de fusión multimodal se equivoca y un niño con anemia real es clasificado como sano (falso negativo)?}
+R: Este es precisamente el motivo por el que insistimos en que HemoScan Andino es un tamizaje y no un diagnóstico autónomo: el protocolo, alineado con la NTS 213-MINSA, siempre deriva los casos con umbral de riesgo (incluyendo casos límite) a confirmación clínica con el método de referencia. Para la validación de la precisión del algoritmo en la Fase 0, presupuestamos S/600 para una submuestra confirmatoria con ferritina sérica y proteína C reactiva (PCR), comparada contra HemoCue, que es el estándar metodológico correcto para medir sensibilidad y especificidad reales antes de cualquier despliegue más amplio. Hasta no tener esa validación de campo con métricas de sensibilidad/especificidad reales, el sistema seguirá operando en modo tamizaje-más-derivación, nunca en modo de decisión autónoma.
+
+\textbf{P7. Los tres integrantes tienen áreas de competencia distintas (Infraestructura, Gestión de TI, Software). ¿Cómo se articula el trabajo entre ustedes sin duplicar esfuerzos ni dejar vacíos?}
+R: Diseñamos la Estructura de Descomposición del Trabajo del Plan de Gestión (Entregable N.° 3) con 6 ramas que reflejan exactamente las 3 áreas de competencia más una rama transversal de dirección/validación/cierre, evitando así solapamientos. Además, incluimos mecanismos explícitos de cotejo de consistencia entre entregables de distintas áreas: por ejemplo, el Anexo G del Diseño de Red contiene una verificación cruzada con las 10 decisiones de arquitectura de software (ADR-01 a ADR-10), y el Diseño de Centro de Datos retoma explícitamente un mandato textual dejado pendiente por el entregable de Requerimientos y Diseño. Esta trazabilidad entre entregables de distintas áreas es intencional y documentada, no accidental --- y fue verificada además por una revisión de coherencia global independiente sobre los 9 documentos, que solo encontró y corrigió una cifra desincronizada (el punto de equilibrio) y dos referencias narrativas menores.
+
+\textbf{P8. ¿Cómo compite este proyecto frente a soluciones ya existentes de otros países o startups de salud digital?}
+R: No conocemos, hasta la fecha de este proyecto, una solución que combine simultáneamente los tres elementos que consideramos diferenciadores: (1) fusión de tres señales ópticas de bajo costo en un solo nodo de hardware; (2) inferencia 100\% en el dispositivo, sin dependencia de conectividad; y (3) una capa de autocalibración por altitud auditable, diseñada específicamente para el contexto de sobrediagnóstico documentado en poblaciones de altura como Puno. Esta combinación responde a un problema geográficamente específico (Puno y el altiplano andino) que soluciones genéricas de tamizaje de anemia, diseñadas típicamente a nivel del mar, no resuelven adecuadamente.
+
+\textbf{P9. ¿Qué garantiza que las cifras de mercado (población, niños menores de 3 años) que usan son razonables?}
+R: Las presentamos siempre como estimaciones de orden de magnitud, nunca como datos oficiales confirmados, exactamente como se aclara en cada entregable: población de Puno de 1.2 a 1.4 millones de habitantes (proyección INEI) y niños menores de 3 años del orden de 60,000 a 80,000, cifras que requieren validación con el Padrón Nominal (MINSA-MEF-RENIEC), INEI o ENDES antes de cualquier decisión de inversión seria. Usarlas como aproximación de orden de magnitud es metodológicamente razonable para dimensionar un modelo de negocio en etapa de tesis, pero coincidimos en que un contrato real de Fase 1 requeriría cifras confirmadas del Padrón Nominal específico de los establecimientos objetivo.
+
+\textbf{P10. ¿Cuál es, en su opinión, la mayor debilidad de este proyecto en su estado actual?}
+R: La mayor debilidad, y la reconocemos sin rodeos, es que todo el proyecto ---incluida la organización diagnosticada--- es hasta ahora un ejercicio de diseño riguroso pero sin datos primarios de campo. No tenemos convenio institucional firmado, no tenemos comité de ética constituido, y por tanto no tenemos todavía una sola medición real de sensibilidad/especificidad del algoritmo de fusión multimodal en niños reales de Puno. Esa es exactamente la brecha entre ``Bueno con elementos de Excelente'' y ``Excelente'' que nosotros mismos identificamos en las autoevaluaciones de varios de los nueve entregables. El siguiente paso institucional, fuera del alcance de esta tesis pero ya planificado, es cerrar exactamente esa brecha.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{PARTE 2: Guion de defensa técnica (3--5 minutos)}\label{parte-2-guion-de-defensa-tuxe9cnica-35-minutos}
+
+\textbf{{[}Apertura --- 30 segundos{]}}
+``Quisiera usar estos minutos para explicar, con mayor profundidad técnica, cómo se conecta la arquitectura de HemoScan Andino de punta a punta: desde el sensor físico hasta el dato clínico auditable, y por qué cada decisión de diseño responde a una restricción real del contexto de Puno.''
+
+\textbf{{[}Núcleo técnico 1: del sensor al dato --- 60-70 segundos{]}}
+``Todo comienza en el nodo de hardware: un microcontrolador ESP32-S3 coordina tres fuentes de señal ---el espectrómetro AS7341 de once canales, el sensor de fotopletismografía MAX30102, y una imagen digital de la conjuntiva palpebral iluminada con un LED blanco de alto índice de reproducción cromática, necesario para que el color capturado sea fiel y comparable entre dispositivos---. Estas tres señales viajan por Bluetooth Low Energy hacia la aplicación móvil, que ejecuta el modelo de inferencia localmente, en formato ONNX o TFLite, sin depender de conectividad a internet. Esta decisión offline-first, documentada como ADR-01 en nuestro diseño de arquitectura, no es un detalle menor: en el altiplano puneño, exigir conectividad en el punto de atención habría excluido a buena parte de la población objetivo.''
+
+\textbf{{[}Núcleo técnico 2: la autocalibración por altitud --- 45-60 segundos{]}}
+``La pieza que consideramos más innovadora es la capa de autocalibración por altitud. En vez de confiar en la altitud reportada directamente por el GPS del teléfono, que es conocida por su imprecisión vertical, cruzamos la posición geográfica con un Modelo Digital de Elevación de referencia. El ajuste resultante sobre el umbral de hemoglobina no ocurre de forma oculta: se registra como un evento trazable en el estándar FHIR, usando los recursos Provenance y AuditEvent, de modo que cualquier profesional de salud puede auditar exactamente qué corrección se aplicó a cada determinación. Esto no es un capricho de diseño: es una respuesta directa a la exigencia de supervisión humana y trazabilidad del Decreto Supremo 115-2025-PCM, que clasifica a la salud como sector de alto riesgo para sistemas de inteligencia artificial.''
+
+\textbf{{[}Núcleo técnico 3: de la señal al sistema de información --- 45-60 segundos{]}}
+``Ese resultado no se queda aislado en el teléfono: se sincroniza de forma oportunista con un backend modular que expone los datos como recursos FHIR ---Observation, Consent, Device, Patient, además de Provenance y AuditEvent--- lo que habilita la interoperabilidad futura con el HIS del MINSA y el Padrón Nominal. Y este no es un diseño puramente teórico: desplegamos un contenedor Docker efímero con PostgreSQL 16.4 y PostGIS 3.4.3, ejecutamos el script completo de 24 tablas con sus 40 restricciones de integridad, y deliberadamente intentamos violar siete de esas restricciones; las siete fueron rechazadas correctamente por el motor de base de datos, con los mensajes de error reales documentados en nuestro entregable de Plataforma de Datos.''
+
+\textbf{{[}Cierre honesto --- 20-30 segundos{]}}
+``En síntesis: hemos construido y, donde ha sido posible, probado técnicamente cada capa de este sistema ---hardware, firmware, red, base de datos, seguridad e interoperabilidad clínica--- bajo estándares reconocidos y con verificación aritmética y funcional real. Lo que queda pendiente, y lo decimos con toda honestidad, es la validación con datos primarios de niños reales en una microred real, que es exactamente el siguiente paso institucional que buscamos habilitar a partir de esta sustentación.''
+
+
+\end{document}
